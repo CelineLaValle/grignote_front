@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import Header from "./components/Header";
+import Accueil from "./pages/Accueil";
+import ArticleDetails from './components/ArticleDetails';
+import AddArticle from "./components/AddArticle";
+// import EditArticle from './components/EditArticle';
+import Footer from "./components/Footer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+function  App() {
+      return (
+        <BrowserRouter>
+        <Header />
+          <Routes>
+            <Route path="/" element={<Accueil />} />
+            <Route path="/article/:id" element={<ArticleDetails />} /> 
+            <Route path="/AddArticle" element={<AddArticle />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
   );
 }
 
 export default App;
+
+
+
+
+
+            // <Route path="/edit/:id" element={<EditArticle />} />

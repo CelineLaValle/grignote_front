@@ -1,0 +1,9 @@
+@use '../var' as *;
+
+.footer {
+    height: 200px;
+    background-color: $color-primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

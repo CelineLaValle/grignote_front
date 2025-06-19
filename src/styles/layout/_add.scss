@@ -1,0 +1,43 @@
+@use '../var' as *;
+
+.articleForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+  width: 60%;
+
+  label {
+    display: block;
+    font-family: $font-primary;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .inputField,
+  .textArea {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: $font-primary;
+  }
+
+  .submitButton {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #CABCBC;
+    border: 1px solid #000;
+    font-family: "Jacquarda Bastarda 9";
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: #b8aaaa;
+    }
+  }
+}

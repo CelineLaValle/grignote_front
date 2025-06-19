@@ -1,0 +1,165 @@
+@use '../var' as *;
+
+.containerAccueil {
+  padding: 20px;
+  width: 100%;
+  margin: auto;
+
+  .titleArticle {
+    font-family: $font-primary;
+    font-size: 48px;
+    text-align: center;
+  }
+
+  .articlesContainer {
+    margin: 0 80px;
+  }
+
+  .articles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .articleDiv {
+    width: 50%;
+  }
+
+.cardArticle {
+  position: relative;
+  background-color: $color-secondary;
+  border-radius: 10px;
+  padding: 40px 20px 40px 20px; // garde du padding pour le titre en haut et catégorie en bas
+  margin-bottom: 30px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center; // centre horizontalement
+  justify-content: center; // centre verticalement
+  max-height: 600px;
+  min-height: 300px;
+  height: 60%;
+  width: 60%;
+  overflow: hidden;
+  font-family: Itim;
+  text-align: center; // centrer le contenu texte
+}
+
+.articleTitle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: $font-primary;
+  font-size: 24px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.articleImage {
+  width: 80%;        // un peu plus large
+  max-height: 400px; // augmente la hauteur max
+  object-fit: contain;
+  margin-bottom: 15px;
+  display: block;
+  align-self: center;
+}
+
+.cardArticle > span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; // limite à 3 lignes
+  -webkit-box-orient: vertical;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 0;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.articleCategory {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-family: $font-primary;
+  font-size: 16px;
+  color: $color-primary;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 12px;
+  z-index: 2;
+}
+
+  .fullLink {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .articleH2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-primary;
+    font-size: 48px;
+    margin: 0 auto;
+  }
+
+  .containerButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .addButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: $color-secondary;
+    width: 196px;
+    height: 32px;
+    font-family: $font-primary;
+    font-size: 16px;
+
+    &:visited {
+      color: #000000;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    gap: 10px;
+
+    button {
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+      font-size: 24px;
+      padding: 10px;
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+    }
+
+    .pageInfo {
+      margin: 0 15px;
+      padding: 3px 10px;
+      font-size: 14px;
+      font-family: $font-primary;
+    }
+  }
+}

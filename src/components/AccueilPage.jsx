@@ -76,13 +76,15 @@ function AccueilPage() {
             {/* Affichage de l'image si elle existe */}
     {item.image && <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.title} className="articleImage" />}
 
-    {/* Affichage de la catégorie */}
-    <div className='articleCategory'>{item.category}</div>
+
 
 
           <Link to={`/article/${item._id}`} className='fullLink'></Link>
-          {item.content}
-        </div>
+          <span className="articleContent">{item.content}</span>
+
+            {/* Affichage de la catégorie */}
+    <div className='articleCategory'>{item.category}</div>
+          </div>
       </div>
     ))}
   </article>

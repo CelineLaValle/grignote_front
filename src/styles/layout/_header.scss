@@ -1,9 +1,16 @@
 @use '../var' as *;
 
 .header {
+    font-family: $font-primary;
     background-color: $color-primary;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+
+    .title {
+        font-size: 64px;
+        font-weight: 200;
+        color: $color-secondary;
+    }
 }

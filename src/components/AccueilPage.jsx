@@ -15,7 +15,7 @@ function AccueilPage() {
   // Fonction qui retourne les articles
   async function getWorks() {
 
-    const response = await fetch('http://localhost:4000/api/article');
+    const response = await fetch('http://localhost:4000/article');
     const data = await response.json();
     console.log('Données récupérées :', data);
     setArticles(data);
@@ -70,7 +70,7 @@ function AccueilPage() {
 <div className='articlesContainer'>
   <article className='articles'>
     {currentArticles.map(item => (
-      <div className='articleDiv' key={item._id}>
+      <div className='articleDiv' key={item.idArticle}>
         <div className='cardArticle'>
         <span className='articleTitle'>{item.title}</span>
             {/* Affichage de l'image si elle existe */}
@@ -79,7 +79,7 @@ function AccueilPage() {
 
 
 
-          <Link to={`/article/${item._id}`} className='fullLink'></Link>
+          <Link to={`/article/${item.idArticle}`} className='fullLink'></Link>
           <span className="articleContent">{item.content}</span>
 
             {/* Affichage de la catégorie */}

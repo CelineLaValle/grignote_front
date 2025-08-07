@@ -8,9 +8,15 @@
     align-items: center;
     padding: 10px 20px;
 
-    .title {
-        font-size: 64px;
-        font-weight: 200;
-        color: $color-secondary;
-    }
+    .logoHeader {
+        width: 67px;
+        height: 86px;
+        margin-left: 40px;
+        }
+
+        .title {
+            font-size: 64px;
+            font-weight: 200;
+            color: $color-secondary;
+            }
 }

@@ -3,6 +3,10 @@
 .containerAccueil {
   width: 100%;
   margin: auto;
+  background-image: $bg-primary;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   .titleArticle {
     font-family: $font-secondary;
@@ -29,7 +33,6 @@
     position: relative;
     background-color: $color-secondary;
     border-radius: 10px;
-    padding: 40px 20px;
     margin-bottom: 40px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -38,7 +41,6 @@
     justify-content: center;
     height: 400px;
     width: 100%;
-    overflow: hidden;
     font-family: Itim;
     text-align: center;
 

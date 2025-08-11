@@ -59,7 +59,7 @@ const handleLogout = async () => {
       {user ? (
         <>
           <button onClick={handleLogout} className='nav'>Logout</button>
-          <Link to="/mon-compte" className='nav'>Mon compte</Link>
+          <Link to="/MyAccount" className='nav'>Mon compte</Link>
           {user.role === 'admin' && (
             <Link to="/admin" className='nav'>Admin</Link>
           )}

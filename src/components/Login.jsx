@@ -18,6 +18,7 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json', // On envoie du JSON
                 },
+                credentials: 'include', // Pour inclure les cookies (comme le token JWT)
                 body: JSON.stringify({ email, password }) // Corps de la requête = données du formulaire
             });
 
@@ -28,12 +29,14 @@ function Login() {
                 throw new Error(data.message || "Erreur de connexion");
             }
 
-            // ✅ Si la connexion est réussie :
+            // Si la connexion est réussie :
             // On stocke l'ID de l'utilisateur dans le localStorage (permet de s'en servir ailleurs)
             localStorage.setItem('user', JSON.stringify(data.user));// Assure-toi que backend renvoie bien `user.idUser`
 
-            // 🔁 On redirige vers la page d'acceuil'
+
+            // On redirige vers la page d'acceuil'
             navigate('/');
+            window.location.reload(); // Pour recharger la page et mettre à jour l'état de l'application
         } catch (error) {
             console.error('Erreur de connexion:', error);
             alert('Connexion échouée : ' + error.message);

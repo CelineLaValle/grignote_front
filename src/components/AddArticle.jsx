@@ -17,7 +17,7 @@ function AddArticle() {
 
     // useEffect permet de récupérer l'idUser après que le composant ait été monté
     useEffect(() => {
-        const storedId = localStorage.getItem('idUser'); // On récupère l'id stocké dans le localStorage
+        const storedId = localStorage.getItem('user'); // On récupère l'id stocké dans le localStorage
         if (!storedId) {
             // Si aucun id trouvé, on redirige vers la page de connexion
             navigate('/login');

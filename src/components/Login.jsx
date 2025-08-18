@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
+import '../styles/layout/_login.scss';
 
 function Login() {
     // On initialise des états pour stocker les champs du formulaire
@@ -29,9 +30,9 @@ function Login() {
                 throw new Error(data.message || "Erreur de connexion");
             }
 
-            // Si la connexion est réussie :
-            // On stocke l'ID de l'utilisateur dans le localStorage (permet de s'en servir ailleurs)
-            localStorage.setItem('user', JSON.stringify(data.user));// Assure-toi que backend renvoie bien `user.idUser`
+            // // Si la connexion est réussie :
+            // // On stocke l'ID de l'utilisateur dans le localStorage (permet de s'en servir ailleurs)
+            localStorage.setItem('user', JSON.stringify(data.user));
 
 
             // On redirige vers la page d'acceuil'

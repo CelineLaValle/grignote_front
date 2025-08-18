@@ -31,14 +31,6 @@ function AddArticle() {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
 
-        // console.log('Valeurs envoyées :', {
-        //     title,
-        //     list,
-        //     content,
-        //     category,
-        //     image
-        // });
-
         // Vérifie que l'id de l'utilisateur est bien chargé avant de soumettre
         if (!idUser) {
             alert("Utilisateur non connecté.");
@@ -51,10 +43,11 @@ function AddArticle() {
         formData.append('ingredient', ingredient);
         formData.append('content', content);
         formData.append('category', category);
-        formData.append("idUser", idUser);
+        formData.append('idUser', idUser);
         if (image) {
             formData.append('image', image); // Ajoute le fichier s'il existe
         }
+                console.log('formData:', formData);
 
 
         // Envoi de la requête POST au backend

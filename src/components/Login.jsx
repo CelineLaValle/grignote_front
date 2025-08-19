@@ -44,7 +44,7 @@ return (
         <div className="login-container">
             <h2>Connexion</h2>
             <form onSubmit={handleLogin} className="login-form">
-                {/* Champ pour l'email /}
+                {/* Champ pour l'email */}
                 <label htmlFor="email">Email :</label>
                 <input
                     type="email"
@@ -54,7 +54,7 @@ return (
                     required
                 />
 
-                {/ Champ pour le mot de passe /}
+                {/* Champ pour le mot de passe */}
                 <label htmlFor="password">Mot de passe :</label>
                 <input
                     type="password"
@@ -64,7 +64,7 @@ return (
                     required
                 />
 
-                {/ Bouton de soumission */}
+                {/* Bouton de soumission */}
                 <button type="submit">Se connecter</button>
             </form>
         </div>

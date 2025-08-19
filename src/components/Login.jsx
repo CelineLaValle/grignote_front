@@ -23,19 +23,16 @@ function Login() {
                 body: JSON.stringify({ email, password }) // Corps de la requête = données du formulaire
             });
 
-            const data = await response.json(); // On récupère la réponse du serveur (idUser, message, etc.)
+            const data = await response.json(); // On récupère la réponse du serveur
             console.log('Login response:', data);
+
             // Si la réponse n'est pas OK (ex: mauvais mot de passe), on affiche une erreur
             if (!response.ok) {
                 throw new Error(data.message || "Erreur de connexion");
             }
 
-            // // Si la connexion est réussie :
-            // // On stocke l'ID de l'utilisateur dans le localStorage (permet de s'en servir ailleurs)
-            localStorage.setItem('user', JSON.stringify(data.user));
-
-
-            // On redirige vers la page d'acceuil'
+            // Si la connexion est réussie, on redirige vers la page d'accueil
+            // Le token est maintenant stocké dans un cookie HTTP-only
             navigate('/');
             window.location.reload(); // Pour recharger la page et mettre à jour l'état de l'application
         } catch (error) {
@@ -43,12 +40,11 @@ function Login() {
             alert('Connexion échouée : ' + error.message);
         }
     };
-
-    return (
+return (
         <div className="login-container">
             <h2>Connexion</h2>
             <form onSubmit={handleLogin} className="login-form">
-                {/* Champ pour l'email */}
+                {/* Champ pour l'email /}
                 <label htmlFor="email">Email :</label>
                 <input
                     type="email"
@@ -58,7 +54,7 @@ function Login() {
                     required
                 />
 
-                {/* Champ pour le mot de passe */}
+                {/ Champ pour le mot de passe /}
                 <label htmlFor="password">Mot de passe :</label>
                 <input
                     type="password"
@@ -68,7 +64,7 @@ function Login() {
                     required
                 />
 
-                {/* Bouton de soumission */}
+                {/ Bouton de soumission */}
                 <button type="submit">Se connecter</button>
             </form>
         </div>

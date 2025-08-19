@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import '../styles/layout/_add.scss';
 import { useNavigate } from 'react-router-dom';
 
-
 function AddArticle() {
     // Déclaration des états pour le titre et le contenu
     const navigate = useNavigate(); // Initialiser useNavigate
-    const [idUser, setIdUser] = useState(null); // On crée un état pour stocker l'id de l'utilisateur connecté
+    const [user, setUser] = useState(null); // On crée un état pour stocker l'utilisateur connecté
     const categories = ['Entrée', 'Plat', 'Dessert'];
     const [title, setTitle] = useState('');
     const [ingredient, setIngredient] = useState('');
@@ -14,25 +13,32 @@ function AddArticle() {
     const [category, setCategory] = useState(categories[0]);
     const [image, setImage] = useState(null); // Fichier image
 
-
-    // useEffect permet de récupérer l'idUser après que le composant ait été monté
+    // useEffect permet de récupérer l'utilisateur via l'endpoint /auth/me
     useEffect(() => {
-        const storedId = localStorage.getItem('user'); // On récupère l'id stocké dans le localStorage
-        if (!storedId) {
-            // Si aucun id trouvé, on redirige vers la page de connexion
-            navigate('/login');
-        } else {
-            // Sinon, on met à jour l'état idUser avec la valeur trouvée
-            setIdUser(storedId);
-        }
+        fetch('http://localhost:4000/auth/me', {
+            credentials: 'include' // Important pour envoyer les cookies
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                throw new Error('Non authentifié');
+            })
+            .then(data => {
+                setUser(data.user);
+            })
+            .catch(err => {
+                console.log('Utilisateur non connecté, redirection vers login');
+                navigate('/login');
+            });
     }, []); // Ce code ne s'exécute qu'une seule fois au chargement du composant
 
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
 
-        // Vérifie que l'id de l'utilisateur est bien chargé avant de soumettre
-        if (!idUser) {
+        // Vérifie que l'utilisateur est bien chargé avant de soumettre
+        if (!user || !user.idUser) {
             alert("Utilisateur non connecté.");
             return;
         }
@@ -43,12 +49,11 @@ function AddArticle() {
         formData.append('ingredient', ingredient);
         formData.append('content', content);
         formData.append('category', category);
-        formData.append('idUser', idUser);
+        formData.append('idUser', user.idUser);
         if (image) {
             formData.append('image', image); // Ajoute le fichier s'il existe
         }
-                console.log('formData:', formData);
-
+        console.log('formData:', formData);
 
         // Envoi de la requête POST au backend
         try {
@@ -76,14 +81,17 @@ function AddArticle() {
         setContent('');
         setCategory(categories[0]);
         setImage(null);
-
     };
+
+    // Affichage de chargement si l'utilisateur n'est pas encore chargé
+    if (!user) {
+        return <div>Chargement...</div>;
+    }
 
     return (
         <div>
             <h2 className="articleH2">Ajouter</h2>
             <form className="articleForm" onSubmit={handleSubmit} encType="multipart/form-data">
-
                 {/* Champ pour le titre */}
                 <div className="articleTitre">
                     <label htmlFor="title">Titre de l'article</label>
@@ -154,11 +162,10 @@ function AddArticle() {
                     />
                 </div>
 
-
                 <button className="submitButton" type="submit">Valider</button>
             </form>
         </div>
     );
 }
 
-export default AddArticle
+export default AddArticle;

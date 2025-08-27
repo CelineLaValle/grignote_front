@@ -69,7 +69,7 @@ function ArticleDetails() {
     };
 
 
-        if (!article) {
+    if (!article) {
         return <div>Chargement...</div>; // Message de chargement
     }
 
@@ -86,7 +86,9 @@ function ArticleDetails() {
                             style={{ maxWidth: "400px", borderRadius: "12px" }}
                         />
                     )}
-                    <p className='articleDetails__ingredient'>{article.ingredient}</p>
+                    <ul className='articleDetails__ingredientList'>
+                        <li className='articleDetails__ingredientList__ingredient'>{article.ingredient}</li>
+                    </ul>
                     <p className='articleDetails__content'>{article.content}</p>
                     {article.category && (
                         <p className='articleDetails__category'>
@@ -105,34 +107,34 @@ function ArticleDetails() {
                         </div>
                     )}
                 </div>
-            <div className='articleDetails__comments'>
-                <h3>Commentaires</h3>
+                <div className='articleDetails__comments'>
+                    <h3>Commentaires</h3>
 
-                <textarea
-                    className='articleDetails__commentsInput'
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Écrivez un commentaire..."
-                />
+                    <textarea
+                        className='articleDetails__commentsInput'
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        placeholder="Écrivez un commentaire..."
+                    />
 
-                <button
-                    className='articleDetails__commentsButton'
-                    onClick={handleAddComment}
-                >
-                    Ajouter
-                </button>
+                    <button
+                        className='articleDetails__commentsButton'
+                        onClick={handleAddComment}
+                    >
+                        Ajouter
+                    </button>
 
-                {comments.length > 0 && (
-                    <div className='articleDetails__commentsList'>
-                        {comments.map(comment => (
-                            <div key={comment.idComment} className='articleDetails__comment'>
-                                <strong>{comment.pseudo} :</strong> {comment.content}
-                                <em> ({new Date(comment.date).toLocaleString()})</em>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
+                    {comments.length > 0 && (
+                        <div className='articleDetails__commentsList'>
+                            {comments.map(comment => (
+                                <div key={comment.idComment} className='articleDetails__comment'>
+                                    <strong>{comment.pseudo} :</strong> {comment.content}
+                                    <em> ({new Date(comment.date).toLocaleString()})</em>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
 
         </>

@@ -32,7 +32,15 @@
         margin-bottom: 20px;
     }
 
-    &__ingredient,
+    &__ingredientList {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__ingredient {
+        font-size: 18px;
+    }
+
     &__content {
         font-size: 18px;
         margin-bottom: 15px;
@@ -73,7 +81,7 @@
     }
 
     &__commentsButton {
-        background-color: $color-primary;
+        background-color: darken($color-primary, 10%);
         color: #fff;
         border: none;
         margin: 20px;
@@ -83,7 +91,7 @@
         font-size: 16px;
 
         &:hover {
-            background-color: darken($color-primary, 10%);
+            background-color: $color-primary;
         }
     }
 

@@ -12,6 +12,11 @@ function AddArticle() {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState(categories[0]);
     const [image, setImage] = useState(null); // Fichier image
+    const [allTags, setAllTags] = useState([]);       // tous les tags existants récupérés depuis le backend
+    const [selectedTags, setSelectedTags] = useState([]); // tags choisis par l'utilisateur
+    const [currentTag, setCurrentTag] = useState(""); // input en cours
+
+
 
     // useEffect permet de récupérer l'utilisateur via l'endpoint /auth/me
     useEffect(() => {
@@ -33,6 +38,15 @@ function AddArticle() {
             });
     }, []); // Ce code ne s'exécute qu'une seule fois au chargement du composant
 
+
+    useEffect(() => {
+        fetch('http://localhost:4000/tag')
+            .then(res => res.json())
+            .then(data => setAllTags(data))
+            .catch(err => console.error(err));
+    }, []);
+
+
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
@@ -43,12 +57,29 @@ function AddArticle() {
             return;
         }
 
+        // Créer les tags qui n'existent pas encore
+        const tagIds = [];
+        for (let tag of selectedTags) {
+            let existingTag = allTags.find(t => t.name.toLowerCase() === tag.name.toLowerCase());
+            if (!existingTag) {
+                const res = await fetch('http://localhost:4000/tag', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: tag.name })
+                });
+                existingTag = await res.json();
+                setAllTags(prev => [...prev, existingTag]);
+            }
+            tagIds.push(existingTag.id || existingTag.idTag);
+        }
+
         // Utilisation de FormData pour gérer texte + fichier
         const formData = new FormData();
         formData.append('title', title);
         formData.append('ingredient', ingredient);
         formData.append('content', content);
         formData.append('category', category);
+        formData.append('tags', JSON.stringify(tagIds));
         formData.append('idUser', user.idUser);
         if (image) {
             formData.append('image', image); // Ajoute le fichier s'il existe
@@ -80,6 +111,7 @@ function AddArticle() {
         setIngredient('');
         setContent('');
         setCategory(categories[0]);
+        setSelectedTags([]);
         setImage(null);
     };
 
@@ -89,27 +121,27 @@ function AddArticle() {
     }
 
     return (
-        <div>
-            <h2 className="articleH2">Ajouter</h2>
-            <form className="articleForm" onSubmit={handleSubmit} encType="multipart/form-data">
+        <div className="article">
+            <h2 className="article__title">Ajouter une recette</h2>
+            <form className="article__form" onSubmit={handleSubmit} encType="multipart/form-data">
                 {/* Champ pour le titre */}
-                <div className="articleTitre">
-                    <label htmlFor="title">Titre de l'article</label>
+                <div className="article__field">
+                    <label htmlFor="title" className="article__label">Titre de la recette</label>
                     <input
-                        className="inputField"
+                        className="article__input"
                         type="text"
                         id="title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)} // Met à jour l'état du titre
-                        placeholder="Entrez le titre de l'article"
+                        placeholder="Entrez le nom de la recette"
                     />
                 </div>
 
                 {/* Champ pour la liste d'ingrédients */}
-                <div className="listIngredients">
-                    <label htmlFor="ingredient">Liste des ingrédients</label>
+                <div className="article__field">
+                    <label htmlFor="ingredient" className="article__label">Liste des ingrédients</label>
                     <textarea
-                        className="textArea"
+                        className="article__textarea"
                         rows="20"
                         cols="33"
                         id="ingredient"
@@ -121,25 +153,25 @@ function AddArticle() {
                 </div>
 
                 {/* Champ pour le contenu */}
-                <div className="articleContenu">
-                    <label htmlFor="content">Contenu de l'article</label>
+                <div className="article__field">
+                    <label htmlFor="content" className="article__label">Contenu de la recette</label>
                     <textarea
-                        className="textArea"
+                        className="article__textarea"
                         rows="20"
                         cols="33"
                         id="content"
                         value={content}
                         onChange={(e) => setContent(e.target.value)} // Met à jour l'état du contenu
-                        placeholder="Entrez le contenu de l'article"
+                        placeholder="Entrez le contenu de la recette"
                     />
                 </div>
 
                 {/* Champ pour la catégorie */}
-                <div className="articleCategorie">
-                    <label htmlFor="category">Catégorie de l'article</label>
+                <div className="article__field">
+                    <label htmlFor="category" className="article__label">Catégorie de la recette</label>
                     <select
                         id="category"
-                        className="inputField"
+                        className="article__select"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                     >
@@ -150,19 +182,66 @@ function AddArticle() {
                     </select>
                 </div>
 
+                {/* Champ pour les tags */}
+
+                <div className="article__field">
+                    <label htmlFor="tags" className="article__label">Tags</label>
+                    <div className="tags-input-container">
+                        {selectedTags.map((tag, index) => (
+                            <span key={index} className="tag">
+                                #{tag.name || tag}
+                                <button type="button" onClick={() => {
+                                    setSelectedTags(selectedTags.filter((_, i) => i !== index));
+                                }}>x</button>
+                            </span>
+                        ))}
+
+                        <input
+                            type="text"
+                            value={currentTag}
+                            onChange={e => setCurrentTag(e.target.value)}
+                            onKeyDown={e => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    const trimmed = currentTag.trim();
+                                    if (!trimmed) return;
+                                    if (!selectedTags.some(t => t.name?.toLowerCase() === trimmed.toLowerCase())) {
+                                        setSelectedTags([...selectedTags, { name: trimmed }]);
+                                    }
+                                    setCurrentTag('');
+                                }
+                            }}
+                            placeholder="Tapez un tag et appuyez sur Entrée"
+                            className="tags-input"
+                        />
+                    </div>
+                </div>
+
                 {/* Champ pour le fichier image */}
-                <div className="articleImage">
-                    <label htmlFor="image">Image de l'article</label>
+                <div className="article__field">
+                    <label htmlFor="image" className="article__label">Image de la recette</label>
                     <input
                         id="image"
-                        className="inputField"
+                        className="article__input"
                         type="file"
                         accept="image/*"
                         onChange={(e) => setImage(e.target.files[0])} // Récupère le fichier
                     />
                 </div>
-
-                <button className="submitButton" type="submit">Valider</button>
+                <div className='article__buttons'>
+                    <button
+                        className="article__submit"
+                        type="button"
+                        onClick={() => {
+                            if (window.confirm("Êtes-vous sûr de vouloir annuler ?")) {
+                                window.location.href = "/"; // Redirection vers la page d'accueil
+                            }
+                        }}
+                    >
+                        Annuler
+                    </button>
+                    <button className="article__submit" type="submit">Valider</button>
+                </div>
             </form>
         </div>
     );

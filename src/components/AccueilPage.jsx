@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/layout/_accueilpage.scss'
+import '../styles/layout/_pagination.scss'
 import { Link } from 'react-router-dom'
 import Pagination from './Pagination';
 
@@ -65,16 +66,16 @@ function AccueilPage() {
 
 
   return (
-    <div className='containerAccueil'>
-      <h2 className='titleArticle'>Articles</h2>
+    <div className='container'>
+      <h2 className='container__title'>Articles</h2>
 <div className='articlesContainer'>
-  <article className='articles'>
+  <article className='articlesContainer__article'>
     {currentArticles.map(item => (
-      <div className='articleDiv' key={item.idArticle}>
-        <div className='cardArticle'>
-        <span className='articleTitle'>{item.title}</span>
+      <div className='articlesContainer__article__div' key={item.idArticle}>
+        <div className='articlesContainer__article__div__card'>
+        <span className='articlesContainer__article__div__card__title'>{item.title}</span>
             {/* Affichage de l'image si elle existe */}
-    {item.image && <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.title} className="articleImage" />}
+    {item.image && <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.title} className="articlesContainer__article__div__card__image" />}
 
 
 
@@ -90,7 +91,7 @@ function AccueilPage() {
   </article>
 </div>
       <div className='containerButton'>
-        <Link to="/AddArticle" className='addButton'>Ajouter un article</Link>
+        <Link to="/AddArticle" className='containerButton__link'>Ajouter une recette</Link>
       </div>
         <Pagination
               currentPage={currentPage} 

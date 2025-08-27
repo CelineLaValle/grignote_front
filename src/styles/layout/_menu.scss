@@ -1,5 +1,5 @@
-.menu-wrapper {
-  .toggle-btn {
+.menu {
+  &__toogle {
     position: fixed;
     top: 15px;
     left: 15px;
@@ -18,7 +18,7 @@
     }
   }
 
-  .sidebar {
+  &__content {
     position: fixed;
     top: 0;
     left: 0;
@@ -35,17 +35,28 @@
       transform: translateX(-100%);
     }
 
-    h3 {
-      font-size: 14px;
-      margin-top: 20px;
-      color: #fec89a;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 5px;
-    }
-
-    h3.information {
+    &__information {
       padding-top: 40px;
       font-weight: 600;
+
+      &__button {
+        font-size: 20px;
+        color: #333;
+        text-decoration: none;
+
+        &:hover {
+          color: #000;
+          font-weight: 500;
+        }
+      }
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #fd8012;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
     }
 
     ul {
@@ -57,6 +68,7 @@
         padding: 8px 0;
         cursor: pointer;
         color: #333;
+        text-decoration: none;
 
         &:hover {
           color: #000;
@@ -70,8 +82,14 @@
       padding: 6px;
       border: 1px solid #ddd;
       border-radius: 4px;
-      margin-top: 5px;
+      margin-top: 10px;
       margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .filtres {
+      font-size: 20px;
+      margin-bottom: 20px;
     }
 
     .tags {
@@ -85,7 +103,7 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        font-size: 13px;
+        font-size: 20px;
       }
     }
   }
@@ -95,11 +113,12 @@
   position: relative;
 
   input[type="text"] {
-    width: 100%;
+    width: 95%;
     padding: 6px 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-top: 5px;
+    margin-top: 10px;
+    font-size: 16px;
   }
 
   .tag-dropdown-menu {
@@ -120,7 +139,7 @@
     align-items: center;
     padding: 6px 10px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 16px;
 
     input[type="checkbox"] {
       margin-right: 8px;

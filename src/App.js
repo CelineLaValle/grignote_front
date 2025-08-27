@@ -7,6 +7,7 @@ import Menu from './components/Menu';
 import Accueil from "./pages/Accueil";
 import ArticleDetails from './components/ArticleDetails';
 import AddArticle from "./components/AddArticle";
+import EditArticle from "./components/EditArticle";
 // import EditArticle from './components/EditArticle';
 import Footer from "./components/Footer";
 
@@ -19,8 +20,9 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/MyAccount" element={<MyAccount />} />
         <Route path="/Menu" element={<Menu />} />
-        <Route path="/article/:id" element={<ArticleDetails />} />
+        <Route path="/article/:idArticle" element={<ArticleDetails />} />
         <Route path="/AddArticle" element={<AddArticle />} />
+        <Route path="/EditArticle/:id" element={<EditArticle />} />
       </Routes>
       <Footer />
     </BrowserRouter>

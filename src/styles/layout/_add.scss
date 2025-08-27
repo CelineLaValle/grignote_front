@@ -1,43 +1,120 @@
 @use '../var' as *;
 
-.articleForm {
+.article {
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin: 0 auto;
-  width: 60%;
+  width: 40%;
 
-  label {
-    display: block;
-    font-family: $font-primary;
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #333;
-  }
-
-  .inputField,
-  .textArea {
-    width: 100%;
-    padding: 8px 10px;
-    font-size: 24px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+  &__title {
+    font-size: 34px;
+    margin-bottom: 16px;
+    text-align: center;
     font-family: $font-primary;
   }
 
-  .submitButton {
-    margin-top: 20px;
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__label {
+    font-weight: bold;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+  }
+
+  &__input {
+    font-family: $font-primary;
     padding: 10px;
-    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+  }
+
+  &__select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  &__textarea {
+    resize: vertical;
+    font-family: $font-primary;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+  }
+
+  &__submit {
+    width: 30%;
+    align-self: center;
+    padding: 10px;
     background-color: #CABCBC;
-    border: 1px solid #000;
-    font-family: "Jacquarda Bastarda 9";
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s;
+    margin: 20px 5px 40px 5px;
 
     &:hover {
-      background-color: #b8aaaa;
+      background-color: #d8c8c8;
     }
   }
 }
+
+
+// .articleForm {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 20px;
+//   margin: 0 auto;
+//   width: 60%;
+
+//   label {
+//     display: block;
+//     font-family: $font-primary;
+//     font-size: 24px;
+//     font-weight: 600;
+//     margin-bottom: 5px;
+//     color: #333;
+//   }
+
+//   .inputField,
+//   .textArea {
+//     width: 100%;
+//     padding: 8px 10px;
+//     font-size: 24px;
+//     border: 1px solid #ccc;
+//     border-radius: 6px;
+//     font-family: $font-primary;
+//   }
+
+//   .submitButton {
+//     margin-top: 20px;
+//     padding: 10px;
+//     font-size: 16px;
+//     background-color: #CABCBC;
+//     border: 1px solid #000;
+//     font-family: "Jacquarda Bastarda 9";
+//     cursor: pointer;
+//     transition: 0.3s;
+
+//     &:hover {
+//       background-color: #b8aaaa;
+//     }
+//   }
+// }

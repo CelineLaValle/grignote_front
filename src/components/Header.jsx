@@ -48,22 +48,23 @@ function Header() {
 
   return (
     <div className='header'>
-      <img className='logoHeader' src={cupcake} alt="logo" />
-      <h1 className='title'>Grignote</h1>
+      <img className='header__logo' src={cupcake} alt="logo" />
+      <h1 className='header__title'>Grignote</h1>
 
-      <Link to="/" className='nav'>Accueil</Link>
+      <div className='header__nav'>
+        <Link to="/" className='header__navLink'>Accueil</Link>
 
-      {user ? (
-        <>
-          <button onClick={handleLogout} className='nav'>Logout</button>
-          <Link to="/MyAccount" className='nav'>Mon compte</Link>
-          {user.role === 'admin' && (
-            <Link to="/admin" className='nav'>Admin</Link>
-          )}
-        </>
-      ) : (
-        <Link to="/login" className='nav'>Login</Link>
-      )}
+        {user ? (
+          <>
+            <button onClick={handleLogout} className='header__navLink'>Logout</button>
+            {user.role === 'admin' && (
+              <Link to="/admin" className='header__navLink'>Admin</Link>
+            )}
+          </>
+        ) : (
+          <Link to="/login" className='header__navLink'>Login</Link>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/layout/_menu.scss';
 
 function Menu() {
@@ -8,7 +9,7 @@ function Menu() {
     const [tags, setTags] = useState([]);
     const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
-    const [tagSearch, setTagSearch] = useState(''); 
+    const [tagSearch, setTagSearch] = useState('');
 
     const dropdownRef = useRef(null);
 
@@ -55,25 +56,25 @@ function Menu() {
     };
 
     return (
-        <div className="menu-wrapper">
+        <div className="menu">
             <button
                 onClick={() => setOuvert(!ouvert)}
-                className="toggle-btn"
+                className="menu__toogle"
             >
                 {ouvert ? '✖' : '☰'}
             </button>
 
-            <div className={`sidebar ${ouvert ? 'ouvert' : 'ferme'}`}>
-                <div className="sidebar-content">
-                    <h3 className="information">Mes informations :</h3>
+            <div className="sidebar">
+                <div className={`menu__content ${ouvert ? '' : 'ferme'}`}>
+                    <h3 className="menu__content__information">Mes informations :</h3>
                     <ul>
-                        <li>Mon compte</li>
-                        <li>Mes favoris</li>
+                        <li> <Link to="/MyAccount" className='menu__content__information__button'>Mon compte</Link> </li>
+                        <li> <Link to="/MyAccount" className='menu__content__information__button'>Mes favoris</Link> </li>
                     </ul>
 
                     <h3>Filtres :</h3>
 
-                    <label className='category'>Par Catégorie</label>
+                    <label className='filtres'>Par Catégorie</label>
                     <select value={selectedCategory} onChange={handleCategoryChange}>
                         <option value="">Toutes les catégories</option>
                         {categories.map((category, index) => (
@@ -81,7 +82,7 @@ function Menu() {
                         ))}
                     </select>
 
-                    <label className='tag'>Par Tag</label>
+                    <label className='filtres'>Par Tag</label>
                     <div className="tag-dropdown" ref={dropdownRef}>
                         <input
                             type="text"

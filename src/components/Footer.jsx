@@ -4,7 +4,7 @@ import '../styles/layout/_footer.scss'
 function Footer() {
     return (
         <div className="footer" >
-            <h2 className='footerTitle'>BLOG</h2>
+            <h2 className='footer__title'>BLOG</h2>
         </div>
     )
 }

@@ -1,22 +1,47 @@
 @use '../var' as *;
 
 .header {
-    font-family: $font-primary;
-    background-color: $color-primary;
+  font-family: $font-primary;
+  background-color: $color-primary;
+  display: grid;
+  height: 105px;
+  grid-template-columns: auto 1fr auto; // gauche | centre | droite
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+
+  &__left {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    gap: 15px; // espace entre logo et bouton menu
+  }
 
-    .logoHeader {
-        width: 67px;
-        height: 86px;
-        margin-left: 40px;
-        }
+  &__logo {
+    width: 67px;
+    height: 86px;
+    margin-left: 40px;
+    border-radius: 10px;
+  }
 
-        .title {
-            font-size: 64px;
-            font-weight: 200;
-            color: $color-secondary;
-            }
+  &__title {
+    font-size: 64px;
+    font-weight: 200;
+    color: $color-secondary;
+    text-align: center;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 20px;
+
+    &Link {
+      text-decoration: none;
+      font-size: 18px;
+      color: black;
+
+      &:hover {
+        color: $color-secondary;
+      }
+    }
+  }
 }

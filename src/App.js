@@ -3,6 +3,7 @@ import './App.css';
 import Header from "./components/Header";
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
+import MyFavorites from './components/MyFavorites';
 import Menu from './components/Menu';
 import Accueil from "./pages/Accueil";
 import ArticleDetails from './components/ArticleDetails';
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Accueil />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/MyAccount" element={<MyAccount />} />
+        <Route path="/MyFavorites" element={<MyFavorites />} />
         <Route path="/Menu" element={<Menu />} />
         <Route path="/article/:idArticle" element={<ArticleDetails />} />
         <Route path="/AddArticle" element={<AddArticle />} />

@@ -6,121 +6,120 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-}
 
-.my-account {
-    background-color: #faf6ff; 
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 2rem;
-    max-width: 800px;
-    margin: 2rem auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 
-    .success-message {
-        background-color: #d4edda;
-        color: #155724;
-        padding: 10px 15px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        border: 1px solid #c3e6cb;
-    }
+    &__content {
+        background-color: #faf6ff;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 2rem;
+        max-width: 800px;
+        margin: 2rem auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 
-    .error-message {
-        background-color: #ffe3e3;
-        color: #b80000;
-        padding: 10px 15px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        border: 1px solid #b8000079;
-    }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #c3e6cb;
+        }
 
-    h2 {
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
-        text-align: left;
-    }
+        .error-message {
+            background-color: #ffe3e3;
+            color: #b80000;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #b8000079;
+        }
 
-    .user-info {
-        margin-bottom: 2rem;
-        font-family: $font-secondary;
+        &__title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
 
-        p {
-            margin: 0.3rem 0;
-            font-size: 1rem;
+        &__userInfo {
+            margin-bottom: 2rem;
+            font-family: $font-secondary;
 
-            strong {
-                font-weight: bold;
-                margin-right: 0.5rem;
+            p {
+                margin: 0.3rem 0;
+                font-size: 1rem;
+
+                strong {
+                    font-weight: bold;
+                    margin-right: 0.5rem;
+                }
             }
         }
-    }
 
-    h3 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .article-list {
-        list-style: none;
-        padding: 0;
-
-        .article-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border-radius: 8px;
-            padding: 1rem;
+        &__article {
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            transition: box-shadow 0.3s ease;
 
-            &:hover {
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            }
 
-            .article-title {
-                min-width: 120px;
-                margin: 0;
-                font-size: 1.2rem;
-            }
+            &__list {
+                list-style: none;
+                padding: 0;
 
-            .article-img {
-                width: 60px;
-                height: 60px;
-                object-fit: cover;
-                border-radius: 6px;
-            }
+                &__item {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    border-radius: 8px;
+                    padding: 1rem;
+                    margin-bottom: 1rem;
+                    transition: box-shadow 0.3s ease;
 
-            .article-content {
-                flex: 1;
-                margin: 0;
-                color: #555;
-            }
+                    &:hover {
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                    }
 
-            .article-date {
-                min-width: 110px;
-                margin: 0;
-                color: #888;
-                font-size: 0.95em;
-            }
 
-            .article-edit,
-            .article-delete {
-                margin-left: 8px;
-                padding: 0.3em 0.8em;
-                border-radius: 4px;
-                border: none;
-                cursor: pointer;
-            }
+                    &__title {
+                        min-width: 120px;
+                        margin: 0;
+                        font-size: 1.2rem;
+                    }
 
-            .article-edit {
-                background: #e3eaff;
-                color: #2a2a7a;
-            }
+                    &__image {
+                        width: 60px;
+                        height: 60px;
+                        object-fit: cover;
+                        border-radius: 6px;
+                    }
 
-            .article-delete {
-                background: #ffe3e3;
-                color: #b80000;
+                    &__content {
+                        flex: 1;
+                        margin: 0;
+                        color: #555;
+                    }
+
+                    &__date {
+                        min-width: 110px;
+                        margin: 0;
+                        color: #888;
+                        font-size: 0.95em;
+                    }
+
+                    &__edit {
+                        background: #e3eaff;
+                        color: #2a2a7a;
+                    }
+
+                    &__delete {
+                        background: #ffe3e3;
+                        color: #b80000;
+                        margin-left: 8px;
+                        padding: 0.3em 0.8em;
+                        border-radius: 4px;
+                        border: none;
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }

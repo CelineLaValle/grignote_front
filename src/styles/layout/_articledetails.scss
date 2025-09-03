@@ -33,8 +33,7 @@
     }
 
     &__ingredientList {
-        display: flex;
-        flex-direction: column;
+        list-style: none;
     }
 
     &__ingredient {
@@ -49,14 +48,21 @@
     &__category {
         font-size: 16px;
         margin-bottom: 15px;
+        display: flex;
+        flex: end;
     }
 
     &__tags {
+        width: 20%;
         font-size: 16px;
         background-color: $color-primary;
         color: #fff;
         padding: 4px 8px;
         border-radius: 12px;
+        margin-right: 6px;
+    }
+
+    &__tag {
         margin-right: 6px;
     }
 

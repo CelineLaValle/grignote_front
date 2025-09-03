@@ -69,7 +69,7 @@ function MyAccount() {
 
     return (
         <div className='containerAccount'>
-            <div className='my-account'>
+            <div className='containerAccount__content'>
 
 
                 {/* Message dynamique */}
@@ -79,28 +79,28 @@ function MyAccount() {
                     </div>
                 )}
 
-                <h2>Mon Compte</h2>
+                <h2 className='containerAccount__content__title'>Mon Compte</h2>
 
-                <div className='user-info'>
+                <div className='containerAccount__content__userInfo'>
                     <p><strong>Pseudo:</strong> {user.pseudo}</p>
                     <p><strong>Email:</strong> {user.email}</p>
                 </div>
-                <h3>Mes Articles</h3>
+                <h3 className='containerAccount__content__title__article'>Mes Articles</h3>
                 {articles.length > 0 ? (
                     <>
-                        <ul className='article-list'>
+                        <ul className='containerAccount__content__article__list'>
                             {currentArticles.map(article => (
-                                <li className="article-item" key={article.idArticle}>
-                                    <h4 className="article-title">{article.title}</h4>
+                                <li className="containerAccount__content__article__list__item" key={article.idArticle}>
+                                    <h4 className="containerAccount__content__article__list__item__title">{article.title}</h4>
                                     <img
-                                        className="article-img"
+                                        className="containerAccount__content__article__list__item__image"
                                         src={`http://localhost:4000/uploads/${article.image}`}
                                         alt={article.title}
                                     />
-                                    <p className="article-content">
+                                    <p className="containerAccount__content__article__list__item__content">
                                         {article.content.slice(0, 100)}{article.content.length > 100 ? '...' : ''}
                                     </p>
-                                    <p className="article-date">
+                                    <p className="containerAccount__content__article__list__item__date">
                                         {new Date(article.date).toLocaleDateString('fr-FR', {
                                             year: 'numeric',
                                             month: 'long',
@@ -108,14 +108,14 @@ function MyAccount() {
                                         })}
                                     </p>
                                     <button
-                                        className="article-edit"
+                                        className="containerAccount__content__article__list__item__edit"
                                         onClick={() => navigate(`/EditArticle/${article.idArticle}`)}
                                     >
                                         Modifier
                                     </button>
 
                                     <button
-                                        className="article-delete"
+                                        className="containerAccount__content__article__list__item__delete"
                                         onClick={async () => {
                                             if (!window.confirm("Voulez-vous vraiment supprimer cet article ?")) return;
 

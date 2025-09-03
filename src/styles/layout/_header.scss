@@ -4,7 +4,6 @@
   font-family: $font-primary;
   background-color: $color-primary;
   display: grid;
-  height: 105px;
   grid-template-columns: auto 1fr auto; // gauche | centre | droite
   align-items: center;
   justify-content: center;
@@ -17,15 +16,15 @@
   }
 
   &__logo {
-    width: 67px;
-    height: 86px;
+    width: 100px;
+    height: 119px;
     margin-left: 40px;
     border-radius: 10px;
   }
 
   &__title {
     font-size: 64px;
-    font-weight: 200;
+    font-weight: 800;
     color: $color-secondary;
     text-align: center;
   }
@@ -36,11 +35,15 @@
 
     &Link {
       text-decoration: none;
-      font-size: 18px;
-      color: black;
+      font-size: 20px;
+      color: $color-secondary;
+      background-color: $color-primary;
+      font-family: $font-secondary;
+      border: none;
+      cursor: pointer;
 
       &:hover {
-        color: $color-secondary;
+        color: lighten($color-primary, 10%);
       }
     }
   }

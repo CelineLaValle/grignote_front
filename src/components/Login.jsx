@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
+import { useLocation, useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
 import '../styles/layout/_login.scss';
 
 function Login() {
@@ -7,6 +7,11 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); // Permet de rediriger vers une autre page
+    const location = useLocation();
+
+    // Récupérer le redirect ou fallback sur "/"
+    const params = new URLSearchParams(location.search);
+    const redirectPath = params.get("redirect") || "/";
 
     // Fonction appelée lors de la soumission du formulaire
     const handleLogin = async (e) => {
@@ -33,14 +38,15 @@ function Login() {
 
             // Si la connexion est réussie, on redirige vers la page d'accueil
             // Le token est maintenant stocké dans un cookie HTTP-only
-            navigate('/');
+            // Si la connexion est réussie, redirige vers l'article ou page demandée
+            navigate(redirectPath);
             window.location.reload(); // Pour recharger la page et mettre à jour l'état de l'application
         } catch (error) {
             console.error('Erreur de connexion:', error);
             alert('Connexion échouée : ' + error.message);
         }
     };
-return (
+    return (
         <div className="login-container">
             <h2>Connexion</h2>
             <form onSubmit={handleLogin} className="login-form">

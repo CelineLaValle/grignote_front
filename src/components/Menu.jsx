@@ -69,7 +69,7 @@ function Menu() {
                     <h3 className="menu__content__information">Mes informations :</h3>
                     <ul>
                         <li> <Link to="/MyAccount" className='menu__content__information__button'>Mon compte</Link> </li>
-                        <li> <Link to="/MyAccount" className='menu__content__information__button'>Mes favoris</Link> </li>
+                        <li> <Link to="/MyFavorites" className='menu__content__information__button'>Mes favoris</Link> </li>
                     </ul>
 
                     <h3>Filtres :</h3>

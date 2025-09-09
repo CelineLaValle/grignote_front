@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Pagination from '../components/Pagination'; // si tu veux garder la pagination
+import Pagination from '../components/Pagination';
+import '../styles/layout/_myaccount.scss';
+import '../styles/layout/_pagination.scss'
 
 function MyFavorites() {
     const navigate = useNavigate();
@@ -63,24 +65,24 @@ function MyFavorites() {
 
     return (
         <div className='containerAccount'>
-            <div className='my-account'>
+            <div className='containerAccount__content'>
                 <h2>Mes Favoris</h2>
 
                 {favorites.length > 0 ? (
                     <>
-                        <ul className='article-list'>
+                        <ul className='containerAccount__content__article__list'>
                             {currentArticles.map(article => (
-                                <li className="article-item" key={article.idArticle}>
-                                    <h4 className="article-title">{article.title}</h4>
+                                <li className="containerAccount__content__article__list__item" key={article.idArticle}>
+                                    <h4 className="containerAccount__content__article__list__item__title">{article.title}</h4>
                                     <img
-                                        className="article-img"
+                                        className="containerAccount__content__article__list__item__image"
                                         src={`http://localhost:4000/uploads/${article.image}`}
                                         alt={article.title}
                                     />
-                                    <p className="article-content">
+                                    <p className="containerAccount__content__article__list__item__content">
                                         {article.content ? article.content.slice(0, 100) : ''}{article.content && article.content.length > 100 ? '...' : ''}
                                     </p>
-                                    <p className="article-date">
+                                    <p className="containerAccount__content__article__list__item__date">
                                         {article.date ? new Date(article.date).toLocaleDateString('fr-FR', {
                                             year: 'numeric',
                                             month: 'long',
@@ -90,7 +92,7 @@ function MyFavorites() {
 
                                     {/* Bouton pour accéder à l'article */}
                                     <button
-                                        className="article-edit"
+                                        className="containerAccount__content__article__list__item__edit"
                                         onClick={() => navigate(`/article/${article.idArticle}`)}
                                     >
                                         Voir l'article
@@ -98,7 +100,7 @@ function MyFavorites() {
 
                                     {/* Bouton pour retirer des favoris */}
                                     <button
-                                        className="article-delete"
+                                        className="containerAccount__content__article__list__item__delete"
                                         onClick={async () => {
                                             if (!window.confirm("Voulez-vous vraiment retirer cet article de vos favoris ?")) return;
                                             try {

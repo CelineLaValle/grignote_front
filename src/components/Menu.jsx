@@ -24,8 +24,9 @@ function Menu() {
 
         fetch('http://localhost:4000/tag')
             .then(res => res.json())
-            .then(data => setTags(data))
+            .then(data => setTags(Array.isArray(data) ? data : []))
             .catch(err => console.error('Erreur chargement tags :', err));
+        setTags([]); // toujours un tableau
     }, []);
 
     useEffect(() => {
@@ -47,9 +48,11 @@ function Menu() {
         );
     };
 
-    const filteredTags = tags.filter(tag =>
-        tag.name.toLowerCase().startsWith(tagSearch.toLowerCase())
-    );
+    const filteredTags = Array.isArray(tags)
+        ? tags.filter(tag =>
+            tag.name.toLowerCase().startsWith(tagSearch.toLowerCase())
+        )
+        : [];
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
@@ -119,10 +122,14 @@ function Menu() {
                     {selectedTags.length > 0 && (
                         <div className="selected-tags">
                             <strong>Tags sélectionnés :</strong>{' '}
-                            {selectedTags.map(id => {
-                                const tag = tags.find(t => t.idTag === id);
-                                return tag ? tag.name : '';
-                            }).join(', ')}
+                            {Array.isArray(tags)
+                                ? selectedTags
+                                    .map(id => {
+                                        const tag = tags.find(t => t.idTag === id);
+                                        return tag ? tag.name : '';
+                                    })
+                                    .join(', ')
+                                : ''}
                         </div>
                     )}
 

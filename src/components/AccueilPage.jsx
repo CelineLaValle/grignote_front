@@ -14,20 +14,27 @@ function AccueilPage() {
 
 
   // Fonction qui retourne les articles
-async function getWorks() {
-  try {
-    const response = await fetch('http://localhost:4000/article');
-    if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
-    
-    const data = await response.json();
-    console.log('Données récupérées :', data);
+  async function getWorks() {
+    try {
+      const response = await fetch('http://localhost:4000/article');
+      if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
 
-    setArticles(Array.isArray(data) ? data : Array.isArray(data.articles) ? data.articles : []);
-  } catch (err) {
-    console.error(err);
-    setArticles([]); // fallback
+      const data = await response.json();
+      console.log('Données récupérées :', data);
+
+      // 🔹 Vérifie si c'est un tableau direct ou un objet avec "articles"
+      if (Array.isArray(data)) {
+        setArticles(data);
+      } else if (data && Array.isArray(data.articles)) {
+        setArticles(data.articles);
+      } else {
+        setArticles([]);
+      }
+    } catch (err) {
+      console.error(err);
+      setArticles([]); // fallback
+    }
   }
-}
 
   useEffect(() => {
     getWorks();
@@ -36,11 +43,8 @@ async function getWorks() {
   // Calcul des articles actuels
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-  const currentArticles = (Array.isArray(articles) ? articles : []).slice(
-    indexOfFirstArticle,
-    indexOfLastArticle
-  );
-  const totalPages = Math.ceil((Array.isArray(articles) ? articles : []).length / articlesPerPage);
+  const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
+  const totalPages = Math.ceil(articles.length / articlesPerPage);
 
 
   // Gestion de la page suivante

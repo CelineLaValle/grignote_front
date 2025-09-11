@@ -3,21 +3,21 @@ import Pagination from "../components/Pagination";
 
 function AdminPage() {
     const [activeTab, setActiveTab] = useState("user");
-    const [user, setUsers] = useState([]);
-    const [article, setArticles] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
     // Pagination
     const totalPages =
         activeTab === "user"
-            ? Math.ceil(user.length / itemsPerPage)
-            : Math.ceil(article.length / itemsPerPage);
+            ? Math.ceil(users.length / itemsPerPage)
+            : Math.ceil(articles.length / itemsPerPage);
 
     const currentItems =
         activeTab === "user"
-            ? user.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            : article.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+            ? users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+            : articles.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
 
     // Récupération des utilisateurs

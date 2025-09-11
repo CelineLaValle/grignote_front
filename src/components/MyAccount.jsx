@@ -120,12 +120,9 @@ function MyAccount() {
                                             if (!window.confirm("Voulez-vous vraiment supprimer cet article ?")) return;
 
                                             try {
-                                                const token = localStorage.getItem("token"); // si tu utilises JWT
                                                 const response = await fetch(`http://localhost:4000/article/${article.idArticle}`, {
                                                     method: "DELETE",
-                                                    headers: {
-                                                        Authorization: token ? `Bearer ${token}` : "",
-                                                    },
+                                    
                                                     credentials: "include",
                                                 });
 

@@ -8,6 +8,8 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); // Permet de rediriger vers une autre page
     const location = useLocation();
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
 
     // Récupérer le redirect ou fallback sur "/"
     const params = new URLSearchParams(location.search);
@@ -43,11 +45,17 @@ function Login() {
             window.location.reload(); // Pour recharger la page et mettre à jour l'état de l'application
         } catch (error) {
             console.error('Erreur de connexion:', error);
-            alert('Connexion échouée : ' + error.message);
+            setMessage('Connexion échouée : ' + error.message);
+            setMessageType("error");
         }
     };
     return (
         <div className="login-container">
+            {message && (
+                <div className={`message ${messageType}`}>
+                    {message}
+                </div>
+            )}
             <h2>Connexion</h2>
             <form onSubmit={handleLogin} className="login-form">
                 {/* Champ pour l'email */}
@@ -73,6 +81,10 @@ function Login() {
                 {/* Bouton de soumission */}
                 <button type="submit">Se connecter</button>
             </form>
+
+            <p>Pas encore de compte ?</p>
+            <button onClick={() => navigate('/register')}>S’enregistrer</button>
+
         </div>
     );
 }

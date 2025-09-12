@@ -10,21 +10,29 @@ function Header() {
 
   // Charger l'utilisateur via l'endpoint /auth/me au lieu du localStorage
   useEffect(() => {
+    // Vérifier si un cookie JWT est présent AVANT d’appeler /auth/me
+    if (!document.cookie.includes('token=')) {
+      // Pas de cookie = pas connecté => on ne fait pas la requête
+      return;
+    }
+
     fetch('http://localhost:4000/auth/me', {
       credentials: 'include' // Important pour envoyer les cookies
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error('Non authentifié');
+        if (res.ok) return res.json();
+        if (res.status === 401) return null; // utilisateur non connecté
+        throw new Error('Erreur serveur');   // toutes les autres erreurs remontent
       })
       .then(data => {
-        setUser(data.user);
+        if (data?.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
       })
       .catch(err => {
-        console.log('Utilisateur non connecté');
-        setUser(null);
+        console.error(err); // ici on logue seulement les vraies erreurs
       });
   }, []);
 

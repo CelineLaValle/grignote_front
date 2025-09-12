@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import Header from "./components/Header";
+import Register from './components/Register';
+import Verify from './components/Verify';
 import Login from './components/Login';
 import AdminPage from './components/AdminPage';
 import MyAccount from './components/MyAccount';
@@ -19,6 +21,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Accueil />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/Verify" element={<Verify />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/AdminPage" element={<AdminPage />} />
         <Route path="/MyAccount" element={<MyAccount />} />

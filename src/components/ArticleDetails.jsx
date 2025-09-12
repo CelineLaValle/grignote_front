@@ -14,6 +14,13 @@ function ArticleDetails() {
 
     // Récupérer l'utilisateur connecté
     useEffect(() => {
+        // // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
+        // if (!document.cookie.includes('token=')) {
+        //     // Pas de cookie = pas connecté => on ne fait pas la requête
+        //     setUser(null);
+        //     return;
+        // }
+
         fetch("http://localhost:4000/auth/me", {
             credentials: "include"
         })

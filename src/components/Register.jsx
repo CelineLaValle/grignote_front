@@ -73,7 +73,7 @@ function Register() {
                     required
                     minLength={3}
                     maxLength={20}
-                    pattern="^[a-zA-Z0-9_-]+$"
+                    pattern="^[a-zA-Z0-9_\-]+$"
                     title="Le pseudo doit contenir uniquement des lettres, chiffres, _ ou -"
                 />
 

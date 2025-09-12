@@ -10,11 +10,12 @@ function Header() {
 
   // Charger l'utilisateur via l'endpoint /auth/me au lieu du localStorage
   useEffect(() => {
-    // Vérifier si un cookie JWT est présent AVANT d’appeler /auth/me
-    if (!document.cookie.includes('token=')) {
-      // Pas de cookie = pas connecté => on ne fait pas la requête
-      return;
-    }
+    // // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
+    // if (!document.cookie.includes('token=')) {
+    //   // Pas de cookie = pas connecté => on ne fait pas la requête
+    //   setUser(null);
+    //   return;
+    // }
 
     fetch('http://localhost:4000/auth/me', {
       credentials: 'include' // Important pour envoyer les cookies
@@ -67,13 +68,13 @@ function Header() {
 
           {user ? (
             <>
-              <button onClick={handleLogout} className='header__navLink'>Logout</button>
+              <button onClick={handleLogout} className='header__navLink'>Se déconnecter</button>
               {user.role === 'admin' && (
-                <Link to="/AdminPage" className='header__navLink'>Admin</Link>
+                <Link to="/AdminPage" className='header__navLink'>Page Admin</Link>
               )}
             </>
           ) : (
-            <Link to="/login" className='header__navLink'>Login</Link>
+            <Link to="/login" className='header__navLink'>Se connecter</Link>
           )}
         </div>
       </div>

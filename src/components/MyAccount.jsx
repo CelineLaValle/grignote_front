@@ -15,6 +15,13 @@ function MyAccount() {
     const [message, setMessage] = useState(null);
 
     useEffect(() => {
+        // // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
+        // if (!document.cookie.includes('token=')) {
+        //     // Pas de cookie = pas connecté => on ne fait pas la requête
+        //     setUser(null);
+        //     return;
+        // }
+
         fetch('http://localhost:4000/auth/me', {
             credentials: 'include'
         })
@@ -27,7 +34,7 @@ function MyAccount() {
             })
             .then(res => res.json())
             .then(data => { // On vérifie que c'est bien un tableau
-               if (Array.isArray(data)) {
+                if (Array.isArray(data)) {
                     setArticles(data);
                 } else {
                     console.error("Réponse inattendue :", data);
@@ -122,7 +129,7 @@ function MyAccount() {
                                             try {
                                                 const response = await fetch(`http://localhost:4000/article/${article.idArticle}`, {
                                                     method: "DELETE",
-                                    
+
                                                     credentials: "include",
                                                 });
 

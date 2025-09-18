@@ -1,6 +1,6 @@
 @use '../var' as *;
 
-.container {
+.containerFilter {
   width: 100%;
   margin: auto;
   background-image: $bg-primary;
@@ -11,19 +11,14 @@
 
   &__title {
     font-family: $font-secondary;
-    font-size: 48px;
+    font-size: $font-size-xxl;
     text-align: center;
   }
 
+  &__indicator {
+    margin-left: 10px;
+  }
 }
-
-// span {
-//   overflow: hidden;
-//   font-size: 14px;
-//   color: #333;
-//   width: 100%;
-//   flex-shrink: 0;
-// }
 
 .articlesContainer {
   margin: 0 80px;
@@ -41,7 +36,7 @@
         position: relative;
         background-color: $color-secondary;
         border: 2px solid black;
-        border-radius: 10px;
+        border-radius: $radius-md;
         margin-bottom: 40px;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         display: flex;
@@ -50,7 +45,6 @@
         justify-content: center;
         height: 400px;
         width: 100%;
-        font-family: Itim;
         text-align: center;
 
         &__title {
@@ -58,21 +52,52 @@
           top: 10px;
           left: 10px;
           font-family: $font-primary;
-          font-size: 24px;
+          font-size: $font-size-lg;
           z-index: 2;
-          padding: 2px 6px;
-          border-radius: 6px;
+          padding: 2px 6px 0 6px;
+          border-radius: $radius-sm;
           text-align: left;
         }
 
         &__image {
           width: 60%;
-          max-height: 300px;
+          max-height: 250px;
           border-radius: 10px;
-          object-fit: contain;
+          object-fit: cover;
           margin: auto;
           display: block;
           align-self: center;
+        }
+
+        &__content {
+          width: 60%;
+          position: relative;
+          box-sizing: border-box;
+          padding: 0 20px 20px 20px;
+          font-family: $font-secondary;
+          font-size: $font-size-sm;
+          color: #333;
+          text-align: center;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        &__category {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          font-family: $font-secondary;
+          font-size: $font-size-sm;
+          color: $color-primary;
+          background-color: rgba(255, 255, 255, 0.8);
+          padding: 5px 10px;
+          border-radius: 12px;
+          z-index: 2;
+        }
+
+        &__tags {
+          display: none;
         }
       }
     }
@@ -85,56 +110,19 @@
     text-decoration: none;
     color: inherit;
   }
-
-  .articleCategory {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-family: $font-secondary;
-    font-size: 16px;
-    color: $color-primary;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 5px 10px;
-    border-radius: 12px;
-    z-index: 2;
-  }
-
-  .articleContent {
-    position: relative;
-    box-sizing: border-box;
-    padding: 0 20px;
-    font-family: $font-primary;
-    font-size: 16px;
-    color: #333;
-    text-align: center;
-    /* Pour limiter à 1 ligne avec "..." */
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
 }
-
-// .articleH2 {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   font-family: $font-primary;
-//   font-size: 48px;
-//   margin: 0 auto;
-// }
 
 .containerButton {
   display: flex;
   justify-content: center;
   align-items: center;
 
-
   &__link {
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin-top: 20px;
+    margin: 20px 0 20px 0;
     border-radius: 10px;
     text-decoration: none;
     background-color: $color-secondary;
@@ -145,6 +133,116 @@
 
     &:visited {
       color: #000000;
+    }
+  }
+}
+
+// ---------------------------
+// Responsive
+// ---------------------------
+
+// Tablette (~768px)
+@media (max-width: 768px) {
+  .container {
+    &__title {
+      font-size: 36px;
+    }
+  }
+
+  .articlesContainer {
+    margin: 0 40px;
+
+    &__article {
+      &__div {
+        width: 80%;
+
+        &__card {
+          height: 320px;
+
+          &__title {
+            font-size: 20px;
+          }
+
+          &__image {
+            width: 70%;
+            max-height: 220px;
+          }
+
+
+          &__content {
+            font-size: 14px;
+            padding: 0 10px;
+          }
+
+          &__category {
+            font-size: 14px;
+            padding: 4px 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .containerButton {
+    &__link {
+      width: 160px;
+      height: 30px;
+      font-size: 14px;
+    }
+  }
+}
+
+// Mobile (~480px)
+@media (max-width: 480px) {
+  .container {
+    &__title {
+      font-size: 28px;
+      padding: 0 10px;
+    }
+  }
+
+  .articlesContainer {
+    margin: 0 20px;
+
+    &__article {
+      flex-direction: column;
+      align-items: center;
+
+      &__div {
+        width: 100%;
+
+        &__card {
+          height: auto;
+          padding: 16px;
+
+          &__title {
+            font-size: 18px;
+          }
+
+          &__image {
+            width: 80%;
+            max-height: 180px;
+          }
+        }
+      }
+    }
+
+    .articleCategory {
+      font-size: 12px;
+      padding: 3px 6px;
+    }
+
+    .articleContent {
+      font-size: 13px;
+      padding: 0 6px;
+    }
+  }
+
+  .containerButton {
+    &__link {
+      width: 140px;
+      height: 28px;
+      font-size: 13px;
     }
   }
 }

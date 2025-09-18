@@ -1,0 +1,17 @@
+// &bg, &color, &radius sont des paramètres, on appelle ensuite les variables au moment d'appeler la mixin
+@mixin button-style($bg, $color: #fff, $radius: 6px) {
+  background: $bg;
+  color: $color;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 15px; 
+  margin: 10px;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: lighten($bg, 5%);
+  }
+}

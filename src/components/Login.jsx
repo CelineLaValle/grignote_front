@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
-import '../styles/layout/_login.scss';
+import '../styles/layout/_account.scss';
 
 function Login() {
     // On initialise des états pour stocker les champs du formulaire
@@ -50,14 +50,14 @@ function Login() {
         }
     };
     return (
-        <div className="login-container">
+        <div className="containerAccount">
             {message && (
                 <div className={`message ${messageType}`}>
                     {message}
                 </div>
             )}
-            <h2>Connexion</h2>
-            <form onSubmit={handleLogin} className="login-form">
+            <h2 className='containerAccount__title'>Connexion</h2>
+            <form onSubmit={handleLogin} className="containerAccount__form">
                 {/* Champ pour l'email */}
                 <label htmlFor="email">Email :</label>
                 <input
@@ -79,11 +79,11 @@ function Login() {
                 />
 
                 {/* Bouton de soumission */}
-                <button type="submit">Se connecter</button>
+                <button className='accountButton' type="submit">Se connecter</button>
             </form>
 
             <p>Pas encore de compte ?</p>
-            <button onClick={() => navigate('/register')}>S’enregistrer</button>
+            <button className='accountButton' onClick={() => navigate('/register')}>S’inscrire</button>
 
         </div>
     );

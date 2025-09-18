@@ -2,50 +2,67 @@ import React, { useEffect, useState } from 'react'
 import '../styles/layout/_accueilpage.scss'
 import '../styles/layout/_pagination.scss'
 import { Link } from 'react-router-dom'
+import { useFilters } from './FilterContext';
 import Pagination from './Pagination';
 
-
 function AccueilPage() {
-
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 4;
 
-
+  // Utilisation du contexte de filtres
+  const { applyFilters, selectedCategory, selectedTags } = useFilters();
 
   // Fonction qui retourne les articles
-  async function getWorks() {
+  const getWorks = async () => {
     try {
+      setLoading(true);
+      setError(null);
+      
       const response = await fetch('http://localhost:4000/article');
-      if (!response.ok) throw new Error(`Erreur serveur: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`Erreur serveur: ${response.status}`);
+      }
 
       const data = await response.json();
       console.log('Données récupérées :', data);
-
-      // 🔹 Vérifie si c'est un tableau direct ou un objet avec "articles"
-      if (Array.isArray(data)) {
-        setArticles(data);
-      } else if (data && Array.isArray(data.articles)) {
-        setArticles(data.articles);
-      } else {
-        setArticles([]);
-      }
+      
+      setArticles(data);
     } catch (err) {
-      console.error(err);
-      setArticles([]); // fallback
+      console.error('Erreur lors du chargement des articles:', err);
+      setError(err.message);
+      setArticles([]);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     getWorks();
   }, []);
 
-  // Calcul des articles actuels
+  useEffect(() => {
+    console.log('Articles chargés:', articles);
+    if (articles.length > 0) {
+        console.log('Premier article et ses tags:', articles[0]);
+    }
+}, [articles]);
+
+  // Appliquer les filtres aux articles
+  const filteredArticles = applyFilters(articles);
+
+  // Réinitialiser la page courante quand les filtres changent
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, selectedTags]);
+
+  // Calcul des articles actuels (après filtrage)
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-  const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
-  const totalPages = Math.ceil(articles.length / articlesPerPage);
-
+  const currentArticles = filteredArticles.slice(indexOfFirstArticle, indexOfLastArticle);
+  const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
 
   // Gestion de la page suivante
   const nextPage = () => {
@@ -61,66 +78,108 @@ function AccueilPage() {
     }
   };
 
-  // async function deleteArticle(articleId) {
-  //   try {
-  //     const response = await fetch(`http://localhost:4000/api/article/${articleId}`, {
-  //       method: 'DELETE',
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error('Erreur lors de la suppression de l\'article');
-  //     }
-  //     // Rafraîchir la liste des articles après la suppression
-  //     getWorks(); 
-  //   } catch (error) {
-  //     console.error('Erreur:', error);
-  //   }
-  // }
+  // Affichage pendant le chargement
+  if (loading) {
+    return (
+      <div className='container'>
+        <div className="loading">Chargement des articles...</div>
+      </div>
+    );
+  }
 
+  // Affichage en cas d'erreur
+  if (error) {
+    return (
+      <div className='container'>
+        <div className="error">
+          <p>Erreur lors du chargement des articles : {error}</p>
+          <button onClick={getWorks}>Réessayer</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className='container'>
-      <h2 className='container__title'>Articles</h2>
-      <div className='articlesContainer'>
-        <article className='articlesContainer__article'>
-          {currentArticles.map(item => (
-            <div className='articlesContainer__article__div' key={item.idArticle}>
-              <div className='articlesContainer__article__div__card'>
-                <span className='articlesContainer__article__div__card__title'>{item.title}</span>
-                {/* Affichage de l'image si elle existe */}
-                {item.image && <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.title} className="articlesContainer__article__div__card__image" />}
+    <div className='containerFilter'>
+      <h2 className='containerFilter__title'>
+        Articles 
+        {(selectedCategory || selectedTags.length > 0) && (
+          <span className="containerFilter__indicator">
+            ({filteredArticles.length} résultat{filteredArticles.length > 1 ? 's' : ''})
+          </span>
+        )}
+      </h2>
 
+      {/* Message si aucun résultat avec filtres */}
+      {filteredArticles.length === 0 && articles.length > 0 && (
+        <div className="no-results">
+          <p>Aucun article ne correspond aux filtres sélectionnés.</p>
+        </div>
+      )}
 
+      {/* Message si aucun article du tout */}
+      {articles.length === 0 && !loading && (
+        <div className="no-articles">
+          <p>Aucun article disponible pour le moment.</p>
+        </div>
+      )}
 
+      {/* Affichage des articles */}
+      {filteredArticles.length > 0 && (
+        <div className='articlesContainer'>
+          <article className='articlesContainer__article'>
+            {currentArticles.map(item => (
+              <div className='articlesContainer__article__div' key={item.idArticle}>
+                <div className='articlesContainer__article__div__card'>
+                  <span className='articlesContainer__article__div__card__title'>{item.title}</span>
+                  
+                  {/* Affichage de l'image si elle existe */}
+                  {item.image && (
+                    <img 
+                      src={`http://localhost:4000/uploads/${item.image}`} 
+                      alt={item.title} 
+                      className="articlesContainer__article__div__card__image" 
+                    />
+                  )}
 
-                <Link to={`/article/${item.idArticle}`} className='fullLink'></Link>
-                <span className="articleContent">{item.content}</span>
+                  <Link to={`/article/${item.idArticle}`} className='fullLink'></Link>
+                  <span className="articlesContainer__article__div__card__content">{item.content}</span>
 
-                {/* Affichage de la catégorie */}
-                <div className='articleCategory'>{item.category}</div>
+                  {/* Affichage de la catégorie */}
+                  <div className='articlesContainer__article__div__card__category'>{item.category}</div>
+                  
+                  {/* Affichage des tags si disponibles */}
+                  {item.tags && item.tags.length > 0 && (
+                    <div className='articlesContainer__article__div__card__tags'>
+                      {item.tags.map((tag, index) => (
+                        <span key={index} className="tag-badge">
+                          {typeof tag === 'object' ? tag.name : tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </article>
-      </div>
+            ))}
+          </article>
+        </div>
+      )}
+
       <div className='containerButton'>
         <Link to="/AddArticle" className='containerButton__link'>Ajouter une recette</Link>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        nextPage={nextPage}
-        prevPage={prevPage}
-      />
-    </div>
-  )
 
+      {/* Affichage de la pagination seulement s'il y a des résultats */}
+      {filteredArticles.length > 0 && totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          nextPage={nextPage}
+          prevPage={prevPage}
+        />
+      )}
+    </div>
+  );
 }
 
-export default AccueilPage
-
-
-// <div className='buttonContainer'>
-// <Link to={`/article/${item._id}`} className='articleButton'>Lire</Link>
-// <button className='articleButton' onClick={() => deleteArticle(item._id)}>Supprimer</button>
-// <Link to={`/edit/${item._id}`} className='articleButton'>Modifier</Link>
-// </div>
+export default AccueilPage;

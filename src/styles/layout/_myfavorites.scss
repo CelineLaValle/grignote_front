@@ -1,6 +1,6 @@
 @use '../var' as *;
 
-.containerMyAccount {
+.containerFavorites {
     background-image: $bg-secondary;
     overflow: auto;
     background-repeat: no-repeat;
@@ -40,25 +40,9 @@
             text-align: left;
         }
 
-        &__userInfo {
-            margin-bottom: 2rem;
-            font-family: $font-secondary;
-
-            p {
-                margin: 0.3rem 0;
-                font-size: 1rem;
-
-                strong {
-                    font-weight: bold;
-                    margin-right: 0.5rem;
-                }
-            }
-        }
-
         &__article {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-
 
             &__list {
                 list-style: none;
@@ -77,9 +61,8 @@
                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
                     }
 
-
                     &__title {
-                        min-width: 150px;
+                        min-width: 150px; 
                         max-width: 150px; 
                         overflow: hidden;
                         white-space: nowrap;
@@ -109,6 +92,10 @@
                     &__edit {
                         background: #e3eaff;
                         color: #2a2a7a;
+                        padding: 0.3em 0.8em;
+                        border-radius: 4px;
+                        border: none;
+                        cursor: pointer;
                     }
 
                     &__delete {
@@ -125,23 +112,3 @@
         }
     }
 }
-
-// .pagination {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   margin: 20px;
-//   gap: 10px;
-
-//   button {
-//     cursor: pointer;
-//     border: none;
-//     background-color: transparent;
-//     font-size: 24px;
-//     padding: 10px;
-
-//     &:disabled {
-//       cursor: not-allowed;
-//       opacity: 0.5;
-//     }
-//   }

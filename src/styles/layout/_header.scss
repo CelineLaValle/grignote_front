@@ -35,7 +35,8 @@
 
     &Link {
       text-decoration: none;
-      font-size: 20px;
+      font-weight: 800;
+      font-size: $font-size-md;
       color: $color-secondary;
       background-color: $color-primary;
       font-family: $font-secondary;

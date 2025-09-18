@@ -4,6 +4,7 @@ import '../styles/layout/_pagination.scss'
 import { useNavigate } from "react-router-dom";
 import Pagination from './Pagination';
 import { useLocation } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 function MyAccount() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ function MyAccount() {
     const articlesPerPage = 5;
     const location = useLocation();
     const [message, setMessage] = useState(null);
+    const [articleToDelete, setArticleToDelete] = useState(null);
 
     useEffect(() => {
         // // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
@@ -73,10 +75,35 @@ function MyAccount() {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
 
+     const handleDelete = async () => {
+        if (!articleToDelete) return;
+        try {
+            const response = await fetch(`http://localhost:4000/article/${articleToDelete.idArticle}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.message || "Erreur lors de la suppression");
+            }
+
+            setArticles(prev => prev.filter(a => a.idArticle !== articleToDelete.idArticle));
+            setMessage({ text: "Article supprimé avec succès !", type: "error" });
+            setTimeout(() => setMessage(null), 5000);
+        } catch (error) {
+            console.error(error);
+            setMessage("Échec de la suppression : " + error.message);
+            setTimeout(() => setMessage(null), 5000);
+        } finally {
+            setArticleToDelete(null); // ✅ ferme la modale
+        }
+    };
+
 
     return (
-        <div className='containerAccount'>
-            <div className='containerAccount__content'>
+        <div className='containerMyAccount'>
+            <div className='containerMyAccount__content'>
 
 
                 {/* Message dynamique */}
@@ -86,28 +113,28 @@ function MyAccount() {
                     </div>
                 )}
 
-                <h2 className='containerAccount__content__title'>Mon Compte</h2>
+                <h2 className='containerMyAccount__content__title'>Mon Compte</h2>
 
-                <div className='containerAccount__content__userInfo'>
+                <div className='containerMyAccount__content__userInfo'>
                     <p><strong>Pseudo:</strong> {user.pseudo}</p>
                     <p><strong>Email:</strong> {user.email}</p>
                 </div>
-                <h3 className='containerAccount__content__title__article'>Mes Articles</h3>
+                <h3 className='containerMyAccount__content__title__article'>Mes Articles</h3>
                 {articles.length > 0 ? (
                     <>
-                        <ul className='containerAccount__content__article__list'>
+                        <ul className='containerMyAccount__content__article__list'>
                             {currentArticles.map(article => (
-                                <li className="containerAccount__content__article__list__item" key={article.idArticle}>
-                                    <h4 className="containerAccount__content__article__list__item__title">{article.title}</h4>
+                                <li className="containerMyAccount__content__article__list__item" key={article.idArticle}>
+                                    <h4 className="containerMyAccount__content__article__list__item__title">{article.title}</h4>
                                     <img
-                                        className="containerAccount__content__article__list__item__image"
+                                        className="containerMyAccount__content__article__list__item__image"
                                         src={`http://localhost:4000/uploads/${article.image}`}
                                         alt={article.title}
                                     />
-                                    <p className="containerAccount__content__article__list__item__content">
+                                    <p className="containerMyAccount__content__article__list__item__content">
                                         {article.content.slice(0, 100)}{article.content.length > 100 ? '...' : ''}
                                     </p>
-                                    <p className="containerAccount__content__article__list__item__date">
+                                    <p className="containerMyAccount__content__article__list__item__date">
                                         {new Date(article.date).toLocaleDateString('fr-FR', {
                                             year: 'numeric',
                                             month: 'long',
@@ -115,41 +142,16 @@ function MyAccount() {
                                         })}
                                     </p>
                                     <button
-                                        className="containerAccount__content__article__list__item__edit"
+                                        className="containerMyAccount__content__article__list__item__edit"
                                         onClick={() => navigate(`/EditArticle/${article.idArticle}`)}
                                     >
                                         Modifier
                                     </button>
 
+                                   
                                     <button
-                                        className="containerAccount__content__article__list__item__delete"
-                                        onClick={async () => {
-                                            if (!window.confirm("Voulez-vous vraiment supprimer cet article ?")) return;
-
-                                            try {
-                                                const response = await fetch(`http://localhost:4000/article/${article.idArticle}`, {
-                                                    method: "DELETE",
-
-                                                    credentials: "include",
-                                                });
-
-                                                if (!response.ok) {
-                                                    const errData = await response.json();
-                                                    throw new Error(errData.message || "Erreur lors de la suppression");
-                                                }
-
-                                                // Supprime l'article du state
-                                                setArticles(prev => prev.filter(a => a.idArticle !== article.idArticle));
-
-                                                // Affiche le message dynamique
-                                                setMessage({ text: "Article supprimé avec succès !", type: "error" });
-                                                setTimeout(() => setMessage(null), 5000); // disparaît après 5 secondes
-                                            } catch (error) {
-                                                console.error(error);
-                                                setMessage("Échec de la suppression : " + error.message);
-                                                setTimeout(() => setMessage(null), 5000);
-                                            }
-                                        }}
+                                        className="containerMyAccount__content__article__list__item__delete"
+                                        onClick={() => setArticleToDelete(article)} // Ouvre la modale
                                     >
                                         Supprimer
                                     </button>
@@ -167,6 +169,17 @@ function MyAccount() {
                 ) : (
                     <p>Aucun article trouvé.</p>
                 )}
+
+                   {/* Modale affichée si articleToDelete est défini */}
+                {articleToDelete && (
+                    <ConfirmModal
+                        title="Confirmation de suppression"
+                        message={`Voulez-vous vraiment supprimer l’article « ${articleToDelete.title} » ?`}
+                        onConfirm={handleDelete}
+                        onCancel={() => setArticleToDelete(null)}
+                    />
+                )}
+
             </div>
         </div >
     );

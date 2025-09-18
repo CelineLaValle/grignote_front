@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import '../styles/layout/_articledetails.scss';
+import NotFound from "../components/NotFound";
+
 
 function ArticleDetails() {
     const { idArticle } = useParams(); // Récupérer l'ID depuis l'URL
@@ -136,8 +138,12 @@ function ArticleDetails() {
         }
     };
 
+    // if (!article) {
+    //     return <div>Chargement...</div>; // Message de chargement
+    // }
+
     if (!article) {
-        return <div>Chargement...</div>; // Message de chargement
+        return <NotFound />;
     }
 
 
@@ -162,15 +168,6 @@ function ArticleDetails() {
                 <div className='articleDetails__container'>
                     <h2 className='articleDetails__title'>{article.title}</h2>
 
-                    {/* Ajout du bouton favori */}
-                    <button
-                        className="articleDetails__favoriBtn"
-                        onClick={handleToggleFavori}
-                        style={{ marginLeft: "15px" }}
-                    >
-                        {isFavori ? "⭐ Retirer des favoris" : "☆ Ajouter aux favoris"}
-                    </button>
-
                     {article.image && (
                         <img
                             className='articleDetails__image'
@@ -186,12 +183,27 @@ function ArticleDetails() {
                             </li>
                         ))}
                     </ul>
+
+                    {/* Ligne de séparation */}
+                    <div className="articleDetails__separator"></div>
+
                     <p className='articleDetails__content'>{article.content}</p>
-                    {article.category && (
-                        <p className='articleDetails__category'>
-                            <strong>Catégorie :</strong> {article.category}
-                        </p>
-                    )}
+                    <div className='articleDetails__meta'>
+
+                        {article.category && (
+                            <p className='articleDetails__category'>
+                                <strong>Catégorie :</strong> {article.category}
+                            </p>
+                        )}
+
+                        {/* Ajout du bouton favori */}
+                        <button
+                            className="articleDetails__favoriButton"
+                            onClick={handleToggleFavori}
+                        >
+                            {isFavori ? "⭐ Retirer des favoris" : "☆ Ajouter aux favoris"}
+                        </button>
+                    </div>
 
                     {article.tags && article.tags.length > 0 && (
                         <div className='articleDetails__tags'>

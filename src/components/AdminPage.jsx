@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
+import ConfirmModal from "../components/ConfirmModal";
+import '../styles/layout/_adminPage.scss';
 
 function AdminPage() {
     const [activeTab, setActiveTab] = useState("user");
     const [users, setUsers] = useState([]);
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [actionToConfirm, setActionToConfirm] = useState(null);
     const itemsPerPage = 5;
 
     // Pagination
@@ -61,6 +64,52 @@ function AdminPage() {
             .catch((err) => console.error("Erreur chargement articles :", err));
     }, []);
 
+    // Fonction qui s’exécute après confirmation
+    const handleConfirmAction = async () => {
+        if (!actionToConfirm) return;
+
+        try {
+            if (actionToConfirm.type === "deleteUser") {
+                const res = await fetch(`http://localhost:4000/user/${actionToConfirm.item.idUser}`, {
+                    method: "DELETE",
+                    credentials: "include",
+                });
+                if (!res.ok) throw new Error("Erreur suppression utilisateur");
+                setUsers(prev => prev.filter(u => u.idUser !== actionToConfirm.item.idUser));
+            }
+
+            if (actionToConfirm.type === "suspendUser") {
+                const res = await fetch(`http://localhost:4000/user/suspend/${actionToConfirm.item.idUser}`, {
+                    method: "PATCH",
+                    credentials: "include",
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message);
+                setUsers(prev =>
+                    prev.map(u =>
+                        u.idUser === actionToConfirm.item.idUser
+                            ? { ...u, suspended: data.suspended }
+                            : u
+                    )
+                );
+            }
+
+            if (actionToConfirm.type === "deleteArticle") {
+                const res = await fetch(`http://localhost:4000/article/${actionToConfirm.item.idArticle}`, {
+                    method: "DELETE",
+                    credentials: "include",
+                });
+                if (!res.ok) throw new Error("Erreur suppression article");
+                setArticles(prev => prev.filter(a => a.idArticle !== actionToConfirm.item.idArticle));
+            }
+        } catch (err) {
+            console.error("Erreur :", err);
+            alert(err.message);
+        } finally {
+            setActionToConfirm(null); // Ferme la modale
+        }
+    };
+
     return (
         <div className="admin">
             <div className="admin__content">
@@ -69,13 +118,13 @@ function AdminPage() {
                 {/* Onglets */}
                 <div className="admin__tabs">
                     <button
-                        className={`admin__tab ${activeTab === "user" ? "active" : ""}`}
+                        className={`admin__tabs__tab ${activeTab === "user" ? "active" : ""}`}
                         onClick={() => setActiveTab("user")}
                     >
                         Utilisateurs
                     </button>
                     <button
-                        className={`admin__tab ${activeTab === "article" ? "active" : ""}`}
+                        className={`admin__tabs__tab ${activeTab === "article" ? "active" : ""}`}
                         onClick={() => setActiveTab("article")}
                     >
                         Articles
@@ -91,11 +140,27 @@ function AdminPage() {
                                     <strong>Pseudo:</strong> {user.pseudo} <br />
                                     <strong>Email:</strong> {user.email}
                                 </p>
-                                <button className="admin__list__item__edit">Modifier</button>
-                                <button className="admin__list__item__delete">Supprimer</button>
-                                <button onClick={() => toggleSuspend(user.idUser)}>
-                                    {user.suspended ? "Réactiver" : "Suspendre"}
-                                </button>
+                                <div className="admin__list__item__buttons">
+                                    <button className="admin__list__item__edit">Modifier</button>
+
+                                    <button
+                                        className="admin__list__item__delete"
+                                        onClick={() =>
+                                            setActionToConfirm({ type: "deleteUser", item: user })
+                                        }
+                                    >
+                                        Supprimer
+                                    </button>
+
+                                    <button
+                                        className="admin__list__item__suspend"
+                                        onClick={() =>
+                                            setActionToConfirm({ type: "suspendUser", item: user })
+                                        }
+                                    >
+                                        {user.suspended ? "Réactiver" : "Suspendre"}
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -106,15 +171,24 @@ function AdminPage() {
                     <ul className="admin__list">
                         {currentItems.map(article => (
                             <li className="admin__list__item" key={article.idArticle}>
-                                <h4>{article.title}</h4>
+                                <h4 className="admin__list__item__title">{article.title}</h4>
                                 <img
                                     src={`http://localhost:4000/uploads/${article.image}`}
                                     alt={article.title}
                                     className="admin__list__item__image"
                                 />
-                                <p>{article.content?.slice(0, 100)}...</p>
-                                <button className="admin__list__item__edit">Modifier</button>
-                                <button className="admin__list__item__delete">Supprimer</button>
+                                <p className="admin__list__item__content">{article.content?.slice(0, 100)}...</p>
+                                <div className="admin__list__item__buttons">
+                                    <button className="admin__list__item__edit">Modifier</button>
+                                    <button
+                                        className="admin__list__item__delete"
+                                        onClick={() =>
+                                            setActionToConfirm({ type: "deleteArticle", item: article })
+                                        }
+                                    >
+                                        Supprimer
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -127,6 +201,25 @@ function AdminPage() {
                     nextPage={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
                     prevPage={() => setCurrentPage(p => Math.max(p - 1, 1))}
                 />
+
+                {/* Modale de confirmation */}
+                {actionToConfirm && (
+                    <ConfirmModal
+                        title="Confirmation"
+                        message={
+                            actionToConfirm.type === "deleteUser"
+                                ? `Voulez-vous vraiment supprimer l'utilisateur "${actionToConfirm.item.pseudo}" ?`
+                                : actionToConfirm.type === "suspendUser"
+                                    ? `Voulez-vous vraiment ${actionToConfirm.item.suspended ? "réactiver" : "suspendre"
+                                    } "${actionToConfirm.item.pseudo}" ?`
+                                    : `Voulez-vous vraiment supprimer l'article "${actionToConfirm.item.title}" ?`
+                        }
+                        onConfirm={handleConfirmAction}
+                        onCancel={() => setActionToConfirm(null)}
+                    />
+                )}
+
+
             </div>
         </div>
     );

@@ -1,3 +1,5 @@
+@use '../var' as *;
+
 .menu {
   &__toogle {
     position: fixed;
@@ -24,20 +26,24 @@
     left: 0;
     height: 100vh;
     width: 260px;
-    background: #f9f9f9;
-    border-right: 1px solid #ddd;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    background: $color-tertiary;
     padding: 20px;
     transition: transform 0.3s ease;
+    border: 1px solid $color-primary;
     z-index: 3;
 
     &.ferme {
       transform: translateX(-100%);
     }
 
-    &__information {
+    &__title {
       padding-top: 40px;
       font-weight: 600;
+      font-size: $font-size-lg;
+      margin-top: 20px;
+      color: #fd8012;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
 
       &__button {
         font-size: 20px;
@@ -49,14 +55,6 @@
           font-weight: 500;
         }
       }
-    }
-
-    h3 {
-      font-size: 24px;
-      margin-top: 20px;
-      color: #fd8012;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 5px;
     }
 
     ul {
@@ -84,81 +82,114 @@
       border-radius: 4px;
       margin-top: 10px;
       margin-bottom: 10px;
-      font-size: 16px;
+      font-size: $font-size-sm;
     }
 
-    .filtres {
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
+    .containerFiltres {
+      margin-top: 20px;
 
-    .tags {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      &__title {
+        font-size: $font-size-md;
+        margin-bottom: 20px;
+      }
 
-      label {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 20px;
+      &__dropdown {
+        position: relative;
+
+        &__menuFiltres {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          max-height: 200px; // hauteur max avant scroll
+          overflow-y: auto;
+          border: 1px solid #ccc;
+          background: #fff;
+          z-index: 1000;
+          padding: 8px;
+          border-radius: 6px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        &__empty {
+          padding: 10px;
+          color: #999;
+        }
+
+        &__item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 4px;
+          cursor: pointer;
+          font-size: $font-size-sm;
+
+          input {
+            cursor: pointer;
+          }
+
+          &:hover {
+            background: #f5f5f5;
+          }
+        }
+
+        &__tags {
+          font-size: $font-size-sm;
+          color: #555;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+
+        &__reset {
+          text-align: right;
+          margin: 10px 0 10px 0;
+
+          &__button {
+            background: none;
+            border: none;
+            color: $color-primary;
+            cursor: pointer;
+            font-size: $font-size-sm;
+            text-decoration: underline;
+
+            &:hover {
+              color: darken($color-primary, 10%);
+            }
+          }
+        }
+
+        input[type="text"] {
+          width: 95%;
+          padding: 6px 8px;
+          border: 1px solid #ddd;
+          box-shadow: inset 0 1px 3px rgba($color-primary, 0.1);
+          border-radius: 4px;
+          margin-top: 10px;
+          font-size: $font-size-sm;
+        }
       }
     }
   }
 }
 
-.tag-dropdown {
-  position: relative;
+/*
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
-  input[type="text"] {
-    width: 95%;
-    padding: 6px 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-top: 10px;
-    font-size: 16px;
-  }
-
-  .tag-dropdown-menu {
-    position: absolute;
-    z-index: 10;
-    background: #fff;
-    width: 100%;
-    max-height: 180px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  }
-
-  .tag-dropdown-item {
+  label {
     display: flex;
     align-items: center;
-    padding: 6px 10px;
-    cursor: pointer;
-    font-size: 16px;
-
-    input[type="checkbox"] {
-      margin-right: 8px;
-    }
-
-    &:hover {
-      background: #f0f0f0;
-    }
-  }
-
-  .tag-dropdown-empty {
-    padding: 10px;
-    color: #999;
-    font-style: italic;
+    gap: 6px;
+    font-size: 20px;
   }
 }
-
-.selected-tags {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #555;
-}
+*/

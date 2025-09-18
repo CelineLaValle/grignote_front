@@ -36,6 +36,7 @@
     border: 1px solid #ccc;
     border-radius: $radius-sm;
     font-size: $font-size-md;
+  
   }
 
   &__select {
@@ -55,7 +56,7 @@
   }
 
   &__file {
-    display: none;
+    display: none; // cache l’input de type file
   }
 
   &__image {
@@ -67,6 +68,18 @@
     font-size: $font-size-md;
     background-color: $color-secondary;
     cursor: pointer;
+  }
+
+  &__preview {
+    max-width: 200px;
+    margin-top: 10px;
+    border-radius: $radius-sm;
+  }
+
+  &__tags {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 
   &__buttons {
@@ -83,46 +96,3 @@
     }
   }
 }
-
-
-// .articleForm {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 20px;
-//   margin: 0 auto;
-//   width: 60%;
-
-//   label {
-//     display: block;
-//     font-family: $font-primary;
-//     font-size: 24px;
-//     font-weight: 600;
-//     margin-bottom: 5px;
-//     color: #333;
-//   }
-
-//   .inputField,
-//   .textArea {
-//     width: 100%;
-//     padding: 8px 10px;
-//     font-size: 24px;
-//     border: 1px solid #ccc;
-//     border-radius: 6px;
-//     font-family: $font-primary;
-//   }
-
-//   .submitButton {
-//     margin-top: 20px;
-//     padding: 10px;
-//     font-size: 16px;
-//     background-color: #CABCBC;
-//     border: 1px solid #000;
-//     font-family: "Jacquarda Bastarda 9";
-//     cursor: pointer;
-//     transition: 0.3s;
-
-//     &:hover {
-//       background-color: #b8aaaa;
-//     }
-//   }
-// }

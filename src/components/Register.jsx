@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/layout/_login.scss';
+import '../styles/layout/_account.scss';
 function Register() {
     const [pseudo, setPseudo] = useState('');
     const [email, setEmail] = useState('');
@@ -61,9 +61,9 @@ function Register() {
     };
 
     return (
-        <div className="login-container">
-            <h2>Inscription</h2>
-            <form onSubmit={handleRegister} className="login-form">
+        <div className="containerAccount">
+            <h2 className='containerAccount__title'>Inscription</h2>
+            <form className='containerAccount__form' onSubmit={handleRegister}>
                 <label htmlFor="pseudo">Pseudo :</label>
                 <input
                     type="text"
@@ -104,11 +104,11 @@ function Register() {
                     required
                 />
 
-                <button type="submit">S’enregistrer</button>
+                <button className='accountButton' type="submit">S’enregistrer</button>
             </form>
 
             <p>Déjà un compte ?</p>
-            <button onClick={() => navigate('/login')}>Se connecter</button>
+            <button className='accountButton' onClick={() => navigate('/login')}>Se connecter</button>
         </div>
     );
 }

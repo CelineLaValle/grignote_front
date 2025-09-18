@@ -186,9 +186,9 @@ function AddArticle() {
 
                 <div className="article__field">
                     <label htmlFor="tags" className="article__label">Tags</label>
-                    <div className="tags-input-container">
+                    <div>
                         {selectedTags.map((tag, index) => (
-                            <span key={index} className="tag">
+                            <span key={index}>
                                 #{tag.name || tag}
                                 <button type="button" onClick={() => {
                                     setSelectedTags(selectedTags.filter((_, i) => i !== index));
@@ -212,7 +212,7 @@ function AddArticle() {
                                 }
                             }}
                             placeholder="Tapez un tag et appuyez sur Entrée"
-                            className="tags-input"
+                            className="article__input"
                         />
                     </div>
                 </div>
@@ -222,11 +222,12 @@ function AddArticle() {
                     <label htmlFor="image" className="article__label">Image de la recette</label>
                     <input
                         id="image"
-                        className="article__input"
+                        className="article__file"
                         type="file"
                         accept="image/*"
                         onChange={(e) => setImage(e.target.files[0])} // Récupère le fichier
                     />
+                      <label htmlFor="image" className="article__image">Choisir une image</label>
                 </div>
                 <div className='article__buttons'>
                     <button

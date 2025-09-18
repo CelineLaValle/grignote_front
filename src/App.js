@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import { FilterProvider } from './components/FilterContext';
 import Header from "./components/Header";
 import Register from './components/Register';
 import Verify from './components/Verify';
@@ -12,28 +13,31 @@ import Accueil from "./pages/Accueil";
 import ArticleDetails from './components/ArticleDetails';
 import AddArticle from "./components/AddArticle";
 import EditArticle from "./components/EditArticle";
-// import EditArticle from './components/EditArticle';
+import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Accueil />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/Verify" element={<Verify />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/AdminPage" element={<AdminPage />} />
-        <Route path="/MyAccount" element={<MyAccount />} />
-        <Route path="/MyFavorites" element={<MyFavorites />} />
-        <Route path="/Menu" element={<Menu />} />
-        <Route path="/article/:idArticle" element={<ArticleDetails />} />
-        <Route path="/AddArticle" element={<AddArticle />} />
-        <Route path="/EditArticle/:id" element={<EditArticle />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <FilterProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Accueil />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Verify" element={<Verify />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/AdminPage" element={<AdminPage />} />
+          <Route path="/MyAccount" element={<MyAccount />} />
+          <Route path="/MyFavorites" element={<MyFavorites />} />
+          <Route path="/Menu" element={<Menu />} />
+          <Route path="/article/:idArticle" element={<ArticleDetails />} />
+          <Route path="/AddArticle" element={<AddArticle />} />
+          <Route path="/EditArticle/:id" element={<EditArticle />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </FilterProvider>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import '../styles/layout/_editArticle.scss';
 
 function EditArticle() {
     const { id } = useParams();
@@ -7,6 +8,9 @@ function EditArticle() {
     const [article, setArticle] = useState(null); // null = pas encore de données
     const [notFound, setNotFound] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [newTag, setNewTag] = useState("");
+    const [tags, setTags] = useState([]); // tous les tags existants
+    const [selectedTags, setSelectedTags] = useState([]); // tags de l’article
 
     useEffect(() => {
         fetch(`http://localhost:4000/article/${id}`)
@@ -16,6 +20,11 @@ function EditArticle() {
                     setNotFound(true);
                 } else {
                     setArticle(data);
+
+                    // on coche les tags de l’article si le backend les envoie
+                    if (Array.isArray(data.tags)) {
+                        setSelectedTags(data.tags.map((tag) => tag.idTag));
+                    }
                 }
             })
             .catch((err) => {
@@ -32,6 +41,49 @@ function EditArticle() {
             .catch((err) => console.error("Erreur categories :", err));
     }, []);
 
+    useEffect(() => {
+        fetch("http://localhost:4000/tag")
+            .then((res) => res.json())
+            .then((data) => setTags(Array.isArray(data) ? data : []))
+            .catch((err) => console.error("Erreur tags :", err));
+    }, []);
+
+    const handleTagToggle = (tagId) => {
+        setSelectedTags((prev) =>
+            prev.includes(tagId)
+                ? prev.filter((t) => t !== tagId)
+                : [...prev, tagId]
+        );
+    };
+
+    // Nouvelle fonction : ajouter un tag
+    const handleAddTag = async () => {
+        if (!newTag.trim()) return;
+
+        try {
+            const response = await fetch("http://localhost:4000/tag", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`, // si tu utilises JWT
+                },
+                body: JSON.stringify({ name: newTag }),
+            });
+
+            if (!response.ok) throw new Error("Erreur lors de l’ajout du tag");
+
+            const createdTag = await response.json();
+
+            // Ajout immédiat dans la liste et sélection
+            setTags((prev) => [...prev, createdTag]);
+            setSelectedTags((prev) => [...prev, createdTag.idTag]);
+            setNewTag("");
+        } catch (err) {
+            console.error(err);
+            alert("Impossible d’ajouter le tag");
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!article) return;
@@ -42,6 +94,9 @@ function EditArticle() {
             formData.append("ingredient", article.ingredient);
             formData.append("content", article.content);
             formData.append("category", article.category);
+
+            // On ajoute les tags sélectionnés
+            formData.append("tags", JSON.stringify(selectedTags));
 
             // Si l'image est un fichier (nouvelle image)
             if (article.image instanceof File) {
@@ -65,7 +120,14 @@ function EditArticle() {
             }
 
             // Redirection avec message
-            navigate("/MyAccount", { state: { message: "Article mis à jour avec succès !" } });
+            navigate("/MyAccount", {
+                state: {
+                    message: {
+                        text: "Article mis à jour avec succès !",
+                        type: "success"
+                    }
+                }
+            });
 
         } catch (error) {
             console.error(error);
@@ -83,68 +145,120 @@ function EditArticle() {
 
 
     return (
-        <div>
-            <h2>Modifier l'article</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="article">
+            <h2 className="article__title">Modifier l'article</h2>
+            <form className="article__form" onSubmit={handleSubmit}>
 
                 {/* Titre */}
-                <input
-                    type="text"
-                    value={article.title}
-                    onChange={(e) => setArticle({ ...article, title: e.target.value })}
-                    placeholder="Titre"
-                />
+                <div className="article__field">
+                    <input
+                        className="article__input"
+                        type="text"
+                        value={article.title}
+                        onChange={(e) => setArticle({ ...article, title: e.target.value })}
+                        placeholder="Titre"
+                    />
+                </div>
 
                 {/* Ingrédients */}
-                <textarea
-                    value={article.ingredient}
-                    onChange={(e) => setArticle({ ...article, ingredient: e.target.value })}
-                    placeholder="Ingrédients"
-                />
+                <div className="article__field">
+                    <textarea
+                        className="article__textarea"
+                        value={article.ingredient}
+                        onChange={(e) => setArticle({ ...article, ingredient: e.target.value })}
+                        placeholder="Ingrédients"
+                    />
+                </div>
 
                 {/* Contenu */}
-                <textarea
-                    value={article.content}
-                    onChange={(e) => setArticle({ ...article, content: e.target.value })}
-                    placeholder="Contenu"
-                />
+                <div className="article__field">
+                    <textarea
+                        className="article__textarea"
+                        value={article.content}
+                        onChange={(e) => setArticle({ ...article, content: e.target.value })}
+                        placeholder="Contenu"
+                    />
+                </div>
 
                 {/* Catégorie */}
-                <select
-                    value={article.category}
-                    onChange={(e) => setArticle({ ...article, category: e.target.value })}
-                >
-                    <option value="">-- Sélectionner une catégorie --</option>
-                    {categories.map((cat) => (
-                        <option key={cat} value={cat}>
-                            {cat}
-                        </option>
-                    ))}
-                </select>
+                <div className="article__field">
+                    <select
+                        className="article__select"
+                        value={article.category}
+                        onChange={(e) => setArticle({ ...article, category: e.target.value })}
+                    >
+                        <option value="">-- Sélectionner une catégorie --</option>
+                        {categories.map((cat) => (
+                            <option key={cat} value={cat}>
+                                {cat}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="article__field">
+                    <span className="article__label">Tags</span>
 
-                {/* Image */}
+                    {/* Tags existants */}
+                    <div className="article__tags">
+                        {tags.map((tag) => (
+                            <label key={tag.idTag} style={{ display: "block" }}>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedTags.includes(tag.idTag)}
+                                    onChange={() => handleTagToggle(tag.idTag)}
+                                />
+                                {tag.name}
+                            </label>
+                        ))}
+                    </div>
 
-                {/* Aperçu de l'image actuelle */}
-                {article.image && typeof article.image === "string" && (
-                    <div>
-                        <p>Image actuelle :</p>
+                    {/* Ajout d’un nouveau tag */}
+                    <div className="article__newTag">
+                        <input
+                            type="text"
+                            placeholder="Ajouter un tag..."
+                            value={newTag}
+                            onChange={(e) => setNewTag(e.target.value)}
+                            onKeyDown={(e) => e.key === "Enter" && handleAddTag()} // permet Enter
+                        />
+                        <button type="button" onClick={handleAddTag}>
+                            Ajouter
+                        </button>
+                    </div>
+                </div>
+
+                {/* Aperçu image */}
+                {article.image && (
+                    <div className="article__field">
+                        <span className="article__label">Image actuelle</span>
                         <img
-                            src={`http://localhost:4000/uploads/${article.image}`}
-                            alt="Article"
-                            style={{ width: "200px", marginBottom: "10px" }}
+                            className="article__preview"
+                            src={
+                                typeof article.image === "string"
+                                    ? `http://localhost:4000/uploads/${article.image}`
+                                    : URL.createObjectURL(article.image)
+                            }
+                            alt="Aperçu"
                         />
                     </div>
                 )}
 
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) =>
-                        setArticle({ ...article, image: e.target.files[0] })
-                    }
-                />
+                {/* Nouvelle image */}
+                <div className="article__field">
+                    <label htmlFor="image" className="article__label">Changer l'image</label>
+                    <input
+                        id="image"
+                        className="article__file"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setArticle({ ...article, image: e.target.files[0] })}
+                    />
+                    <label htmlFor="image" className="article__image">Choisir une image</label>
+                </div>
 
-                <button type="submit">Enregistrer</button>
+                <div className="article__buttons">
+                    <button className="article__submit" type="submit">Enregistrer</button>
+                </div>
             </form>
         </div>
     );

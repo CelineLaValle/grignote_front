@@ -78,27 +78,6 @@ function AccueilPage() {
     }
   };
 
-  // Affichage pendant le chargement
-  if (loading) {
-    return (
-      <div className='container'>
-        <div className="loading">Chargement des articles...</div>
-      </div>
-    );
-  }
-
-  // Affichage en cas d'erreur
-  if (error) {
-    return (
-      <div className='container'>
-        <div className="error">
-          <p>Erreur lors du chargement des articles : {error}</p>
-          <button onClick={getWorks}>Réessayer</button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className='containerFilter'>
       <h2 className='containerFilter__title'>
@@ -110,16 +89,28 @@ function AccueilPage() {
         )}
       </h2>
 
-      {/* Message si aucun résultat avec filtres */}
+
+    {/* Si c'est en chargement */}
+    {loading && <div className="loading">Chargement des articles...</div>}
+
+    {/* Si erreur */}
+    {error && (
+      <div className="error">
+        <p>Erreur lors du chargement des articles : {error}</p>
+        <button onClick={getWorks}>Réessayer</button>
+      </div>
+    )}
+
+      {/* Si aucun résultat avec filtres */}
       {filteredArticles.length === 0 && articles.length > 0 && (
-        <div className="no-results">
+        <div className="containerFilter__noResults">
           <p>Aucun article ne correspond aux filtres sélectionnés.</p>
         </div>
       )}
 
-      {/* Message si aucun article du tout */}
+      {/* Si aucun article du tout */}
       {articles.length === 0 && !loading && (
-        <div className="no-articles">
+        <div className="containerFilter__noArticles">
           <p>Aucun article disponible pour le moment.</p>
         </div>
       )}

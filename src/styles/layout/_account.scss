@@ -1,43 +1,42 @@
 @use '../var' as *;
 
 .containerAccount {
-  max-width: 400px; 
-  margin: 80px auto; 
-  padding: 32px; 
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 32px;
+  background: $color-tertiary;
+  border-radius: $radius-md;
+  border: 2px solid black;
   display: flex;
   flex-direction: column;
-  gap: 16px; 
+  gap: 16px;
 
   &__title {
     text-align: center;
-    color: #333;
-    margin-bottom: 16px; 
-    font-size: 26px;
+    font-family: $font-primary;
+    margin-bottom: 16px;
+    font-size: $font-size-xl;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 19px; 
+    gap: 18px;
 
     label {
       font-weight: 600;
-      font-size: 15px; 
-      color: #555;
+      font-family: $font-secondary;
+      font-size: $font-size-sm;
     }
 
     input {
       appearance: none;
-      background-color: #FFF7ED;
-      padding: 11px 14px; 
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 16px; 
+      background-color: $color-secondary;
+      padding: 11px 14px;
+      border-radius: $radius-sm;
+      border: 1px solid black;
+      font-size: $font-size-sm;
       outline: none;
-      transition: border 0.3s ease;
 
       &:focus {
         border-color: #FEC89A;
@@ -48,71 +47,25 @@
 }
 
 .accountButton {
-    @include button-style($color-primary, #fff, $radius-md);
+  @include button-style($color-primary, #fff, $radius-md);
 }
 
 // ---------------------------
 // Responsive
 // ---------------------------
 
-// Tablette (~768px)
+// Tablette (768px)
 @media (max-width: 768px) {
   .containerAccount {
-    margin: 60px auto; 
-    padding: 24px; 
-    max-width: 90%; 
-
-    &__title {
-      font-size: 22px;
-    }
-
-    &__form {
-      gap: 16px;
-
-      label {
-        font-size: 14px;
-      }
-
-      input {
-        padding: 10px 12px;
-        font-size: 15px;
-      }
-    }
-  }
-
-  .accountButton {
-    font-size: 15px;
-    padding: 12px;
+    margin: 60px auto;
+    padding: 24px;
   }
 }
 
-// Mobile (~480px)
+// Mobile (480px)
 @media (max-width: 480px) {
   .containerAccount {
     margin: 40px auto;
     padding: 16px;
-    max-width: 95%;
-
-    &__title {
-      font-size: 20px;
-    }
-
-    &__form {
-      gap: 14px;
-
-      label {
-        font-size: 13px;
-      }
-
-      input {
-        padding: 8px 10px;
-        font-size: 14px;
-      }
-    }
-  }
-
-  .accountButton {
-    font-size: 14px;
-    padding: 10px;
   }
 }

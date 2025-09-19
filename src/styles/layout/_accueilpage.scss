@@ -18,6 +18,15 @@
   &__indicator {
     margin-left: 10px;
   }
+
+  &__noResults,
+  &__noArticles {
+    text-align: center;
+    font-family: $font-secondary;
+    font-size: $font-size-md;
+    color: #555;
+    margin: 20px;
+  }
 }
 
 .articlesContainer {
@@ -35,10 +44,9 @@
       &__card {
         position: relative;
         background-color: $color-secondary;
-        border: 2px solid black;
+        border: 2px solid $color-quaternary;
         border-radius: $radius-md;
         margin-bottom: 40px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -52,7 +60,8 @@
           top: 10px;
           left: 10px;
           font-family: $font-primary;
-          font-size: $font-size-lg;
+          font-size: $font-size-xl;
+          font-weight: $font-weight-bold;
           z-index: 2;
           padding: 2px 6px 0 6px;
           border-radius: $radius-sm;
@@ -61,7 +70,7 @@
 
         &__image {
           width: 60%;
-          max-height: 250px;
+          height: 250px;
           border-radius: 10px;
           object-fit: cover;
           margin: auto;
@@ -71,12 +80,10 @@
 
         &__content {
           width: 60%;
-          position: relative;
           box-sizing: border-box;
           padding: 0 20px 20px 20px;
           font-family: $font-secondary;
           font-size: $font-size-sm;
-          color: #333;
           text-align: center;
           overflow: hidden;
           white-space: nowrap;
@@ -90,10 +97,11 @@
           font-family: $font-secondary;
           font-size: $font-size-sm;
           color: $color-primary;
-          background-color: rgba(255, 255, 255, 0.8);
+          font-weight: $font-weight-bold;
+          background-color: white;
+          border: 1px solid $color-quaternary;
           padding: 5px 10px;
-          border-radius: 12px;
-          z-index: 2;
+          border-radius: $radius-lg;
         }
 
         &__tags {
@@ -106,9 +114,6 @@
   .fullLink {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    text-decoration: none;
-    color: inherit;
   }
 }
 
@@ -123,13 +128,15 @@
     justify-content: center;
     cursor: pointer;
     margin: 20px 0 20px 0;
-    border-radius: 10px;
+    box-shadow: $color-quaternary 0px 1px 0px 0px;
+    border-radius: $radius-md;
+    border: 1px solid $color-quaternary;
     text-decoration: none;
     background-color: $color-secondary;
     width: 196px;
-    height: 32px;
+    height: 35px;
     font-family: $font-secondary;
-    font-size: 16px;
+    font-size: $font-size-sm;
 
     &:visited {
       color: #000000;

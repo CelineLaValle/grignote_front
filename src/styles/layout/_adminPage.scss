@@ -8,40 +8,38 @@
     background-position: center;
 
     &__content {
-        background-color: #EFF6FF;
-        border: 2px solid black;
-        border-radius: 10px;
-        padding: 2rem;
+        background-color: $color-secondary-blue;
+        border: 2px solid $color-quaternary;
+        border-radius: $radius-md;
+        padding: 30px;
         max-width: 900px;
-        margin: 2rem auto;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        margin: 30px auto;
     }
 
     &__title {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
+        font-size: $font-size-xl;
+        margin-bottom: 24px;
         text-align: center;
     }
 
     &__tabs {
         display: flex;
         justify-content: center;
-        margin-bottom: 2rem;
-        gap: 1rem;
+        margin-bottom: 30px;
+        gap: 16px;
     }
 
     &__tabs__tab {
-        padding: 0.5rem 1rem;
+        padding: 8px 16px;
         border: 2px solid $color-primary;
         border-radius: 8px;
-        background-color: #fff;
+        background-color: white;
         cursor: pointer;
-        font-weight: bold;
-        transition: all 0.3s;
+        font-weight: $font-weight-bold;
 
         &.active {
             background-color: $color-primary;
-            color: #000000;
+            color: black;
         }
 
         &:hover {
@@ -60,13 +58,17 @@
         gap: 5px;
         max-height: 100px;
         border-radius: 8px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
+        padding: 16px;
+        margin-bottom: 16px;
+        border: 1px solid $color-quaternary;
         transition: box-shadow 0.3s ease;
 
         &:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        &__info {
+            font-size: $font-size-sm;
         }
 
         &__buttons {
@@ -78,7 +80,6 @@
         }
 
         &__title {
-            flex: 1; // prend la place dispo
             min-width: 120px;
             max-width: 200px;
             font-size: $font-size-md;
@@ -93,16 +94,13 @@
             flex-shrink: 0; // garde sa taille fixe
             width: 80px;
             height: 80px;
-            align-self: center;
             border-radius: $radius-sm;
         }
 
         &__content {
             margin: 0 20px;
-            color: #555;
+            color: $color-quaternary;
             font-size: $font-size-sm;
-            display: flex;
-            align-items: center;
             text-align: center;
         }
 
@@ -111,11 +109,11 @@
         &__suspend {
             border: 1px solid;
             border-radius: 5px;
-            padding: 0.4rem 0.8rem;
+            padding: 6px 12px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: $font-size-sm;
             transition: all 0.2s;
-            margin-left: 0.5rem;
+            margin-left: 8px;
             min-width: 100px;
         }
 

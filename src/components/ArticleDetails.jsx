@@ -237,6 +237,7 @@ function ArticleDetails() {
                         </>
                     ) : (
                         <button
+                            className='articleDetails__commentsButton'
                             onClick={() => navigate(`/login?redirect=/article/${idArticle}`)}
                         >
                             Se connecter pour commenter

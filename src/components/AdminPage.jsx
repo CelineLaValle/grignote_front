@@ -136,7 +136,7 @@ function AdminPage() {
                     <ul className="admin__list">
                         {currentItems.map(user => (
                             <li className="admin__list__item" key={user.idUser}>
-                                <p>
+                                <p className="admin__list__item__info">
                                     <strong>Pseudo:</strong> {user.pseudo} <br />
                                     <strong>Email:</strong> {user.email}
                                 </p>

@@ -145,14 +145,14 @@ function EditArticle() {
 
 
     return (
-        <div className="article">
-            <h2 className="article__title">Modifier l'article</h2>
-            <form className="article__form" onSubmit={handleSubmit}>
+        <div className="articleModify">
+            <h2 className="articleModify__title">Modifier l'article</h2>
+            <form className="articleModify__form" onSubmit={handleSubmit}>
 
                 {/* Titre */}
-                <div className="article__field">
+                <div className="articleModify__field">
                     <input
-                        className="article__input"
+                        className="articleModify__input"
                         type="text"
                         value={article.title}
                         onChange={(e) => setArticle({ ...article, title: e.target.value })}
@@ -161,9 +161,9 @@ function EditArticle() {
                 </div>
 
                 {/* Ingrédients */}
-                <div className="article__field">
+                <div className="articleModify__field">
                     <textarea
-                        className="article__textarea"
+                        className="articleModify__textarea"
                         value={article.ingredient}
                         onChange={(e) => setArticle({ ...article, ingredient: e.target.value })}
                         placeholder="Ingrédients"
@@ -171,9 +171,9 @@ function EditArticle() {
                 </div>
 
                 {/* Contenu */}
-                <div className="article__field">
+                <div className="articleModify__field">
                     <textarea
-                        className="article__textarea"
+                        className="articleModify__textarea"
                         value={article.content}
                         onChange={(e) => setArticle({ ...article, content: e.target.value })}
                         placeholder="Contenu"
@@ -181,9 +181,9 @@ function EditArticle() {
                 </div>
 
                 {/* Catégorie */}
-                <div className="article__field">
+                <div className="articleModify__field">
                     <select
-                        className="article__select"
+                        className="articleModify__select"
                         value={article.category}
                         onChange={(e) => setArticle({ ...article, category: e.target.value })}
                     >
@@ -195,11 +195,11 @@ function EditArticle() {
                         ))}
                     </select>
                 </div>
-                <div className="article__field">
-                    <span className="article__label">Tags</span>
+                <div className="articleModify__field">
+                    <span className="articleModify__label">Tags</span>
 
                     {/* Tags existants */}
-                    <div className="article__tags">
+                    <div className="articleModify__tags">
                         {tags.map((tag) => (
                             <label key={tag.idTag} style={{ display: "block" }}>
                                 <input
@@ -213,7 +213,7 @@ function EditArticle() {
                     </div>
 
                     {/* Ajout d’un nouveau tag */}
-                    <div className="article__newTag">
+                    <div className="articleModify__newTag">
                         <input
                             type="text"
                             placeholder="Ajouter un tag..."
@@ -229,10 +229,10 @@ function EditArticle() {
 
                 {/* Aperçu image */}
                 {article.image && (
-                    <div className="article__field">
-                        <span className="article__label">Image actuelle</span>
+                    <div className="articleModify__field">
+                        <span className="articleModify__label">Image actuelle</span>
                         <img
-                            className="article__preview"
+                            className="articleModify__preview"
                             src={
                                 typeof article.image === "string"
                                     ? `http://localhost:4000/uploads/${article.image}`
@@ -244,20 +244,20 @@ function EditArticle() {
                 )}
 
                 {/* Nouvelle image */}
-                <div className="article__field">
-                    <label htmlFor="image" className="article__label">Changer l'image</label>
+                <div className="articleModify__field">
+                    <label htmlFor="image" className="articleModify__label">Changer l'image</label>
                     <input
                         id="image"
-                        className="article__file"
+                        className="articleModify__file"
                         type="file"
                         accept="image/*"
                         onChange={(e) => setArticle({ ...article, image: e.target.files[0] })}
                     />
-                    <label htmlFor="image" className="article__image">Choisir une image</label>
+                    <label htmlFor="image" className="articleModify__image">Choisir une image</label>
                 </div>
 
-                <div className="article__buttons">
-                    <button className="article__submit" type="submit">Enregistrer</button>
+                <div className="articleModify__buttons">
+                    <button className="articleModify__submit" type="submit">Enregistrer</button>
                 </div>
             </form>
         </div>

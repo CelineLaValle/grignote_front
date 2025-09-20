@@ -61,6 +61,7 @@ function Header() {
       <Menu />
       <div className='header'>
         <Link to="/"> <img className="header__logo" src={cupcake} alt="logo" /></Link>
+        <div className='header__containerNav'>
         <h1 className='header__title'>Grignote</h1>
 
         <div className='header__nav'>
@@ -76,6 +77,7 @@ function Header() {
           ) : (
             <Link to="/login" className='header__navLink'>Se connecter</Link>
           )}
+        </div>
         </div>
       </div>
     </div>

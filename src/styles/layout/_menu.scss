@@ -6,10 +6,10 @@
     top: 15px;
     left: 15px;
     z-index: 4;
-    background: #fff;
-    border: 1px solid #ddd;
+    background: $color-tertiary;
+    border: 1px solid $color-quaternary;
     border-radius: 6px;
-    font-size: 20px;
+    font-size: $font-size-md;
     padding: 6px 10px;
     cursor: pointer;
     box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);

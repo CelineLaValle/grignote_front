@@ -8,19 +8,19 @@
     background-position: center;
 
     &__content {
-        background-color: #faf6ff;
-        border: 2px solid black;
+        background-color: $color-secondary-purple;
+        border: 2px solid $color-quaternary-dark;
         border-radius: 10px;
-        padding: 2rem;
+        padding: 32px;
         max-width: 800px;
-        margin: 2rem auto;
+        margin: 32px auto;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 
         .success-message {
             background-color: #d4edda;
             color: #155724;
             padding: 10px 15px;
-            border-radius: 5px;
+            border-radius: $radius-sm;
             margin-bottom: 15px;
             border: 1px solid #c3e6cb;
         }
@@ -35,29 +35,29 @@
         }
 
         &__title {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: $font-size-xl;
+            margin-bottom: 16px;
             text-align: left;
         }
 
         &__userInfo {
-            margin-bottom: 2rem;
+            margin-bottom: 32px;
             font-family: $font-secondary;
 
             p {
-                margin: 0.3rem 0;
-                font-size: 1rem;
+                margin: 5px 0;
+                font-size: $font-size-sm;
 
                 strong {
                     font-weight: bold;
-                    margin-right: 0.5rem;
+                    margin-right: 8px;
                 }
             }
         }
 
         &__article {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: $font-size-lg;
+            margin-bottom: 16px;
 
 
             &__list {
@@ -67,10 +67,10 @@
                 &__item {
                     display: flex;
                     align-items: center;
-                    gap: 1rem;
+                    gap: 16px;
                     border-radius: 8px;
-                    padding: 1rem;
-                    margin-bottom: 1rem;
+                    padding: 16px;
+                    margin-bottom: 16px;
                     transition: box-shadow 0.3s ease;
 
                     &:hover {
@@ -90,35 +90,50 @@
                         width: 60px;
                         height: 60px;
                         object-fit: cover;
-                        border-radius: 6px;
+                        border-radius: $radius-sm;
                     }
 
                     &__content {
                         flex: 1;
                         margin: 0;
-                        color: #555;
+                        color: $color-quaternary-dark;
                     }
 
                     &__date {
                         min-width: 110px;
                         margin: 0;
-                        color: #888;
-                        font-size: 0.95em;
+                        color: $color-quaternary;
+                        font-size: $font-size-sm;
+                    }
+
+                    &__edit,
+                    &__delete {
+                        border: 1px solid;
+                        border-radius: 5px;
+                        padding: 6px 12px;
+                        cursor: pointer;
+                        font-size: $font-size-sm;
+                        transition: all 0.2s;
+                        margin-left: 8px;
+                        min-width: 100px;
                     }
 
                     &__edit {
-                        background: #e3eaff;
+                        background-color: $color-tertiary;
                         color: #2a2a7a;
+
+                            &:hover {
+                                background-color: darken($color-secondary-blue, 10%);
+                            }
                     }
 
                     &__delete {
-                        background: #ffe3e3;
-                        color: #b80000;
-                        margin-left: 8px;
-                        padding: 0.3em 0.8em;
-                        border-radius: 4px;
-                        border: none;
-                        cursor: pointer;
+                        background-color: $color-secondary;
+                        color: #be2020;
+
+                    &:hover {
+                        background-color: darken($color-secondary, 10%);
+                        }
                     }
                 }
             }

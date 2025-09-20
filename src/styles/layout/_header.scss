@@ -25,7 +25,7 @@
 
   &__title {
     position: absolute;
-    left: 50%;
+    left: 45%;
     transform: translateX(-50%); // Corrige le décalage
     font-size: $font-size-xxxl;
     font-weight: $font-weight-bold;
@@ -94,19 +94,13 @@
       height: 72px;
     }
 
-    &__containerNav {
-      flex-direction: column;
-
-    }
-
     &__title {
       font-size: $font-size-xl;
       left: 40%;
-      bottom: 20px;
     }
 
     &__nav {
-      gap: 8px;
+      display: none;
 
       &Link {
         font-size: $font-size-sm;

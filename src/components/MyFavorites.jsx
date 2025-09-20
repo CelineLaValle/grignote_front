@@ -90,7 +90,7 @@ function MyFavorites() {
     if (!user) {
         return (
             <div className="containerAccount">
-                <p>Vous devez être connecté pour voir vos favoris.</p>
+                <p>Vous devez être connecté pour accéder à vos favoris.</p>
             </div>
         );
     }

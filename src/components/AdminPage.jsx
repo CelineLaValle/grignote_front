@@ -1,16 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import ConfirmModal from "../components/ConfirmModal";
 import '../styles/layout/_adminPage.scss';
 
 function AdminPage() {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("user");
     const [users, setUsers] = useState([]);
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [actionToConfirm, setActionToConfirm] = useState(null);
     const itemsPerPage = 5;
-
+    const [message, setMessage] = useState(null);
+    
+    // Récupérer l'onglet actif depuis l'état de navigation
+    const location = useLocation();
+    
+    useEffect(() => {
+        // Si un onglet actif est spécifié dans l'état, l'utiliser
+        if (location.state?.activeTab) {
+            setActiveTab(location.state.activeTab);
+        }
+        
+        // Récupérer le message s'il existe
+        if (location.state?.message) {
+            setMessage(location.state.message);
+            setTimeout(() => setMessage(null), 5000); // disparaît après 5s
+        }
+    }, [location.state]);
     // Pagination
     const totalPages =
         activeTab === "user"
@@ -76,6 +94,8 @@ function AdminPage() {
                 });
                 if (!res.ok) throw new Error("Erreur suppression utilisateur");
                 setUsers(prev => prev.filter(u => u.idUser !== actionToConfirm.item.idUser));
+                setMessage({ text: "Utilisateur supprimé avec succès !", type: "success" });
+                setTimeout(() => setMessage(null), 5000);
             }
 
             if (actionToConfirm.type === "suspendUser") {
@@ -92,6 +112,13 @@ function AdminPage() {
                             : u
                     )
                 );
+                setMessage({ 
+                    text: data.suspended ? 
+                        `L'utilisateur ${actionToConfirm.item.pseudo} a été suspendu` : 
+                        `L'utilisateur ${actionToConfirm.item.pseudo} a été réactivé`, 
+                    type: "success" 
+                });
+                setTimeout(() => setMessage(null), 5000);
             }
 
             if (actionToConfirm.type === "deleteArticle") {
@@ -101,6 +128,8 @@ function AdminPage() {
                 });
                 if (!res.ok) throw new Error("Erreur suppression article");
                 setArticles(prev => prev.filter(a => a.idArticle !== actionToConfirm.item.idArticle));
+                setMessage({ text: "Article supprimé avec succès !", type: "success" });
+                setTimeout(() => setMessage(null), 5000);
             }
         } catch (err) {
             console.error("Erreur :", err);
@@ -114,6 +143,13 @@ function AdminPage() {
         <div className="admin">
             <div className="admin__content">
                 <h2 className="admin__title">Tableau de bord Admin</h2>
+
+                {/* Message dynamique */}
+                {message && (
+                    <div className={message.type === "error" ? "error-message" : "success-message"}>
+                        {message.text}
+                    </div>
+                )}
 
                 {/* Onglets */}
                 <div className="admin__tabs">
@@ -141,7 +177,11 @@ function AdminPage() {
                                     <strong>Email:</strong> {user.email}
                                 </p>
                                 <div className="admin__list__item__buttons">
-                                    <button className="admin__list__item__edit">Modifier</button>
+                                    <button 
+                                        className="admin__list__item__edit"
+                                        onClick={() => navigate(`/EditUser/${user.idUser}`, { state: { from: "AdminPage", tab: "user" } })}>
+                                        Modifier
+                                    </button>
 
                                     <button
                                         className="admin__list__item__delete"
@@ -179,7 +219,10 @@ function AdminPage() {
                                 />
                                 <p className="admin__list__item__content">{article.content?.slice(0, 100)}...</p>
                                 <div className="admin__list__item__buttons">
-                                    <button className="admin__list__item__edit">Modifier</button>
+                                    <button className="admin__list__item__edit"
+                                            onClick={() => navigate(`/EditArticle/${article.idArticle}`, { state: { from: "AdminPage", tab: "article" } })}>
+                                            Modifier
+                                            </button>
                                     <button
                                         className="admin__list__item__delete"
                                         onClick={() =>

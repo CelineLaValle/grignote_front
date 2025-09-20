@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import '../styles/layout/_editArticle.scss';
 
 function EditArticle() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const [article, setArticle] = useState(null); // null = pas encore de données
     const [notFound, setNotFound] = useState(false);
     const [categories, setCategories] = useState([]);
     const [newTag, setNewTag] = useState("");
     const [tags, setTags] = useState([]); // tous les tags existants
-    const [selectedTags, setSelectedTags] = useState([]); // tags de l’article
+    const [selectedTags, setSelectedTags] = useState([]); // tags de l'article
+    // Récupérer la page d'origine depuis l'état de navigation
+    const fromPage = location.state?.from || "MyAccount";
 
     useEffect(() => {
         fetch(`http://localhost:4000/article/${id}`)
@@ -119,13 +122,15 @@ function EditArticle() {
                 throw new Error(errData.message || "Erreur lors de la mise à jour");
             }
 
-            // Redirection avec message
-            navigate("/MyAccount", {
+            // Redirection avec message et conservation de l'onglet actif
+            const tab = location.state?.tab || "";
+            navigate(`/${fromPage}${tab ? `?tab=${tab}` : ""}`, {
                 state: {
                     message: {
                         text: "Article mis à jour avec succès !",
                         type: "success"
-                    }
+                    },
+                    activeTab: tab
                 }
             });
 

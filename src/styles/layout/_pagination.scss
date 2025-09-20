@@ -11,7 +11,7 @@
     cursor: pointer;
     border: none;
     background-color: transparent;
-    font-size: 24px;
+    font-size: $font-size-xl;
     padding: 10px;
 
     &:disabled {
@@ -23,7 +23,7 @@
   .pageInfo {
     margin: 0 15px;
     padding: 3px 10px;
-    font-size: 14px;
+    font-size: $font-size-md;
     font-family: $font-secondary;
   }
 }

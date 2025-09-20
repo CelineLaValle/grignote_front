@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useFilters } from './FilterContext';
 import '../styles/layout/_menu.scss';
 
-function Menu() {
+function Menu({user, onLogout}) {
   const [ouvert, setOuvert] = useState(false);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
@@ -87,13 +87,63 @@ const filteredTags = tagSearch
         {ouvert ? '✖' : '☰'}
       </button>
 
-      <div className="sidebar">
+      <div className="menu__sidebar">
         <div className={`menu__content ${ouvert ? '' : 'ferme'}`}>
           <h3 className="menu__content__title">Mes informations :</h3>
+
           <ul>
             <li> <Link to="/MyAccount" className='menu__content__title__button' onClick={() => setOuvert(false)}>Mon compte</Link> </li>
             <li> <Link to="/MyFavorites" className='menu__content__title__button' onClick={() => setOuvert(false)}>Mes favoris</Link> </li>
           </ul>
+
+                     {/* Bloc d'auth juste sous "Mes informations" (visible mobile seulement via CSS) */}
+          <div className="menu__mobileDiff">
+                    {/* Ligne de séparation */}
+            <div className="menu__separator"></div>
+
+            <div className="menu__accueil">
+              <Link
+                to="/"
+                className="menu__accueilLink"
+                onClick={() => setOuvert(false)}
+              >
+                Accueil
+              </Link>
+            </div>
+            <div className="menu__auth">
+              {user ? (
+                <>
+                  <button
+                    className="menu__authLink"
+                    onClick={() => {
+                      onLogout && onLogout();
+                      setOuvert(false);
+                    }}
+                  >
+                    Se déconnecter
+                  </button>
+                  {user.role === "admin" && (
+                    <Link
+                      to="/AdminPage"
+                      className="menu__authLink"
+                      onClick={() => setOuvert(false)}
+                    >
+                      Page Admin
+                    </Link>
+                  )}
+                </>
+              ) : (
+               <Link
+                  to="/login"
+                 className="menu__authLink"
+                 onClick={() => setOuvert(false)}
+               >
+                 Se connecter
+                </Link>
+             )}
+            </div>
+          </div>
+         {/* fin bloc auth */}
 
           <h3 className="menu__content__title">Filtres :</h3>
 
@@ -167,10 +217,10 @@ const filteredTags = tagSearch
 
             {/* Indicateur des filtres actifs */}
             {(selectedCategory || selectedTags.length > 0) && (
-              <div className="active-filters">
+              <div className="containerFiltres__dropdown__reset__active">
                 <strong>Filtres actifs :</strong>
-                {selectedCategory && <span className="filter-chip">Catégorie: {selectedCategory}</span>}
-                {selectedTags.length > 0 && <span className="filter-chip">{selectedTags.length} tag(s)</span>}
+                {selectedCategory && <span className="containerFiltres__dropdown__reset__active__category">Catégorie: {selectedCategory}</span>}
+                {selectedTags.length > 0 && <span className="containerFiltres__dropdown__reset__active__tags">{selectedTags.length} tag(s)</span>}
               </div>
             )}
           </div>

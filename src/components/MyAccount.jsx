@@ -23,28 +23,17 @@ function MyAccount() {
         //     setUser(null);
         //     return;
         // }
-
-        fetch('http://localhost:4000/auth/me', {
-            credentials: 'include'
+    fetch('http://localhost:4000/auth/me', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            setUser(data.user); // stocke l'utilisateur
+            return fetch(`http://localhost:4000/article/user/${data.user.idUser}`);
         })
-            .then(res => res.json())
-            .then(data => {
-                setUser(data.user); // ici on stocke l'utilisateur
-                console.log(data.user)
-                return fetch(`http://localhost:4000/article/user/${data.user.idUser}`);
-
-            })
-            .then(res => res.json())
-            .then(data => { // On vérifie que c'est bien un tableau
-                if (Array.isArray(data)) {
-                    setArticles(data);
-                } else {
-                    console.error("Réponse inattendue :", data);
-                    setArticles([]); // évite les plantages
-                }
-            })
-
-            .catch(err => console.error('Erreur:', err));
+        .then(res => res.json())
+        .then(data => {
+            setArticles(data); // on fait confiance à l'API
+         })
+        .catch(err => console.error('Erreur:', err));
     }, []);
 
     useEffect(() => {
@@ -55,8 +44,12 @@ function MyAccount() {
     }, [location.state]);
 
 
-    if (!user) {
-        return <div>Chargement des informations utilisateur...</div>;
+     if (!user) {
+        return (
+            <div className="containerAccount">
+                <p>Vous devez être connecté pour accéder à votre compte.</p>
+            </div>
+        );
     }
 
     // Pagination

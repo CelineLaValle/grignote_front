@@ -89,23 +89,34 @@
                         font-size: 0.95em;
                     }
 
-                    &__edit {
-                        background: #e3eaff;
-                        color: #2a2a7a;
-                        padding: 0.3em 0.8em;
-                        border-radius: 4px;
-                        border: none;
+                    &__show,
+                    &__delete {
+                        border: 1px solid;
+                        border-radius: 5px;
+                        padding: 6px 12px;
                         cursor: pointer;
+                        font-size: $font-size-sm;
+                        transition: all 0.2s;
+                        margin-left: 8px;
+                        min-width: 100px;
+                    }
+
+                    &__show {
+                        background-color: $color-tertiary;
+                        color: #2a2a7a;
+
+                            &:hover {
+                                background-color: darken($color-secondary-blue, 10%);
+                            }
                     }
 
                     &__delete {
-                        background: #ffe3e3;
-                        color: #b80000;
-                        margin-left: 8px;
-                        padding: 0.3em 0.8em;
-                        border-radius: 4px;
-                        border: none;
-                        cursor: pointer;
+                        background-color: $color-secondary;
+                        color: #be2020;
+
+                    &:hover {
+                        background-color: darken($color-secondary, 10%);
+                        }
                     }
                 }
             }

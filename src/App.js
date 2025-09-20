@@ -13,6 +13,7 @@ import Accueil from "./pages/Accueil";
 import ArticleDetails from './components/ArticleDetails';
 import AddArticle from "./components/AddArticle";
 import EditArticle from "./components/EditArticle";
+import EditUser from "./components/EditUser";
 import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/article/:idArticle" element={<ArticleDetails />} />
           <Route path="/AddArticle" element={<AddArticle />} />
           <Route path="/EditArticle/:id" element={<EditArticle />} />
+          <Route path="/EditUser/:id" element={<EditUser />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

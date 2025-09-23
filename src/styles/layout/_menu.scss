@@ -51,8 +51,8 @@
         text-decoration: none;
 
         &:hover {
-        color: darken($color-quaternary-dark, 10%);
-        font-weight: $font-weight-bold;
+          color: darken($color-quaternary-dark, 10%);
+          font-weight: $font-weight-bold;
         }
       }
     }
@@ -142,10 +142,11 @@
           }
 
           &__active {
-              font-size: $font-size-md;
-              padding: 6px;
-              display: flex;
-              flex-direction: column;
+            font-size: $font-size-md;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+
             &__category,
             &__tags {
               font-size: $font-size-sm;
@@ -168,83 +169,86 @@
   }
 
 
-&__accueilLink, 
-&__authLink {
-  text-decoration: none;
-  font-size: $font-size-md;
-  color: $color-quaternary-dark;
-  font-family: $font-secondary;
-  border: none;
-  cursor: pointer;
-}
-
-&__auth,
-&__accueil {
-  display: none;
-}
-
-
-@media (max-width: 480px) {
-
-  
-
-  .menu,
-  &__content {
-    position: fixed;     // conserve l'overlay
-    padding-bottom: 0;   // on n'a plus besoin de laisser de place en bas
-    overflow-y: auto;
+  &__accueilLink,
+  &__authLink {
+    text-decoration: none;
+    font-size: $font-size-md;
+    color: $color-quaternary-dark;
+    font-family: $font-secondary;
+    border: none;
+    cursor: pointer;
   }
 
-  &__separator {
-        width: 50%;
-        height: 1px;
-        background-color: $color-quaternary;
-        margin: 40px auto;
+  &__auth,
+  &__accueil {
+    display: none;
+  }
+
+
+  @media (max-width: 480px) {
+
+
+
+    .menu,
+    &__content {
+      position: fixed; // conserve l'overlay
+      padding-bottom: 0; // on n'a plus besoin de laisser de place en bas
+      overflow-y: auto;
     }
 
-  &__auth {
-    padding: 8px 0;
-    display: flex;
-    gap: 12px;
-    position: static;    // dans le flux normal
-    margin: 10px 0;      // espace sous "Mes informations"
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+    &__separator {
+      width: 50%;
+      height: 1px;
+      background-color: $color-quaternary;
+      margin: 40px auto;
+    }
 
-  &__accueil {
-    display: flex;
-    gap: 12px;
-    position: static;    // dans le flux normal
-    margin: 10px 0;      // espace sous "Mes informations"
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+    &__auth {
+      padding: 8px 0;
+      display: block;
+      gap: 12px;
+      position: static; // dans le flux normal
+      margin: 10px 0; // espace sous "Mes informations"
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-  &__authLink {
-    font-size: $font-size-md;
-  }
+    &__accueil,
+    &__authLink {
+      display: flex;
+      gap: 12px;
+      position: static; // dans le flux normal
+      margin: 10px 0; // espace sous "Mes informations"
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-  // Amélioration de la liste déroulante sur mobile
-  .containerFiltres {
-    &__dropdown {
-      &__menuFiltres {
-        position: fixed; // Changement de absolute à fixed
-        top: auto;
-        bottom: 20px; // Position depuis le bas de l'écran
-        left: 20px;
-        right: 20px;
-        width: auto; // Largeur automatique avec left/right
-        max-height: 40vh; // Réduction de la hauteur max sur mobile
-        z-index: 1001; // Z-index plus élevé pour passer au-dessus
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); // Ombre plus prononcée
+    // &__authLink {
+    //   display: flex;
+    //   font-size: $font-size-md;
+    // }
+
+    // Amélioration de la liste déroulante sur mobile
+    .containerFiltres {
+      &__dropdown {
+        &__menuFiltres {
+          position: fixed; // Changement de absolute à fixed
+          top: auto;
+          bottom: 20px; // Position depuis le bas de l'écran
+          left: 20px;
+          right: 20px;
+          width: auto; // Largeur automatique avec left/right
+          max-height: 40vh; // Réduction de la hauteur max sur mobile
+          z-index: 1001; // Z-index plus élevé pour passer au-dessus
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); // Ombre plus prononcée
+        }
       }
     }
   }
-}
 }
 
 // .tags {

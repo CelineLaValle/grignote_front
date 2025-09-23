@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useFilters } from './FilterContext';
 import '../styles/layout/_menu.scss';
+import { Link, useNavigate } from 'react-router-dom';
 
-function Menu({user, onLogout}) {
+function Menu() {
   const [ouvert, setOuvert] = useState(false);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
   const [tagSearch, setTagSearch] = useState('');
-
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  console.log('Menu - user prop:', user);
+  console.log('Menu - user role:', user?.role);
   // Utilisation du contexte de filtres
   const {
     selectedCategory,
@@ -34,12 +37,35 @@ function Menu({user, onLogout}) {
 
     // Récupération des tags
     fetch('http://localhost:4000/tag')
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
         setTags(Array.isArray(data) ? data : []);
       })
       .catch(err => console.error('Erreur chargement tags :', err));
   }, []);
+
+  useEffect(() => {
+
+    fetch('http://localhost:4000/auth/me', {
+      credentials: 'include' // Important pour envoyer les cookies
+    })
+      .then(res => {
+        if (res.ok) return res.json();
+        if (res.status === 401) return null; // utilisateur non connecté
+        throw new Error('Erreur serveur');   // toutes les autres erreurs remontent
+      })
+      .then(data => {
+        if (data?.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      })
+      .catch(err => {
+        console.error(err); // ici on logue seulement les vraies erreurs
+      });
+  }, []);
+
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -54,17 +80,35 @@ function Menu({user, onLogout}) {
     };
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      // Appelle le backend pour effacer le cookie token
+      await fetch('http://localhost:4000/auth/logout', {
+        method: 'POST',
+        credentials: 'include' // très important pour envoyer le cookie au backend
+      });
+
+      // Réinitialise l'état
+      setUser(null);
+
+      // Redirige vers l'accueil
+      navigate('/');
+    } catch (err) {
+      console.error('Erreur de déconnexion:', err);
+    }
+  };
+
   const toggleTag = (idTag) => {
     setSelectedTags(prev =>
       prev.includes(idTag) ? prev.filter(t => t !== idTag) : [...prev, idTag]
     );
   };
 
-const filteredTags = tagSearch
-  ? tags.filter(tag =>
+  const filteredTags = tagSearch
+    ? tags.filter(tag =>
       tag.name.toLowerCase().startsWith(tagSearch.toLowerCase())
     )
-  : [];
+    : [];
 
 
   const handleCategoryChange = (event) => {
@@ -96,9 +140,9 @@ const filteredTags = tagSearch
             <li> <Link to="/MyFavorites" className='menu__content__title__button' onClick={() => setOuvert(false)}>Mes favoris</Link> </li>
           </ul>
 
-                     {/* Bloc d'auth juste sous "Mes informations" (visible mobile seulement via CSS) */}
+          {/* Bloc d'auth juste sous "Mes informations" (visible mobile seulement via CSS) */}
           <div className="menu__mobileDiff">
-                    {/* Ligne de séparation */}
+            {/* Ligne de séparation */}
             <div className="menu__separator"></div>
 
             <div className="menu__accueil">
@@ -113,15 +157,7 @@ const filteredTags = tagSearch
             <div className="menu__auth">
               {user ? (
                 <>
-                  <button
-                    className="menu__authLink"
-                    onClick={() => {
-                      onLogout && onLogout();
-                      setOuvert(false);
-                    }}
-                  >
-                    Se déconnecter
-                  </button>
+                  <button onClick={handleLogout} className='header__authLink'>Se déconnecter</button>
                   {user.role === "admin" && (
                     <Link
                       to="/AdminPage"
@@ -133,17 +169,17 @@ const filteredTags = tagSearch
                   )}
                 </>
               ) : (
-               <Link
+                <Link
                   to="/login"
-                 className="menu__authLink"
-                 onClick={() => setOuvert(false)}
-               >
-                 Se connecter
+                  className="menu__authLink"
+                  onClick={() => setOuvert(false)}
+                >
+                  Se connecter
                 </Link>
-             )}
+              )}
             </div>
           </div>
-         {/* fin bloc auth */}
+          {/* fin bloc auth */}
 
           <h3 className="menu__content__title">Filtres :</h3>
 

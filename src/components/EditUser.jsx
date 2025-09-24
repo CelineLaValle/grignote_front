@@ -64,7 +64,6 @@ function EditUser() {
 
         } catch (error) {
             console.error(error);
-            alert("Échec de la mise à jour : " + error.message);
         }
     };
 

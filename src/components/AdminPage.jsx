@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import ConfirmModal from "../components/ConfirmModal";
-import jwtDecode from "jwt-decode";
 import '../styles/layout/_adminPage.scss';
 
 function AdminPage() {
@@ -14,7 +13,7 @@ function AdminPage() {
     const [actionToConfirm, setActionToConfirm] = useState(null);
     const itemsPerPage = 5;
     const [message, setMessage] = useState(null);
-        const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     
     // Récupérer l'onglet actif depuis l'état de navigation
@@ -98,7 +97,6 @@ function AdminPage() {
             );
         } catch (err) {
             console.error(err);
-            alert("Erreur lors de la mise à jour : " + err.message);
         }
     };
 
@@ -161,7 +159,6 @@ function AdminPage() {
             }
         } catch (err) {
             console.error("Erreur :", err);
-            alert(err.message);
         } finally {
             setActionToConfirm(null); // Ferme la modale
         }

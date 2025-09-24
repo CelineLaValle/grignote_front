@@ -83,7 +83,6 @@ function EditArticle() {
             setNewTag("");
         } catch (err) {
             console.error(err);
-            alert("Impossible d’ajouter le tag");
         }
     };
 
@@ -136,7 +135,6 @@ function EditArticle() {
 
         } catch (error) {
             console.error(error);
-            alert("Échec de la mise à jour : " + error.message);
         }
     };
 

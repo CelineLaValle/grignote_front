@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/layout/_add.scss';
 import { useNavigate } from 'react-router-dom';
+import ConfirmModal from "../components/ConfirmModal";
 
 function AddArticle() {
     // Déclaration des états pour le titre et le contenu
@@ -15,6 +16,7 @@ function AddArticle() {
     const [allTags, setAllTags] = useState([]);       // tous les tags existants récupérés depuis le backend
     const [selectedTags, setSelectedTags] = useState([]); // tags choisis par l'utilisateur
     const [currentTag, setCurrentTag] = useState(""); // input en cours
+    const [showCancelModal, setShowCancelModal] = useState(false);
 
 
 
@@ -53,7 +55,6 @@ function AddArticle() {
 
         // Vérifie que l'utilisateur est bien chargé avant de soumettre
         if (!user || !user.idUser) {
-            alert("Utilisateur non connecté.");
             return;
         }
 
@@ -233,17 +234,22 @@ function AddArticle() {
                     <button
                         className="article__submit"
                         type="button"
-                        onClick={() => {
-                            if (window.confirm("Êtes-vous sûr de vouloir annuler ?")) {
-                                window.location.href = "/"; // Redirection vers la page d'accueil
-                            }
-                        }}
+                         onClick={() => setShowCancelModal(true)}
                     >
                         Annuler
                     </button>
                     <button className="article__submit" type="submit">Valider</button>
                 </div>
             </form>
+               {/* Modale d’annulation */}
+            {showCancelModal && (
+                <ConfirmModal
+                    title="Confirmation"
+                    message="Êtes-vous sûr de vouloir annuler ? Vos modifications seront perdues."
+                    onConfirm={() => navigate("/")} // redirection
+                    onCancel={() => setShowCancelModal(false)} // ferme la modale
+                />
+            )}
         </div>
     );
 }

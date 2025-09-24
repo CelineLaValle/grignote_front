@@ -84,6 +84,12 @@
   }
 }
 
+// Mobile (390px)
+@media (max-width: 390px) {
+  .article {
+    width: 80%;
+  }
+}
 
 // .articleForm {
 //   display: flex;

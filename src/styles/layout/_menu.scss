@@ -184,16 +184,20 @@
     display: none;
   }
 
+  // ---------------------------
+  // Responsive
+  // ---------------------------
 
-  @media (max-width: 480px) {
-
-
+  // Tablette (768px)
+  @media (max-width: 768px) {
 
     .menu,
     &__content {
-      position: fixed; // conserve l'overlay
-      padding-bottom: 0; // on n'a plus besoin de laisser de place en bas
-      overflow-y: auto;
+      position: fixed;
+      overflow-y: auto; // Permet le scroll
+      padding-bottom: 120px; // Ajoute de l'espace en bas
+      display: flex;
+      flex-direction: column;
     }
 
     &__separator {
@@ -204,15 +208,10 @@
     }
 
     &__auth {
-      padding: 8px 0;
       display: block;
-      gap: 12px;
       position: static; // dans le flux normal
       margin: 10px 0; // espace sous "Mes informations"
-      justify-content: flex-start;
-      flex-direction: column;
       align-items: center;
-      flex-wrap: wrap;
     }
 
     &__accueil,
@@ -223,7 +222,8 @@
       margin: 10px 0; // espace sous "Mes informations"
       justify-content: flex-start;
       align-items: center;
-      flex-wrap: wrap;
+      padding: 0;
+      background-color: $color-tertiary;
     }
 
     // &__authLink {
@@ -233,6 +233,9 @@
 
     // Amélioration de la liste déroulante sur mobile
     .containerFiltres {
+      flex: 1;
+      margin-bottom: 80px; // Espace supplémentaire pour les éléments en bas
+
       &__dropdown {
         &__menuFiltres {
           position: fixed; // Changement de absolute à fixed
@@ -250,18 +253,17 @@
     }
   }
 }
+    // .tags {
+    //   display: flex;
+    //   flex-direction: column;
+    //   gap: 6px;
+    //   margin-top: 10px;
+    //   margin-bottom: 10px;
 
-// .tags {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 6px;
-//   margin-top: 10px;
-//   margin-bottom: 10px;
+    //   label {
+    //     display: flex;
+    //     align-items: center;
+    //     gap: 6px;
+    //     font-size: 20px;
+    // }
 
-//   label {
-//     display: flex;
-//     align-items: center;
-//     gap: 6px;
-//     font-size: 20px;
-//   }
-// }

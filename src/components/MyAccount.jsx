@@ -23,17 +23,17 @@ function MyAccount() {
         //     setUser(null);
         //     return;
         // }
-    fetch('http://localhost:4000/auth/me', { credentials: 'include' })
-        .then(res => res.json())
-        .then(data => {
-            setUser(data.user); // stocke l'utilisateur
-            return fetch(`http://localhost:4000/article/user/${data.user.idUser}`);
-        })
-        .then(res => res.json())
-        .then(data => {
-            setArticles(data); // on fait confiance à l'API
-         })
-        .catch(err => console.error('Erreur:', err));
+        fetch('http://localhost:4000/auth/me', { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+                setUser(data.user); // stocke l'utilisateur
+                return fetch(`http://localhost:4000/article/user/${data.user.idUser}`);
+            })
+            .then(res => res.json())
+            .then(data => {
+                setArticles(data); // on fait confiance à l'API
+            })
+            .catch(err => console.error('Erreur:', err));
     }, []);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ function MyAccount() {
     }, [location.state]);
 
 
-     if (!user) {
+    if (!user) {
         return (
             <div className="containerAccount">
                 <p>Vous devez être connecté pour accéder à votre compte.</p>
@@ -68,7 +68,7 @@ function MyAccount() {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
 
-     const handleDelete = async () => {
+    const handleDelete = async () => {
         if (!articleToDelete) return;
         try {
             const response = await fetch(`http://localhost:4000/article/${articleToDelete.idArticle}`, {
@@ -141,14 +141,14 @@ function MyAccount() {
                                         Modifier
                                     </button>
 
-                                   
+
                                     <button
                                         className="containerMyAccount__content__article__list__item__delete"
                                         onClick={() => setArticleToDelete(article)} // Ouvre la modale
                                     >
                                         Supprimer
                                     </button>
-
+                                    <div className="containerMyAccount__content__article__list__item__separator"></div>
                                 </li>
                             ))}
                         </ul>
@@ -163,7 +163,7 @@ function MyAccount() {
                     <p>Aucun article trouvé.</p>
                 )}
 
-                   {/* Modale affichée si articleToDelete est défini */}
+                {/* Modale affichée si articleToDelete est défini */}
                 {articleToDelete && (
                     <ConfirmModal
                         title="Confirmation de suppression"

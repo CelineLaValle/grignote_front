@@ -98,7 +98,7 @@ function MyFavorites() {
     return (
         <div className='containerFavorites'>
             <div className='containerFavorites__content'>
-                <h2>Mes Favoris</h2>
+                <h2 className='containerFavorites__content__title'>Mes Favoris</h2>
 
                 {favorites.length > 0 ? (
                     <>
@@ -137,6 +137,7 @@ function MyFavorites() {
                                     >
                                         Retirer
                                     </button>
+                                    <div className="containerMyAccount__content__article__list__item__separator"></div>
                                 </li>
                             ))}
                         </ul>

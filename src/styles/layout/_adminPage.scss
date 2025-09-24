@@ -145,3 +145,154 @@
         }
     }
 }
+
+// ---------------------------
+// Responsive
+// ---------------------------
+
+// Tablette (768px)
+@media (max-width: 768px) {
+    .admin {
+        &__content {
+            max-width: 95%;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        &__title {
+            font-size: $font-size-xl;
+            margin-bottom: 20px;
+        }
+
+        &__tabs {
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        &__tabs__tab {
+            padding: 8px 14px;
+            font-size: $font-size-sm;
+        }
+
+        &__list__item {
+            flex-direction: column;
+            max-height: none;
+            padding: 12px;
+            gap: 10px;
+
+            &__title {
+                min-width: auto;
+                max-width: 100%;
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            &__image {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto;
+            }
+
+            &__content {
+                margin: 10px 0;
+                max-width: 100%;
+            }
+
+            &__info {
+                text-align: center;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            &__buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 10px;
+            }
+
+            &__edit,
+            &__delete,
+            &__suspend {
+                min-width: 90px;
+                margin-left: 0;
+                padding: 8px 12px;
+            }
+        }
+    }
+}
+
+
+// Mobile (375px)
+@media (max-width: 375px) {
+    .admin {
+        &__content {
+            max-width: 100%;
+            margin: 0;
+            padding: 15px;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+        }
+
+        &__title {
+            font-size: $font-size-lg;
+            margin-bottom: 16px;
+        }
+
+        &__tabs {
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        &__tabs__tab {
+            width: 100%;
+            padding: 10px 16px;
+            text-align: center;
+        }
+
+        &__list__item {
+            padding: 10px;
+            margin-bottom: 12px;
+
+            &__title {
+                font-size: $font-size-sm;
+                margin: 8px 0;
+            }
+
+            &__image {
+                width: 80px;
+                height: 80px;
+            }
+
+            &__content {
+                font-size: $font-size-sm;
+                margin: 8px 0;
+            }
+
+            &__info {
+                font-size: $font-size-sm;
+                line-height: 1.5;
+            }
+
+            &__buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+                width: 100%;
+            }
+
+            &__edit,
+            &__delete,
+            &__suspend {
+                width: 100%;
+                min-width: auto;
+                padding: 10px 12px;
+                text-align: center;
+                font-size: $font-size-sm;
+            }
+        }
+    }
+}

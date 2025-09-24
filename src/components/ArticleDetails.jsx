@@ -192,7 +192,7 @@ function ArticleDetails() {
 
                         {article.category && (
                             <p className='articleDetails__category'>
-                                <strong>Catégorie :</strong> {article.category}
+                                <strong>Catégorie: &nbsp;</strong> {article.category}
                             </p>
                         )}
 

@@ -80,7 +80,7 @@
 
                     &__title {
                         min-width: 150px;
-                        max-width: 150px; 
+                        max-width: 150px;
                         overflow: hidden;
                         white-space: nowrap;
                         text-overflow: ellipsis;
@@ -122,17 +122,17 @@
                         background-color: $color-tertiary;
                         color: #2a2a7a;
 
-                            &:hover {
-                                background-color: darken($color-secondary-blue, 10%);
-                            }
+                        &:hover {
+                            background-color: darken($color-secondary-blue, 10%);
+                        }
                     }
 
                     &__delete {
                         background-color: $color-secondary;
                         color: #be2020;
 
-                    &:hover {
-                        background-color: darken($color-secondary, 10%);
+                        &:hover {
+                            background-color: darken($color-secondary, 10%);
                         }
                     }
                 }
@@ -191,6 +191,7 @@
                         &__title {
                             margin-bottom: 12px;
                             font-size: $font-size-lg;
+                            overflow: visible;
                         }
 
                         &__image {
@@ -217,6 +218,13 @@
                             min-width: 120px;
                             align-self: center;
                         }
+
+                        &__separator {
+                            width: 50%;
+                            height: 1px;
+                            background-color: $color-quaternary;
+                            margin: 40px auto;
+                        }
                     }
                 }
             }
@@ -224,8 +232,8 @@
     }
 }
 
-// Mobile (480px)
-@media (max-width: 480px) {
+// Mobile (375px)
+@media (max-width: 375px) {
     .containerMyAccount {
         &__content {
             padding: 16px;

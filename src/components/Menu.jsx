@@ -11,8 +11,7 @@ function Menu() {
   const [tagSearch, setTagSearch] = useState('');
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  console.log('Menu - user prop:', user);
-  console.log('Menu - user role:', user?.role);
+
   // Utilisation du contexte de filtres
   const {
     selectedCategory,
@@ -157,7 +156,7 @@ function Menu() {
             <div className="menu__auth">
               {user ? (
                 <>
-                  <button onClick={handleLogout} className='header__authLink'>Se déconnecter</button>
+                  <button onClick={handleLogout} className='menu__authLink'>Se déconnecter</button>
                   {user.role === "admin" && (
                     <Link
                       to="/AdminPage"

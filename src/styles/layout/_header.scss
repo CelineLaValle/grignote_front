@@ -74,8 +74,9 @@
       font-size: $font-size-xxl;
     }
 
+   
     &__nav {
-      gap: 12px;
+      display: none;
 
       &Link {
         font-size: $font-size-sm;
@@ -97,14 +98,6 @@
     &__title {
       font-size: $font-size-xl;
       left: 40%;
-    }
-
-    &__nav {
-      display: none;
-
-      &Link {
-        font-size: $font-size-sm;
-      }
     }
   }
 }

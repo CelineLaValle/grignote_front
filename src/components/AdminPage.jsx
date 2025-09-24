@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import ConfirmModal from "../components/ConfirmModal";
+import jwtDecode from "jwt-decode";
 import '../styles/layout/_adminPage.scss';
 
 function AdminPage() {
@@ -13,9 +14,36 @@ function AdminPage() {
     const [actionToConfirm, setActionToConfirm] = useState(null);
     const itemsPerPage = 5;
     const [message, setMessage] = useState(null);
+        const [loading, setLoading] = useState(true);
+
     
     // Récupérer l'onglet actif depuis l'état de navigation
     const location = useLocation();
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await fetch("http://localhost:4000/auth/me", {
+                    method: "GET",
+                    credentials: "include",
+                });
+                if (!res.ok) throw new Error("Non authentifié");
+                const data = await res.json();
+
+                if (data.user.role !== "admin") {
+                    navigate("/login"); // Redirection si pas admin
+                } else {
+                    setLoading(false);
+                }
+            } catch (err) {
+                console.error("Erreur auth :", err);
+                navigate("/login"); // Redirection si pas connecté
+            }
+        };
+
+        checkAuth();
+    }, [navigate]);
+
     
     useEffect(() => {
         // Si un onglet actif est spécifié dans l'état, l'utiliser
@@ -173,7 +201,7 @@ function AdminPage() {
                         {currentItems.map(user => (
                             <li className="admin__list__item" key={user.idUser}>
                                 <p className="admin__list__item__info">
-                                    <strong>Pseudo:</strong> {user.pseudo} <br />
+                                    <stronUsg>Pseudo:</stronUsg> {user.pseudo} <br />
                                     <strong>Email:</strong> {user.email}
                                 </p>
                                 <div className="admin__list__item__buttons">

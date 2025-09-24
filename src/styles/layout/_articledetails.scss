@@ -147,3 +147,80 @@
         padding: 10px 0;
     }
 }
+
+// ---------------------------
+// Responsive
+// ---------------------------
+
+// Tablette (768px)
+@media (max-width: 768px) {
+    .articleDetails {
+
+        &__container,
+        &__comments {
+            width: 90%;
+            padding: 20px;
+        }
+
+        &__commentsInput {
+            width: 80%;
+        }
+    }
+}
+
+// Mobile (375px)
+@media (max-width: 390px) {
+    .articleDetails {
+
+        &__container {
+            width: 80%;
+        }
+
+        &__comments {
+            width: 80%;
+            padding: 16px;
+        }
+
+        &__title {
+            font-size: $font-size-md;
+        }
+
+        &__image {
+            width: 200px;
+            height: 200px;
+        }
+
+        &__content {
+            font-size: $font-size-sm;
+            text-align: justify;
+        }
+
+        &__ingredientList__ingredient {
+            font-size: $font-size-sm;
+        }
+
+        &__meta {
+            flex-direction: column;}
+        &__category {
+            font-size: $font-size-sm;
+
+        }
+
+        &__separator {
+            width: 80%;
+        }
+
+        &__meta {
+            align-items: center;
+        }
+
+        &__favoriButton {
+            padding: 12px;
+        }
+
+        &__commentsButton {
+            width: 100%;
+            padding: 12px;
+        }
+    }
+}

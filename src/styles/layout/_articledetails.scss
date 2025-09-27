@@ -16,26 +16,22 @@
         background-color: $color-secondary;
         border: 2px solid $color-quaternary;
         border-radius: 10px;
-        padding: 32px;
+        padding: 30px;
         margin-top: 30px;
     }
 
     &__title {
         font-family: $font-primary;
         font-size: $font-size-xl;
-        font-weight: $font-weight-bold;
         margin-bottom: 20px;
     }
 
     &__image {
-        max-width: 100%;
-        height: auto;
         border-radius: $radius-md;
         margin-bottom: 20px;
     }
 
     &__ingredientList {
-        margin-bottom: 20px;
         padding-left: 0;
         list-style: none;
         text-align: left;
@@ -46,7 +42,6 @@
             padding-left: 25px;
             margin-bottom: 6px;
             font-size: $font-size-sm;
-            text-align: left;
 
             &::before {
                 content: "🥕";
@@ -109,32 +104,27 @@
         margin: 30px 0 30px 0;
         border: 2px solid $color-quaternary;
         border-radius: 10px;
-        padding: 32px;
+        padding: 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        text-align: center;
     }
 
     &__commentsInput {
         border-radius: 10px;
         border: 2px solid $color-quaternary;
         padding: 20px;
+        font-size: $font-size-sm;
         width: 80%;
+        margin-bottom: 20px;
     }
 
     &__commentsButton {
-        background-color: darken($color-primary, 10%);
-        color: #fff;
-        border: none;
-        margin: 20px;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: $font-size-sm;
+        @include button-style($color-primary, #fff, $radius-md);
+        width: 20%;
 
         &:hover {
-            background-color: $color-primary;
+            background-color: darken($color-primary, 10%);
         }
     }
 
@@ -148,9 +138,7 @@
     }
 }
 
-// ---------------------------
 // Responsive
-// ---------------------------
 
 // Tablette (768px)
 @media (max-width: 768px) {
@@ -200,7 +188,9 @@
         }
 
         &__meta {
-            flex-direction: column;}
+            flex-direction: column;
+        }
+        
         &__category {
             font-size: $font-size-sm;
 
@@ -219,7 +209,7 @@
         }
 
         &__commentsButton {
-            width: 100%;
+            width: 60%;
             padding: 12px;
         }
     }

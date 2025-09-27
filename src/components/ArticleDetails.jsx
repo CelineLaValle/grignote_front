@@ -173,7 +173,6 @@ function ArticleDetails() {
                             className='articleDetails__image'
                             src={`http://localhost:4000/uploads/${article.image}`}
                             alt={article.title}
-                            style={{ maxWidth: "400px", borderRadius: "12px" }}
                         />
                     )}
                     <ul className='articleDetails__ingredientList'>

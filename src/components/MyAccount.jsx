@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/layout/_myaccount.scss';
 import '../styles/layout/_pagination.scss'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from './Pagination';
 import { useLocation } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
@@ -31,7 +31,7 @@ function MyAccount() {
             })
             .then(res => res.json())
             .then(data => {
-                setArticles(data); // on fait confiance à l'API
+                setArticles(data);
             })
             .catch(err => console.error('Erreur:', err));
     }, []);
@@ -39,15 +39,20 @@ function MyAccount() {
     useEffect(() => {
         if (location.state?.message) {
             setMessage(location.state.message);
-            setTimeout(() => setMessage(null), 5000); // disparaît après 5s
+            setTimeout(() => setMessage(null), 5000);
         }
     }, [location.state]);
 
 
     if (!user) {
         return (
-            <div className="containerAccount">
-                <p>Vous devez être connecté pour accéder à votre compte.</p>
+            <div className="myAccount">
+                <div className="myAccount__login">
+                    <p>Vous devez être connecté pour accéder à votre compte.</p>
+                </div>
+                <div className="buttonMyAccount">
+                    <Link to="/login" className="buttonMyAccount__link">Se connecter</Link>
+                </div>
             </div>
         );
     }
@@ -144,7 +149,7 @@ function MyAccount() {
 
                                     <button
                                         className="containerMyAccount__content__article__list__item__delete"
-                                        onClick={() => setArticleToDelete(article)} // Ouvre la modale
+                                        onClick={() => setArticleToDelete(article)} 
                                     >
                                         Supprimer
                                     </button>

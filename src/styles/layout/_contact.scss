@@ -1,0 +1,31 @@
+@use '../var' as *;
+
+.contact {
+    background-image: $bg-primary;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+
+
+    &__title {
+        font-size: $font-size-xxl;
+        width: 80%;
+    }
+
+    &__list {
+        font-size: $font-size-md;
+        width: 80%;
+        list-style: none;
+    }
+
+    &__mail,
+    &__phone {
+        margin: 20px;
+    }
+}

@@ -133,7 +133,10 @@ function AddArticle() {
                         type="text"
                         id="title"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)} // Met à jour l'état du titre
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '');
+                            setTitle(value);
+                        }}
                         placeholder="Entrez le nom de la recette"
                     />
                 </div>
@@ -148,7 +151,10 @@ function AddArticle() {
                         id="ingredient"
                         name="ingredient"
                         value={ingredient}
-                        onChange={(e) => setIngredient(e.target.value)} // Met à jour l'état du contenu
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
+                            setIngredient(value);
+                        }}      
                         placeholder="Noter les ingrédients"
                     />
                 </div>
@@ -162,7 +168,10 @@ function AddArticle() {
                         cols="33"
                         id="content"
                         value={content}
-                        onChange={(e) => setContent(e.target.value)} // Met à jour l'état du contenu
+                         onChange={(e) => {
+                            const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
+                            setContent(value);
+                        }}
                         placeholder="Entrez le contenu de la recette"
                     />
                 </div>
@@ -200,7 +209,10 @@ function AddArticle() {
                         <input
                             type="text"
                             value={currentTag}
-                            onChange={e => setCurrentTag(e.target.value)}
+                                onChange={e => {
+                                    const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, '');
+                                    setCurrentTag(value);
+                                }}
                             onKeyDown={e => {
                                 if (e.key === "Enter") {
                                     e.preventDefault();

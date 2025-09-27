@@ -60,10 +60,11 @@
   }
 
   &__cancel {
-    @include button-style(#f8f9fa, #212529, $radius-md);
+    @include button-style($color-tertiary, #212529, $radius-md);
+    border: 1px solid $color-quaternary;
 
     &:hover {
-      background-color: darken(#f8f9fa, 10%);
+      background-color: darken($color-tertiary, 10%);
     }
   }
 }
@@ -77,11 +78,22 @@
   border: 1px solid #c3e6cb;
 }
 
-.error-message {
-  background-color: #ffe3e3;
-  color: #b80000;
-  padding: 10px 15px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #b8000079;
+// Responsive
+
+// Tablette (768px)
+@media (max-width: 768px) {
+  .userModify {
+    &__buttons {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+// Mobile (390px)
+@media (max-width: 390px) {
+    .userModify {
+    &__buttons {
+      flex-direction: column;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from '../components/Pagination';
 import ConfirmModal from "../components/ConfirmModal";
 import '../styles/layout/_myfavorites.scss';
@@ -89,8 +89,13 @@ function MyFavorites() {
 
     if (!user) {
         return (
-            <div className="containerAccount">
-                <p>Vous devez être connecté pour accéder à vos favoris.</p>
+            <div className="myFavorite">
+                <div className="myFavorite__login">
+                    <p>Vous devez être connecté pour accéder à vos favoris.</p>
+                </div>
+                <div className="buttonMyFavorite">
+                    <Link to="/login" className="buttonMyFavorite__link">Se connecter</Link>
+                </div>
             </div>
         );
     }

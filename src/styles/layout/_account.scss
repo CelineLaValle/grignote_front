@@ -6,7 +6,7 @@
   padding: 32px;
   background: $color-tertiary;
   border-radius: $radius-md;
-  border: 2px solid black;
+  border: 2px solid $color-quaternary-dark;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -50,9 +50,7 @@
   @include button-style($color-primary, #fff, $radius-md);
 }
 
-// ---------------------------
 // Responsive
-// ---------------------------
 
 // Tablette (768px)
 @media (max-width: 768px) {

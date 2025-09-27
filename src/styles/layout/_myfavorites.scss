@@ -124,6 +124,34 @@
     }
 }
 
+.myFavorite {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+
+    &__login {
+        width: 40%;
+        text-align: center;
+        margin: 100px auto 60px auto;
+        padding: 40px;
+        background: $color-tertiary;
+        border-radius: $radius-md;
+        border: 2px solid $color-quaternary-dark;
+    }
+}
+
+.buttonMyFavorite {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    &__link {
+        text-decoration: none;
+        @include button-style($color-primary, #fff, $radius-md);
+    }
+}
+
 // ---------------------------
 // Responsive
 // ---------------------------

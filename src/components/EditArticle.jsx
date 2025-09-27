@@ -138,10 +138,6 @@ function EditArticle() {
         }
     };
 
-    if (notFound) {
-        return <p style={{ color: "red" }}>Article inexistant</p>;
-    }
-
     if (!article) {
         return null; // on affiche rien si pas encore reçu les données
     }
@@ -158,7 +154,10 @@ function EditArticle() {
                         className="articleModify__input"
                         type="text"
                         value={article.title}
-                        onChange={(e) => setArticle({ ...article, title: e.target.value })}
+                        onChange={(e) =>
+                            setArticle({...article, title: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
+                        })
+                    }
                         placeholder="Titre"
                     />
                 </div>
@@ -168,7 +167,10 @@ function EditArticle() {
                     <textarea
                         className="articleModify__textarea"
                         value={article.ingredient}
-                        onChange={(e) => setArticle({ ...article, ingredient: e.target.value })}
+                        onChange={(e) =>
+                            setArticle({...article, ingredient: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
+                        })
+                    }
                         placeholder="Ingrédients"
                     />
                 </div>
@@ -178,7 +180,10 @@ function EditArticle() {
                     <textarea
                         className="articleModify__textarea"
                         value={article.content}
-                        onChange={(e) => setArticle({ ...article, content: e.target.value })}
+                        onChange={(e) =>
+                            setArticle({...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
+                        })
+                    }
                         placeholder="Contenu"
                     />
                 </div>
@@ -188,7 +193,8 @@ function EditArticle() {
                     <select
                         className="articleModify__select"
                         value={article.category}
-                        onChange={(e) => setArticle({ ...article, category: e.target.value })}
+                        onChange={(e) => 
+                            setArticle({ ...article, category: e.target.value })}
                     >
                         <option value="">-- Sélectionner une catégorie --</option>
                         {categories.map((cat) => (
@@ -204,7 +210,7 @@ function EditArticle() {
                     {/* Tags existants */}
                     <div className="articleModify__tags">
                         {tags.map((tag) => (
-                            <label key={tag.idTag} style={{ display: "block" }}>
+                            <label key={tag.idTag}>
                                 <input
                                     type="checkbox"
                                     checked={selectedTags.includes(tag.idTag)}
@@ -221,8 +227,10 @@ function EditArticle() {
                             type="text"
                             placeholder="Ajouter un tag..."
                             value={newTag}
-                            onChange={(e) => setNewTag(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && handleAddTag()} // permet Enter
+                            onChange={(e) => 
+                                setNewTag(e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, ''))
+                            }
+                            onKeyDown={(e) => e.key === "Enter" && handleAddTag()}
                         />
                         <button type="button" onClick={handleAddTag}>
                             Ajouter

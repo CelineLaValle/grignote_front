@@ -198,7 +198,7 @@ function AdminPage() {
                         {currentItems.map(user => (
                             <li className="admin__list__item" key={user.idUser}>
                                 <p className="admin__list__item__info">
-                                    <stronUsg>Pseudo:</stronUsg> {user.pseudo} <br />
+                                    <strong>Pseudo:</strong> {user.pseudo} <br />
                                     <strong>Email:</strong> {user.email}
                                 </p>
                                 <div className="admin__list__item__buttons">

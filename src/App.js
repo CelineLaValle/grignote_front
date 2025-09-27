@@ -15,6 +15,8 @@ import AddArticle from "./components/AddArticle";
 import EditArticle from "./components/EditArticle";
 import EditUser from "./components/EditUser";
 import NotFound from "./components/NotFound";
+import About from "./components/About";
+import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
           <Route path="/AddArticle" element={<AddArticle />} />
           <Route path="/EditArticle/:id" element={<EditArticle />} />
           <Route path="/EditUser/:id" element={<EditUser />} />
+          <Route path="/About" element={<About />} />
+          <Route path="/Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

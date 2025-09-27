@@ -5,8 +5,8 @@ function ConfirmModal({ title, message, onConfirm, onCancel }) {
   return (
     <div className="modal">
       <div className="modal__content">
-        <h3>{title}</h3>
-        <p>{message}</p>
+        <h3 className="modal__title">{title}</h3>
+        <p className="modal__message">{message}</p>
         <div className="modal__actions">
           <button className="modal__confirm" onClick={onConfirm}>
             Confirmer

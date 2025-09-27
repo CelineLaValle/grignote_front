@@ -1,9 +1,52 @@
 @use '../var' as *;
 
 .footer {
-    height: 200px;
-    background-color: $color-primary;
+  position: relative;
+  display: flex;
+  height: 150px;
+  justify-content: center; 
+  align-items: center;        
+  background-color: $color-primary;
+  padding: 20px 40px;          
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-xl;
+    color: $color-secondary;
+  }
+
+  &__nav {
+    position: absolute;
+    right: 40px;  
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 20px;
+  }
+
+  &__navLink {
+    color: $color-secondary;
+    font-size: $font-size-md;
+    text-decoration: none;
+    font-weight: $font-weight-bold;
+
+    &:hover {
+        color: lighten($color-primary, 10%);
+    }
+  }
+}
+
+// Responsive
+
+// Tablette (768px)
+@media (max-width: 768px) {
+      .footer {
+    flex-direction: column;
+
+    &__title {
+        margin-bottom: 30px;
+    }
+
+    &__nav {
+      position: static;
+    }
+  }
 }

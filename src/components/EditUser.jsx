@@ -67,10 +67,6 @@ function EditUser() {
         }
     };
 
-    if (notFound) {
-        return <p style={{ color: "red" }}>Utilisateur inexistant</p>;
-    }
-
     if (!user) {
         return null; // on affiche rien si pas encore reçu les données
     }
@@ -87,7 +83,10 @@ function EditUser() {
                         className="userModify__input"
                         type="text"
                         value={user.pseudo}
-                        onChange={(e) => setUser({ ...user, pseudo: e.target.value })}
+                         onChange={(e) =>
+                            setUser({ ...user, pseudo: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 _-]/g, '')
+                            })
+                        }
                         placeholder="Pseudo"
                     />
                 </div>

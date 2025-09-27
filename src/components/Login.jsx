@@ -31,7 +31,6 @@ function Login() {
             });
 
             const data = await response.json(); // On récupère la réponse du serveur
-            console.log('Login response:', data);
 
             // Si la réponse n'est pas OK (ex: mauvais mot de passe), on affiche une erreur
             if (!response.ok) {

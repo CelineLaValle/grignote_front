@@ -27,7 +27,6 @@ function AccueilPage() {
       }
 
       const data = await response.json();
-      console.log('Données récupérées :', data);
       
       setArticles(data);
     } catch (err) {
@@ -42,13 +41,6 @@ function AccueilPage() {
   useEffect(() => {
     getWorks();
   }, []);
-
-  useEffect(() => {
-    console.log('Articles chargés:', articles);
-    if (articles.length > 0) {
-        console.log('Premier article et ses tags:', articles[0]);
-    }
-}, [articles]);
 
   // Appliquer les filtres aux articles
   const filteredArticles = applyFilters(articles);

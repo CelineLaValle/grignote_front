@@ -184,9 +184,7 @@
     display: none;
   }
 
-  // ---------------------------
   // Responsive
-  // ---------------------------
 
   // Tablette (768px)
   @media (max-width: 768px) {
@@ -195,7 +193,7 @@
     &__content {
       position: fixed;
       overflow-y: auto; // Permet le scroll
-      padding-bottom: 120px; // Ajoute de l'espace en bas
+      padding-bottom: 120px;
       display: flex;
       flex-direction: column;
     }
@@ -209,8 +207,8 @@
 
     &__auth {
       display: block;
-      position: static; // dans le flux normal
-      margin: 10px 0; // espace sous "Mes informations"
+      position: static;
+      margin: 10px 0;
       align-items: center;
     }
 
@@ -218,34 +216,28 @@
     &__authLink {
       display: flex;
       gap: 12px;
-      position: static; // dans le flux normal
-      margin: 10px 0; // espace sous "Mes informations"
+      position: static;
+      margin: 10px 0;
       justify-content: flex-start;
       align-items: center;
       padding: 0;
       background-color: $color-tertiary;
     }
 
-    // &__authLink {
-    //   display: flex;
-    //   font-size: $font-size-md;
-    // }
-
-    // Amélioration de la liste déroulante sur mobile
     .containerFiltres {
       flex: 1;
-      margin-bottom: 80px; // Espace supplémentaire pour les éléments en bas
+      margin-bottom: 80px;
 
       &__dropdown {
         &__menuFiltres {
-          position: fixed; // Changement de absolute à fixed
+          position: fixed; 
           top: auto;
-          bottom: 20px; // Position depuis le bas de l'écran
+          bottom: 20px; 
           left: 20px;
           right: 20px;
-          width: auto; // Largeur automatique avec left/right
-          max-height: 40vh; // Réduction de la hauteur max sur mobile
-          z-index: 1001; // Z-index plus élevé pour passer au-dessus
+          width: auto; 
+          max-height: 40vh; 
+          z-index: 1001;
           border-radius: 8px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); // Ombre plus prononcée
         }
@@ -253,17 +245,4 @@
     }
   }
 }
-    // .tags {
-    //   display: flex;
-    //   flex-direction: column;
-    //   gap: 6px;
-    //   margin-top: 10px;
-    //   margin-bottom: 10px;
-
-    //   label {
-    //     display: flex;
-    //     align-items: center;
-    //     gap: 6px;
-    //     font-size: 20px;
-    // }
 

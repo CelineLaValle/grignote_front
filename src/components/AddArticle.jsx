@@ -35,7 +35,6 @@ function AddArticle() {
                 setUser(data.user);
             })
             .catch(err => {
-                console.log('Utilisateur non connecté, redirection vers login');
                 navigate('/login');
             });
     }, []); // Ce code ne s'exécute qu'une seule fois au chargement du composant
@@ -85,7 +84,6 @@ function AddArticle() {
         if (image) {
             formData.append('image', image); // Ajoute le fichier s'il existe
         }
-        console.log('formData:', formData);
 
         // Envoi de la requête POST au backend
         try {
@@ -100,7 +98,6 @@ function AddArticle() {
             }
 
             const result = await response.json(); // Si le backend renvoie des données
-            console.log('Article envoyé avec succès:', result);
             // Rediriger vers la page principale
             navigate('/');
         } catch (error) {

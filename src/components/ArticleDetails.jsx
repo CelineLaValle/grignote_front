@@ -44,7 +44,6 @@ function ArticleDetails() {
                     throw new Error("Erreur lors de la récupération de l'article");
                 }
                 const data = await response.json();
-                console.log('Article reçu:', data);
                 setArticle(data);
             } catch (error) {
                 console.error('Erreur :', error);

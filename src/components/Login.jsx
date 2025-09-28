@@ -11,9 +11,9 @@ function Login() {
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
 
-    // Récupérer le redirect ou fallback sur "/"
+    // Récupérer le redirect ou fallback sur '/'
     const params = new URLSearchParams(location.search);
-    const redirectPath = params.get("redirect") || "/";
+    const redirectPath = params.get('redirect') || '/';
 
     // Fonction appelée lors de la soumission du formulaire
     const handleLogin = async (e) => {
@@ -34,7 +34,7 @@ function Login() {
 
             // Si la réponse n'est pas OK (ex: mauvais mot de passe), on affiche une erreur
             if (!response.ok) {
-                throw new Error(data.message || "Erreur de connexion");
+                throw new Error(data.message || 'Erreur de connexion');
             }
 
             // Si la connexion est réussie, on redirige vers la page d'accueil
@@ -45,40 +45,40 @@ function Login() {
         } catch (error) {
             console.error('Erreur de connexion:', error);
             setMessage('Connexion échouée : ' + error.message);
-            setMessageType("error");
+            setMessageType('error');
         }
     };
     return (
-        <div className="containerAccount">
+        <div className='containerAccount'>
             {message && (
                 <div className={`message ${messageType}`}>
                     {message}
                 </div>
             )}
             <h2 className='containerAccount__title'>Connexion</h2>
-            <form onSubmit={handleLogin} className="containerAccount__form">
+            <form onSubmit={handleLogin} className='containerAccount__form'>
                 {/* Champ pour l'email */}
-                <label htmlFor="email">Email :</label>
+                <label htmlFor='email'>Email :</label>
                 <input
-                    type="email"
-                    id="email"
+                    type='email'
+                    id='email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)} // Met à jour l'état
                     required
                 />
 
                 {/* Champ pour le mot de passe */}
-                <label htmlFor="password">Mot de passe :</label>
+                <label htmlFor='password'>Mot de passe :</label>
                 <input
-                    type="password"
-                    id="password"
+                    type='password'
+                    id='password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)} // Met à jour l'état
                     required
                 />
 
                 {/* Bouton de soumission */}
-                <button className='accountButton' type="submit">Se connecter</button>
+                <button className='accountButton' type='submit'>Se connecter</button>
             </form>
 
             <p>Pas encore de compte ?</p>

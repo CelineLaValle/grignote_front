@@ -60,22 +60,22 @@ function Header() {
     <div>
       <Menu />
       <div className='header'>
-        <Link to="/"> <img className="header__logo" src={cupcake} alt="logo" /></Link>
+        <Link to='/'> <img className='header__logo' src={cupcake} alt='logo' /></Link>
         <div className='header__containerNav'>
         <h1 className='header__title'>Grignote</h1>
 
         <div className='header__nav'>
-          <Link to="/" className='header__navLink'>Accueil</Link>
+          <Link to='/' className='header__navLink'>Accueil</Link>
 
           {user ? (
             <>
               <button onClick={handleLogout} className='header__navLink'>Se déconnecter</button>
               {user.role === 'admin' && (
-                <Link to="/AdminPage" className='header__navLink'>Page Admin</Link>
+                <Link to='/AdminPage' className='header__navLink'>Page Admin</Link>
               )}
             </>
           ) : (
-            <Link to="/login" className='header__navLink'>Se connecter</Link>
+            <Link to='/login' className='header__navLink'>Se connecter</Link>
           )}
         </div>
         </div>

@@ -8,7 +8,7 @@
     z-index: 4;
     background: $color-tertiary;
     border: 1px solid $color-quaternary;
-    border-radius: 6px;
+    border-radius: $radius-sm;
     font-size: $font-size-md;
     padding: 6px 10px;
     cursor: pointer;
@@ -38,7 +38,6 @@
 
     &__title {
       padding-top: 40px;
-      font-weight: $font-weight-bold;
       font-size: $font-size-lg;
       margin-top: 20px;
       color: $color-primary-orange;
@@ -79,8 +78,6 @@
     }
 
     .containerFiltres {
-      margin-top: 20px;
-
       &__title {
         font-size: $font-size-md;
         margin-bottom: 20px;
@@ -100,9 +97,8 @@
           overflow-y: auto;
           border: 1px solid $color-quaternary;
           background: $color-tertiary;
-          // z-index: 1000;
           padding: 8px;
-          border-radius: 6px;
+          border-radius: $radius-sm;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
@@ -120,7 +116,6 @@
           flex-direction: column;
           gap: 6px;
           margin-top: 10px;
-          margin-bottom: 10px;
         }
 
         &__reset {
@@ -134,13 +129,13 @@
             font-weight: $font-weight-bold;
             cursor: pointer;
             font-size: $font-size-sm;
-            text-decoration: underline;
 
             &:hover {
               color: darken($color-primary, 10%);
             }
           }
-
+          
+          // Filtres actifs
           &__active {
             font-size: $font-size-md;
             padding: 6px;
@@ -207,39 +202,27 @@
 
     &__auth {
       display: block;
-      position: static;
-      margin: 10px 0;
-      align-items: center;
     }
 
     &__accueil,
     &__authLink {
       display: flex;
-      gap: 12px;
-      position: static;
       margin: 10px 0;
-      justify-content: flex-start;
-      align-items: center;
       padding: 0;
       background-color: $color-tertiary;
     }
 
     .containerFiltres {
-      flex: 1;
       margin-bottom: 80px;
 
       &__dropdown {
         &__menuFiltres {
-          position: fixed; 
           top: auto;
           bottom: 20px; 
           left: 20px;
           right: 20px;
           width: auto; 
           max-height: 40vh; 
-          z-index: 1001;
-          border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); // Ombre plus prononcée
         }
       }
     }

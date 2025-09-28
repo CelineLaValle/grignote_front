@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
-import '../styles/layout/_articledetails.scss';
-import NotFound from "../components/NotFound";
+import { useNavigate } from 'react-router-dom';
+import '../styles/layout/_articleDetails.scss';
+import NotFound from '../components/NotFound';
 
 
 function ArticleDetails() {
@@ -23,11 +23,11 @@ function ArticleDetails() {
         //     return;
         // }
 
-        fetch("http://localhost:4000/auth/me", {
-            credentials: "include"
+        fetch('http://localhost:4000/auth/me', {
+            credentials: 'include'
         })
             .then(res => {
-                if (!res.ok) throw new Error("Non connecté");
+                if (!res.ok) throw new Error('Non connecté');
                 return res.json();
             })
             .then(data => setUser(data.user))
@@ -41,12 +41,12 @@ function ArticleDetails() {
             try {
                 const response = await fetch(`http://localhost:4000/article/${idArticle}`);
                 if (!response.ok) {
-                    throw new Error("Erreur lors de la récupération de l'article");
+                    throw new Error('Erreur lors de la récupération de l’article');
                 }
                 const data = await response.json();
                 setArticle(data);
             } catch (error) {
-                console.error('Erreur :', error);
+                console.error('Erreur chargement article:', error);
             }
         }
 
@@ -56,13 +56,13 @@ function ArticleDetails() {
     // Vérifier si déjà en favori
     useEffect(() => {
         if (user) {
-            fetch("http://localhost:4000/favori", { credentials: "include" })
+            fetch('http://localhost:4000/favori', { credentials: 'include' })
                 .then(res => res.json())
                 .then(data => {
                     const exists = data.some(fav => fav.idArticle === parseInt(idArticle));
                     setIsFavori(exists);
                 })
-                .catch(err => console.error(err));
+                .catch(err => console.error('Erreur vérification favoris:', err));
         }
     }, [idArticle, user]);
 
@@ -77,22 +77,22 @@ function ArticleDetails() {
             if (isFavori) {
                 // Retirer
                 await fetch(`http://localhost:4000/favori/${idArticle}`, {
-                    method: "DELETE",
-                    credentials: "include"
+                    method: 'DELETE',
+                    credentials: 'include'
                 });
                 setIsFavori(false);
             } else {
                 // Ajouter
-                await fetch("http://localhost:4000/favori", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
+                await fetch('http://localhost:4000/favori', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ idArticle })
                 });
                 setIsFavori(true);
             }
         } catch (err) {
-            console.error(err);
+            console.error('Erreur gestion favoris:', err);
         }
     };
 
@@ -105,7 +105,7 @@ function ArticleDetails() {
                 const data = await res.json();
                 setComments(data);
             } catch (err) {
-                console.error(err);
+                console.error('Erreur chargement commentaires:', err);
             }
         }
 
@@ -120,7 +120,7 @@ function ArticleDetails() {
 
             const res = await fetch('http://localhost:4000/comment', {
                 method: 'POST',
-                credentials: "include",
+                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     idArticle,
@@ -133,7 +133,7 @@ function ArticleDetails() {
             setComments([{ idComment: data.idComment, content: newComment, pseudo: user.pseudo, date: new Date() }, ...comments]);
             setNewComment('');
         } catch (err) {
-            console.error(err);
+            console.error('Erreur ajout commentaire:', err);
         }
     };
 
@@ -149,7 +149,7 @@ function ArticleDetails() {
     const ingredientItems = Array.isArray(article.ingredient)
         ? article.ingredient
         : (() => {
-            // essaie de parser du JSON ["Farine","Oeufs"]
+            // essaie de parser du JSON ['Farine','Oeufs']
             try {
                 const parsed = JSON.parse(article.ingredient);
                 if (Array.isArray(parsed)) return parsed;
@@ -183,7 +183,7 @@ function ArticleDetails() {
                     </ul>
 
                     {/* Ligne de séparation */}
-                    <div className="articleDetails__separator"></div>
+                    <div className='articleDetails__separator'></div>
 
                     <p className='articleDetails__content'>{article.content}</p>
                     <div className='articleDetails__meta'>
@@ -196,16 +196,16 @@ function ArticleDetails() {
 
                         {/* Ajout du bouton favori */}
                         <button
-                            className="articleDetails__favoriButton"
+                            className='articleDetails__favoriButton'
                             onClick={handleToggleFavori}
                         >
-                            {isFavori ? "⭐ Retirer des favoris" : "☆ Ajouter aux favoris"}
+                            {isFavori ? '⭐ Retirer des favoris' : '☆ Ajouter aux favoris'}
                         </button>
                     </div>
 
                     {article.tags && article.tags.length > 0 && (
                         <div className='articleDetails__tags'>
-                            <strong>Tags :</strong>{" "}
+                            <strong>Tags :</strong>{' '}
                             {article.tags.map(tag => (
                                 <span className='articleDetails__tag' key={tag.idTag}>
                                     #{tag.name}
@@ -223,7 +223,7 @@ function ArticleDetails() {
                                 className='articleDetails__commentsInput'
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
-                                placeholder="Écrivez un commentaire..."
+                                placeholder='Écrivez un commentaire...'
                             />
 
                             <button

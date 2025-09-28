@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import "../styles/layout/_notFound.scss";
+import { Link } from 'react-router-dom';
+import '../styles/layout/_notFound.scss';
 
 function NotFound() {
   return (
-    <div className="notfound">
+    <div className='notfound'>
       <h1>404</h1>
       <p>Oups... Cette page n'existe pas !</p>
-      <Link to="/" className="notfound__button">
+      <Link to='/' className='notfound__button'>
         Retour à l’accueil
       </Link>
     </div>

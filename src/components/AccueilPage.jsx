@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import '../styles/layout/_accueilpage.scss'
+import '../styles/layout/_accueilPage.scss'
 import '../styles/layout/_pagination.scss'
 import { Link } from 'react-router-dom'
 import { useFilters } from './FilterContext';
@@ -75,19 +75,15 @@ function AccueilPage() {
       <h2 className='containerFilter__title'>
         Articles 
         {(selectedCategory || selectedTags.length > 0) && (
-          <span className="containerFilter__indicator">
+          <span className='containerFilter__indicator'>
             ({filteredArticles.length} résultat{filteredArticles.length > 1 ? 's' : ''})
           </span>
         )}
       </h2>
 
-
-    {/* Si c'est en chargement */}
-    {loading && <div className="loading">Chargement des articles...</div>}
-
     {/* Si erreur */}
     {error && (
-      <div className="error">
+      <div className='error'>
         <p>Erreur lors du chargement des articles : {error}</p>
         <button onClick={getWorks}>Réessayer</button>
       </div>
@@ -95,15 +91,8 @@ function AccueilPage() {
 
       {/* Si aucun résultat avec filtres */}
       {filteredArticles.length === 0 && articles.length > 0 && (
-        <div className="containerFilter__noResults">
+        <div className='containerFilter__noResults'>
           <p>Aucun article ne correspond aux filtres sélectionnés.</p>
-        </div>
-      )}
-
-      {/* Si aucun article du tout */}
-      {articles.length === 0 && !loading && (
-        <div className="containerFilter__noArticles">
-          <p>Aucun article disponible pour le moment.</p>
         </div>
       )}
 
@@ -121,12 +110,12 @@ function AccueilPage() {
                     <img 
                       src={`http://localhost:4000/uploads/${item.image}`} 
                       alt={item.title} 
-                      className="articlesContainer__article__div__card__image" 
+                      className='articlesContainer__article__div__card__image' 
                     />
                   )}
 
                   <Link to={`/article/${item.idArticle}`} className='fullLink'></Link>
-                  <span className="articlesContainer__article__div__card__content">{item.content}</span>
+                  <span className='articlesContainer__article__div__card__content'>{item.content}</span>
 
                   {/* Affichage de la catégorie */}
                   <div className='articlesContainer__article__div__card__category'>{item.category}</div>
@@ -135,7 +124,7 @@ function AccueilPage() {
                   {item.tags && item.tags.length > 0 && (
                     <div className='articlesContainer__article__div__card__tags'>
                       {item.tags.map((tag, index) => (
-                        <span key={index} className="tag-badge">
+                        <span key={index} className='tag-badge'>
                           {typeof tag === 'object' ? tag.name : tag}
                         </span>
                       ))}
@@ -149,7 +138,7 @@ function AccueilPage() {
       )}
 
       <div className='containerButton'>
-        <Link to="/AddArticle" className='containerButton__link'>Ajouter une recette</Link>
+        <Link to='/AddArticle' className='containerButton__link'>Ajouter une recette</Link>
       </div>
 
       {/* Affichage de la pagination seulement s'il y a des résultats */}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import Pagination from '../components/Pagination';
-import ConfirmModal from "../components/ConfirmModal";
-import '../styles/layout/_myfavorites.scss';
+import ConfirmModal from '../components/ConfirmModal';
+import '../styles/layout/_myFavorites.scss';
 import '../styles/layout/_pagination.scss'
 
 function MyFavorites() {
@@ -33,9 +33,9 @@ function MyFavorites() {
         //     return;
         // }
 
-        fetch("http://localhost:4000/auth/me", { credentials: "include" })
+        fetch('http://localhost:4000/auth/me', { credentials: 'include' })
             .then(res => {
-                if (!res.ok) throw new Error("Non connecté");
+                if (!res.ok) throw new Error('Non connecté');
                 return res.json();
             })
             .then(data => setUser(data.user))
@@ -49,9 +49,9 @@ function MyFavorites() {
         async function fetchFavorites() {
             try {
                 const res = await fetch(`http://localhost:4000/favori`, {
-                    credentials: "include",
+                    credentials: 'include',
                 });
-                if (!res.ok) throw new Error("Erreur lors de la récupération des favoris");
+                if (!res.ok) throw new Error('Erreur lors de la récupération des favoris');
                 const data = await res.json();
                 
                 // data doit contenir au moins idArticle
@@ -69,18 +69,18 @@ function MyFavorites() {
         try {
             const res = await fetch(`http://localhost:4000/favori/${favoriToRemove.idArticle}`, {
                 method: 'DELETE',
-                credentials: "include",
+                credentials: 'include',
             });
-            if (!res.ok) throw new Error("Erreur suppression favori");
+            if (!res.ok) throw new Error('Erreur suppression favori');
 
             // Mise à jour du state
             setFavorites(prev => prev.filter(f => f.idArticle !== favoriToRemove.idArticle));
 
-            setMessage({ text: "Article retiré des favoris.", type: "success" });
+            setMessage({ text: 'Article retiré des favoris.', type: 'success' });
             setTimeout(() => setMessage(null), 3000);
         } catch (err) {
             console.error(err);
-            setMessage({ text: err.message, type: "error" });
+            setMessage({ text: err.message, type: 'error' });
             setTimeout(() => setMessage(null), 3000);
         } finally {
             setFavoriToRemove(null); // ferme la modale
@@ -89,12 +89,12 @@ function MyFavorites() {
 
     if (!user) {
         return (
-            <div className="myFavorite">
-                <div className="myFavorite__login">
+            <div className='myFavorite'>
+                <div className='myFavorite__login'>
                     <p>Vous devez être connecté pour accéder à vos favoris.</p>
                 </div>
-                <div className="buttonMyFavorite">
-                    <Link to="/login" className="buttonMyFavorite__link">Se connecter</Link>
+                <div className='buttonMyFavorite'>
+                    <Link to='/login' className='buttonMyFavorite__link'>Se connecter</Link>
                 </div>
             </div>
         );
@@ -103,23 +103,23 @@ function MyFavorites() {
     return (
         <div className='containerFavorites'>
             <div className='containerFavorites__content'>
-                <h2 className='containerFavorites__content__title'>Mes Favoris</h2>
+                <h2 className='containerFavorites__content__article'>Mes Favoris</h2>
 
                 {favorites.length > 0 ? (
                     <>
                         <ul className='containerFavorites__content__article__list'>
                             {currentArticles.map(article => (
-                                <li className="containerFavorites__content__article__list__item" key={article.idArticle}>
-                                    <h4 className="containerFavorites__content__article__list__item__title">{article.title}</h4>
+                                <li className='containerFavorites__content__article__list__item' key={article.idArticle}>
+                                    <h4 className='containerFavorites__content__article__list__item__title'>{article.title}</h4>
                                     <img
-                                        className="containerFavorites__content__article__list__item__image"
+                                        className='containerFavorites__content__article__list__item__image'
                                         src={`http://localhost:4000/uploads/${article.image}`}
                                         alt={article.title}
                                     />
-                                    <p className="containerFavorites__content__article__list__item__content">
+                                    <p className='containerFavorites__content__article__list__item__content'>
                                         {article.content ? article.content.slice(0, 100) : ''}{article.content && article.content.length > 100 ? '...' : ''}
                                     </p>
-                                    <p className="containerFavorites__content__article__list__item__date">
+                                    <p className='containerFavorites__content__article__list__item__date'>
                                         {article.date ? new Date(article.date).toLocaleDateString('fr-FR', {
                                             year: 'numeric',
                                             month: 'long',
@@ -129,7 +129,7 @@ function MyFavorites() {
 
                                     {/* Bouton pour accéder à l'article */}
                                     <button
-                                        className="containerFavorites__content__article__list__item__show"
+                                        className='containerFavorites__content__article__list__item__show'
                                         onClick={() => navigate(`/article/${article.idArticle}`)}
                                     >
                                         Voir l'article
@@ -137,12 +137,12 @@ function MyFavorites() {
 
                                       {/* Bouton pour retirer des favoris */}
                                     <button
-                                        className="containerFavorites__content__article__list__item__delete"
+                                        className='containerFavorites__content__article__list__item__delete'
                                         onClick={() => setFavoriToRemove(article)} // ouvre la modale
                                     >
                                         Retirer
                                     </button>
-                                    <div className="containerMyAccount__content__article__list__item__separator"></div>
+                                    <div className='containerMyAccount__content__article__list__item__separator'></div>
                                 </li>
                             ))}
                         </ul>
@@ -160,7 +160,7 @@ function MyFavorites() {
 
                 {/* Message dynamique */}
                 {message && (
-                    <div className={message.type === "error" ? "error-message" : "success-message"}>
+                    <div className={message.type === 'error' ? 'error-message' : 'success-message'}>
                         {message.text}
                     </div>
                 )}
@@ -168,7 +168,7 @@ function MyFavorites() {
                    {/* Modale de confirmation */}
                 {favoriToRemove && (
                     <ConfirmModal
-                        title="Retirer des favoris"
+                        title='Retirer des favoris'
                         message={`Voulez-vous vraiment retirer « ${favoriToRemove.title} » de vos favoris ?`}
                         onConfirm={handleRemoveFavori}
                         onCancel={() => setFavoriToRemove(null)}

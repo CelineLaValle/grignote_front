@@ -32,7 +32,7 @@ function Menu() {
           setCategories(data);
         }
       })
-      .catch(err => console.error('Erreur chargement categories :', err));
+      .catch(err => console.error('Erreur chargement catégories:', err));
 
     // Récupération des tags
     fetch('http://localhost:4000/tag')
@@ -40,7 +40,7 @@ function Menu() {
       .then(data => {
         setTags(Array.isArray(data) ? data : []);
       })
-      .catch(err => console.error('Erreur chargement tags :', err));
+      .catch(err => console.error('Erreur chargement tags:', err));
   }, []);
 
   useEffect(() => {
@@ -60,9 +60,7 @@ function Menu() {
           setUser(null);
         }
       })
-      .catch(err => {
-        console.error(err); // ici on logue seulement les vraies erreurs
-      });
+      .catch(err => console.error('Erreur vérification auth:', err));
   }, []);
 
 
@@ -93,7 +91,7 @@ function Menu() {
       // Redirige vers l'accueil
       navigate('/');
     } catch (err) {
-      console.error('Erreur de déconnexion:', err);
+      console.error('Erreur déconnexion:', err);
     }
   };
 
@@ -122,45 +120,45 @@ function Menu() {
   };
 
   return (
-    <div className="menu">
+    <div className='menu'>
       <button
         onClick={() => setOuvert(!ouvert)}
-        className="menu__toogle"
+        className='menu__toogle'
       >
         {ouvert ? '✖' : '☰'}
       </button>
 
-      <div className="menu__sidebar">
+      <div className='menu__sidebar'>
         <div className={`menu__content ${ouvert ? '' : 'ferme'}`}>
-          <h3 className="menu__content__title">Mes informations :</h3>
+          <h3 className='menu__content__title'>Mes informations :</h3>
 
           <ul>
-            <li> <Link to="/MyAccount" className='menu__content__title__button' onClick={() => setOuvert(false)}>Mon compte</Link> </li>
-            <li> <Link to="/MyFavorites" className='menu__content__title__button' onClick={() => setOuvert(false)}>Mes favoris</Link> </li>
+            <li> <Link to='/MyAccount' className='menu__content__title__button' onClick={() => setOuvert(false)}>Mon compte</Link> </li>
+            <li> <Link to='/MyFavorites' className='menu__content__title__button' onClick={() => setOuvert(false)}>Mes favoris</Link> </li>
           </ul>
 
-          {/* Bloc d'auth juste sous "Mes informations" (visible mobile seulement via CSS) */}
-          <div className="menu__mobileDiff">
+          {/* Bloc d'auth juste sous 'Mes informations' (visible mobile seulement via CSS) */}
+          <div className='menu__mobileDiff'>
             {/* Ligne de séparation */}
-            <div className="menu__separator"></div>
+            <div className='menu__separator'></div>
 
-            <div className="menu__accueil">
+            <div className='menu__accueil'>
               <Link
-                to="/"
-                className="menu__accueilLink"
+                to='/'
+                className='menu__accueilLink'
                 onClick={() => setOuvert(false)}
               >
                 Accueil
               </Link>
             </div>
-            <div className="menu__auth">
+            <div className='menu__auth'>
               {user ? (
                 <>
                   <button onClick={handleLogout} className='menu__authLink'>Se déconnecter</button>
-                  {user.role === "admin" && (
+                  {user.role === 'admin' && (
                     <Link
-                      to="/AdminPage"
-                      className="menu__authLink"
+                      to='/AdminPage'
+                      className='menu__authLink'
                       onClick={() => setOuvert(false)}
                     >
                       Page Admin
@@ -169,8 +167,8 @@ function Menu() {
                 </>
               ) : (
                 <Link
-                  to="/login"
-                  className="menu__authLink"
+                  to='/login'
+                  className='menu__authLink'
                   onClick={() => setOuvert(false)}
                 >
                   Se connecter
@@ -180,41 +178,41 @@ function Menu() {
           </div>
           {/* fin bloc auth */}
 
-          <h3 className="menu__content__title">Filtres :</h3>
+          <h3 className='menu__content__title'>Filtres :</h3>
 
-          <div className="containerFiltres">
+          <div className='containerFiltres'>
             <label className='containerFiltres__title'>Par Catégorie</label>
             <select value={selectedCategory} onChange={handleCategoryChange}>
-              <option value="">Toutes les catégories</option>
+              <option value=''>Toutes les catégories</option>
               {categories.map((category, index) => (
                 <option key={index} value={category}>{category}</option>
               ))}
             </select>
 
             <label className='containerFiltres__title'>Par Tag</label>
-            <div className="containerFiltres__dropdown" ref={dropdownRef}>
+            <div className='containerFiltres__dropdown' ref={dropdownRef}>
               <input
-                type="text"
-                placeholder="Rechercher un tag..."
+                type='text'
+                placeholder='Rechercher un tag...'
                 value={tagSearch}
                 onChange={e => {
                   setTagSearch(e.target.value);
                   if (!tagDropdownOpen) setTagDropdownOpen(true);
                 }}
                 onClick={() => setTagDropdownOpen(true)}
-                autoComplete="off"
-                aria-label="Recherche tags"
+                autoComplete='off'
+                aria-label='Recherche tags'
               />
 
               {tagDropdownOpen && (
-                <div className="containerFiltres__dropdown__menuFiltres">
+                <div className='containerFiltres__dropdown__menuFiltres'>
                   {filteredTags.length === 0 && (
-                    <div className="containerFiltres__dropdown__menuFiltres__empty">Aucun tag trouvé</div>
+                    <div className='containerFiltres__dropdown__menuFiltres__empty'>Aucun tag trouvé</div>
                   )}
                   {filteredTags.map(tag => (
-                    <label key={tag.idTag} className="containerFiltres__dropdown__menuFiltres__item">
+                    <label key={tag.idTag} className='containerFiltres__dropdown__menuFiltres__item'>
                       <input
-                        type="checkbox"
+                        type='checkbox'
                         checked={selectedTags.includes(tag.idTag)}
                         onChange={() => toggleTag(tag.idTag)}
                       />
@@ -226,7 +224,7 @@ function Menu() {
             </div>
 
             {selectedTags.length > 0 && (
-              <div className="containerFiltres__dropdown__tags">
+              <div className='containerFiltres__dropdown__tags'>
                 <strong>Tags sélectionnés :</strong>{' '}
                 {selectedTags
                   .map(id => {
@@ -239,11 +237,11 @@ function Menu() {
 
             {/* Bouton pour réinitialiser les filtres */}
             {(selectedCategory || selectedTags.length > 0) && (
-              <div className="containerFiltres__dropdown__reset">
+              <div className='containerFiltres__dropdown__reset'>
                 <button
                   onClick={handleResetFilters}
-                  className="containerFiltres__dropdown__reset__button"
-                  type="button"
+                  className='containerFiltres__dropdown__reset__button'
+                  type='button'
                 >
                   Effacer les filtres
                 </button>
@@ -252,10 +250,10 @@ function Menu() {
 
             {/* Indicateur des filtres actifs */}
             {(selectedCategory || selectedTags.length > 0) && (
-              <div className="containerFiltres__dropdown__reset__active">
+              <div className='containerFiltres__dropdown__reset__active'>
                 <strong>Filtres actifs :</strong>
-                {selectedCategory && <span className="containerFiltres__dropdown__reset__active__category">Catégorie: {selectedCategory}</span>}
-                {selectedTags.length > 0 && <span className="containerFiltres__dropdown__reset__active__tags">{selectedTags.length} tag(s)</span>}
+                {selectedCategory && <span className='containerFiltres__dropdown__reset__active__category'>Catégorie: {selectedCategory}</span>}
+                {selectedTags.length > 0 && <span className='containerFiltres__dropdown__reset__active__tags'>{selectedTags.length} tag(s)</span>}
               </div>
             )}
           </div>

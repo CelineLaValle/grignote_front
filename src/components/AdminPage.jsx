@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import Pagination from "../components/Pagination";
-import ConfirmModal from "../components/ConfirmModal";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Pagination from '../components/Pagination';
+import ConfirmModal from '../components/ConfirmModal';
 import '../styles/layout/_adminPage.scss';
 
 function AdminPage() {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState("user");
+    const [activeTab, setActiveTab] = useState('user');
     const [users, setUsers] = useState([]);
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,21 +22,21 @@ function AdminPage() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await fetch("http://localhost:4000/auth/me", {
-                    method: "GET",
-                    credentials: "include",
+                const res = await fetch('http://localhost:4000/auth/me', {
+                    method: 'GET',
+                    credentials: 'include',
                 });
-                if (!res.ok) throw new Error("Non authentifié");
+                if (!res.ok) throw new Error('Non authentifié');
                 const data = await res.json();
 
-                if (data.user.role !== "admin") {
-                    navigate("/login"); // Redirection si pas admin
+                if (data.user.role !== 'admin') {
+                    navigate('/login'); // Redirection si pas admin
                 } else {
                     setLoading(false);
                 }
             } catch (err) {
-                console.error("Erreur auth :", err);
-                navigate("/login"); // Redirection si pas connecté
+                console.error('Erreur auth:', err);
+                navigate("/login");
             }
         };
 
@@ -58,22 +58,22 @@ function AdminPage() {
     }, [location.state]);
     // Pagination
     const totalPages =
-        activeTab === "user"
+        activeTab === 'user'
             ? Math.ceil(users.length / itemsPerPage)
             : Math.ceil(articles.length / itemsPerPage);
 
     const currentItems =
-        activeTab === "user"
+        activeTab === 'user'
             ? users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
             : articles.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
 
     // Récupération des utilisateurs
     useEffect(() => {
-        fetch("http://localhost:4000/user")
+        fetch('http://localhost:4000/user')
             .then((res) => res.json())
             .then((data) => setUsers(data))
-            .catch((err) => console.error("Erreur chargement utilisateurs :", err));
+            .catch((err) => console.error('Erreur chargement utilisateurs:', err));
     }, []);
 
     const toggleSuspend = async (idUser) => {
@@ -81,8 +81,8 @@ function AdminPage() {
             const response = await fetch(
                 `http://localhost:4000/user/suspend/${idUser}`,
                 {
-                    method: "PATCH",
-                    credentials: "include",
+                    method: 'PATCH',
+                    credentials: 'include',
                 }
             );
 
@@ -96,16 +96,16 @@ function AdminPage() {
                 )
             );
         } catch (err) {
-            console.error(err);
+            console.error('Erreur action confirmée :', err);
         }
     };
 
     // Récupération des articles
     useEffect(() => {
-        fetch("http://localhost:4000/article")
+        fetch('http://localhost:4000/article')
             .then((res) => res.json())
             .then((data) => setArticles(data))
-            .catch((err) => console.error("Erreur chargement articles :", err));
+            .catch((err) => console.error('Erreur chargement articles:', err));
     }, []);
 
     // Fonction qui s’exécute après confirmation
@@ -113,21 +113,21 @@ function AdminPage() {
         if (!actionToConfirm) return;
 
         try {
-            if (actionToConfirm.type === "deleteUser") {
+            if (actionToConfirm.type === 'deleteUser') {
                 const res = await fetch(`http://localhost:4000/user/${actionToConfirm.item.idUser}`, {
-                    method: "DELETE",
-                    credentials: "include",
+                    method: 'DELETE',
+                    credentials: 'include',
                 });
-                if (!res.ok) throw new Error("Erreur suppression utilisateur");
+                if (!res.ok) throw new Error('Erreur suppression utilisateur');
                 setUsers(prev => prev.filter(u => u.idUser !== actionToConfirm.item.idUser));
-                setMessage({ text: "Utilisateur supprimé avec succès !", type: "success" });
+                setMessage({ text: 'Utilisateur supprimé avec succès !', type: 'success' });
                 setTimeout(() => setMessage(null), 5000);
             }
 
-            if (actionToConfirm.type === "suspendUser") {
+            if (actionToConfirm.type === 'suspendUser') {
                 const res = await fetch(`http://localhost:4000/user/suspend/${actionToConfirm.item.idUser}`, {
-                    method: "PATCH",
-                    credentials: "include",
+                    method: 'PATCH',
+                    credentials: 'include',
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message);
@@ -142,88 +142,88 @@ function AdminPage() {
                     text: data.suspended ? 
                         `L'utilisateur ${actionToConfirm.item.pseudo} a été suspendu` : 
                         `L'utilisateur ${actionToConfirm.item.pseudo} a été réactivé`, 
-                    type: "success" 
+                    type: 'success' 
                 });
                 setTimeout(() => setMessage(null), 5000);
             }
 
-            if (actionToConfirm.type === "deleteArticle") {
+            if (actionToConfirm.type === 'deleteArticle') {
                 const res = await fetch(`http://localhost:4000/article/${actionToConfirm.item.idArticle}`, {
-                    method: "DELETE",
-                    credentials: "include",
+                    method: 'DELETE',
+                    credentials: 'include',
                 });
-                if (!res.ok) throw new Error("Erreur suppression article");
+                if (!res.ok) throw new Error('Erreur suppression article');
                 setArticles(prev => prev.filter(a => a.idArticle !== actionToConfirm.item.idArticle));
-                setMessage({ text: "Article supprimé avec succès !", type: "success" });
+                setMessage({ text: 'Article supprimé avec succès !', type: 'success' });
                 setTimeout(() => setMessage(null), 5000);
             }
         } catch (err) {
-            console.error("Erreur :", err);
+            console.error('Erreur suspension utilisateur:', err);
         } finally {
             setActionToConfirm(null); // Ferme la modale
         }
     };
 
     return (
-        <div className="admin">
-            <div className="admin__content">
-                <h2 className="admin__title">Tableau de bord Admin</h2>
+        <div className='admin'>
+            <div className='admin__content'>
+                <h2 className='admin__title'>Tableau de bord Admin</h2>
 
                 {/* Message dynamique */}
                 {message && (
-                    <div className={message.type === "error" ? "error-message" : "success-message"}>
+                    <div className={message.type === 'error' ? 'error-message' : 'success-message'}>
                         {message.text}
                     </div>
                 )}
 
                 {/* Onglets */}
-                <div className="admin__tabs">
+                <div className='admin__tabs'>
                     <button
-                        className={`admin__tabs__tab ${activeTab === "user" ? "active" : ""}`}
-                        onClick={() => setActiveTab("user")}
+                        className={`admin__tabs__tab ${activeTab === 'user' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('user')}
                     >
                         Utilisateurs
                     </button>
                     <button
-                        className={`admin__tabs__tab ${activeTab === "article" ? "active" : ""}`}
-                        onClick={() => setActiveTab("article")}
+                        className={`admin__tabs__tab ${activeTab === 'article' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('article')}
                     >
                         Articles
                     </button>
                 </div>
 
                 {/* Contenu onglet Users */}
-                {activeTab === "user" && (
-                    <ul className="admin__list">
+                {activeTab === 'user' && (
+                    <ul className='admin__list'>
                         {currentItems.map(user => (
-                            <li className="admin__list__item" key={user.idUser}>
-                                <p className="admin__list__item__info">
+                            <li className='admin__list__item' key={user.idUser}>
+                                <p className='admin__list__item__info'>
                                     <strong>Pseudo:</strong> {user.pseudo} <br />
                                     <strong>Email:</strong> {user.email}
                                 </p>
-                                <div className="admin__list__item__buttons">
+                                <div className='admin__list__item__buttons'>
                                     <button 
-                                        className="admin__list__item__edit"
-                                        onClick={() => navigate(`/EditUser/${user.idUser}`, { state: { from: "AdminPage", tab: "user" } })}>
+                                        className='admin__list__item__edit'
+                                        onClick={() => navigate(`/EditUser/${user.idUser}`, { state: { from: 'AdminPage', tab: 'user' } })}>
                                         Modifier
                                     </button>
 
                                     <button
-                                        className="admin__list__item__delete"
+                                        className='admin__list__item__delete'
                                         onClick={() =>
-                                            setActionToConfirm({ type: "deleteUser", item: user })
+                                            setActionToConfirm({ type: 'deleteUser', item: user })
                                         }
                                     >
                                         Supprimer
                                     </button>
 
                                     <button
-                                        className="admin__list__item__suspend"
+                                        className='admin__list__item__suspend'
                                         onClick={() =>
-                                            setActionToConfirm({ type: "suspendUser", item: user })
+                                            setActionToConfirm({ type: 'suspendUser', item: user })
                                         }
                                     >
-                                        {user.suspended ? "Réactiver" : "Suspendre"}
+                                        {user.suspended ? 'Réactiver' : 'Suspendre'}
                                     </button>
                                 </div>
                             </li>
@@ -232,26 +232,26 @@ function AdminPage() {
                 )}
 
                 {/* Contenu onglet Articles */}
-                {activeTab === "article" && (
-                    <ul className="admin__list">
+                {activeTab === 'article' && (
+                    <ul className='admin__list'>
                         {currentItems.map(article => (
-                            <li className="admin__list__item" key={article.idArticle}>
-                                <h4 className="admin__list__item__title">{article.title}</h4>
+                            <li className='admin__list__item' key={article.idArticle}>
+                                <h4 className='admin__list__item__title'>{article.title}</h4>
                                 <img
                                     src={`http://localhost:4000/uploads/${article.image}`}
                                     alt={article.title}
-                                    className="admin__list__item__image"
+                                    className='admin__list__item__image'
                                 />
-                                <p className="admin__list__item__content">{article.content?.slice(0, 100)}...</p>
-                                <div className="admin__list__item__buttons">
-                                    <button className="admin__list__item__edit"
-                                            onClick={() => navigate(`/EditArticle/${article.idArticle}`, { state: { from: "AdminPage", tab: "article" } })}>
+                                <p className='admin__list__item__content'>{article.content?.slice(0, 100)}...</p>
+                                <div className='admin__list__item__buttons'>
+                                    <button className='admin__list__item__edit'
+                                            onClick={() => navigate(`/EditArticle/${article.idArticle}`, { state: { from: 'AdminPage', tab: 'article' } })}>
                                             Modifier
                                             </button>
                                     <button
-                                        className="admin__list__item__delete"
+                                        className='admin__list__item__delete'
                                         onClick={() =>
-                                            setActionToConfirm({ type: "deleteArticle", item: article })
+                                            setActionToConfirm({ type: 'deleteArticle', item: article })
                                         }
                                     >
                                         Supprimer
@@ -273,14 +273,14 @@ function AdminPage() {
                 {/* Modale de confirmation */}
                 {actionToConfirm && (
                     <ConfirmModal
-                        title="Confirmation"
+                        title='Confirmation'
                         message={
-                            actionToConfirm.type === "deleteUser"
-                                ? `Voulez-vous vraiment supprimer l'utilisateur "${actionToConfirm.item.pseudo}" ?`
-                                : actionToConfirm.type === "suspendUser"
-                                    ? `Voulez-vous vraiment ${actionToConfirm.item.suspended ? "réactiver" : "suspendre"
-                                    } "${actionToConfirm.item.pseudo}" ?`
-                                    : `Voulez-vous vraiment supprimer l'article "${actionToConfirm.item.title}" ?`
+                            actionToConfirm.type === 'deleteUser'
+                                ? `Voulez-vous vraiment supprimer l'utilisateur '${actionToConfirm.item.pseudo}' ?`
+                                : actionToConfirm.type === 'suspendUser'
+                                    ? `Voulez-vous vraiment ${actionToConfirm.item.suspended ? 'réactiver' : 'suspendre'
+                                    } '${actionToConfirm.item.pseudo}' ?`
+                                    : `Voulez-vous vraiment supprimer l'article '${actionToConfirm.item.title}' ?`
                         }
                         onConfirm={handleConfirmAction}
                         onCancel={() => setActionToConfirm(null)}

@@ -3,7 +3,7 @@ import '../styles/layout/_contact.scss'
 
 function Contact() {
     return (
-        <div className="contact" >
+        <div className='contact' >
             <h2 className='contact__title'>Contact</h2>
             <ul className='contact__list'>
                     <li className='contact__mail'>

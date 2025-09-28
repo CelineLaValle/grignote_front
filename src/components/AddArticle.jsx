@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/layout/_add.scss';
 import { useNavigate } from 'react-router-dom';
-import ConfirmModal from "../components/ConfirmModal";
+import ConfirmModal from '../components/ConfirmModal';
 
 function AddArticle() {
     // Déclaration des états pour le titre et le contenu
@@ -15,7 +15,7 @@ function AddArticle() {
     const [image, setImage] = useState(null); // Fichier image
     const [allTags, setAllTags] = useState([]);       // tous les tags existants récupérés depuis le backend
     const [selectedTags, setSelectedTags] = useState([]); // tags choisis par l'utilisateur
-    const [currentTag, setCurrentTag] = useState(""); // input en cours
+    const [currentTag, setCurrentTag] = useState(''); // input en cours
     const [showCancelModal, setShowCancelModal] = useState(false);
 
 
@@ -44,7 +44,7 @@ function AddArticle() {
         fetch('http://localhost:4000/tag')
             .then(res => res.json())
             .then(data => setAllTags(data))
-            .catch(err => console.error(err));
+            .catch(err => console.error('Erreur chargement tags:', err));
     }, []);
 
 
@@ -101,7 +101,7 @@ function AddArticle() {
             // Rediriger vers la page principale
             navigate('/');
         } catch (error) {
-            console.error('Erreur:', error);
+            console.error('Erreur lors de la soumission:', error);
         }
 
         // Réinitialisation des champs du formulaire
@@ -119,66 +119,66 @@ function AddArticle() {
     }
 
     return (
-        <div className="article">
-            <h2 className="article__title">Ajouter une recette</h2>
-            <form className="article__form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <div className='article'>
+            <h2 className='article__title'>Ajouter une recette</h2>
+            <form className='article__form' onSubmit={handleSubmit} encType='multipart/form-data'>
                 {/* Champ pour le titre */}
-                <div className="article__field">
-                    <label htmlFor="title" className="article__label">Titre de la recette</label>
+                <div className='article__field'>
+                    <label htmlFor='title' className='article__label'>Titre de la recette</label>
                     <input
-                        className="article__input"
-                        type="text"
-                        id="title"
+                        className='article__input'
+                        type='text'
+                        id='title'
                         value={title}
                         onChange={(e) => {
                             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '');
                             setTitle(value);
                         }}
-                        placeholder="Entrez le nom de la recette"
+                        placeholder='Entrez le nom de la recette'
                     />
                 </div>
 
                 {/* Champ pour la liste d'ingrédients */}
-                <div className="article__field">
-                    <label htmlFor="ingredient" className="article__label">Liste des ingrédients</label>
+                <div className='article__field'>
+                    <label htmlFor='ingredient' className='article__label'>Liste des ingrédients</label>
                     <textarea
-                        className="article__textarea"
-                        rows="20"
-                        cols="33"
-                        id="ingredient"
-                        name="ingredient"
+                        className='article__textarea'
+                        rows='20'
+                        cols='33'
+                        id='ingredient'
+                        name='ingredient'
                         value={ingredient}
                         onChange={(e) => {
                             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
                             setIngredient(value);
                         }}      
-                        placeholder="Noter les ingrédients"
+                        placeholder='Noter les ingrédients'
                     />
                 </div>
 
                 {/* Champ pour le contenu */}
-                <div className="article__field">
-                    <label htmlFor="content" className="article__label">Contenu de la recette</label>
+                <div className='article__field'>
+                    <label htmlFor='content' className='article__label'>Contenu de la recette</label>
                     <textarea
-                        className="article__textarea"
-                        rows="20"
-                        cols="33"
-                        id="content"
+                        className='article__textarea'
+                        rows='20'
+                        cols='33'
+                        id='content'
                         value={content}
                          onChange={(e) => {
                             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
                             setContent(value);
                         }}
-                        placeholder="Entrez le contenu de la recette"
+                        placeholder='Entrez le contenu de la recette'
                     />
                 </div>
 
                 {/* Champ pour la catégorie */}
-                <div className="article__field">
-                    <label htmlFor="category" className="article__label">Catégorie de la recette</label>
+                <div className='article__field'>
+                    <label htmlFor='category' className='article__label'>Catégorie de la recette</label>
                     <select
-                        id="category"
-                        className="article__select"
+                        id='category'
+                        className='article__select'
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                     >
@@ -191,27 +191,27 @@ function AddArticle() {
 
                 {/* Champ pour les tags */}
 
-                <div className="article__field">
-                    <label htmlFor="tags" className="article__label">Tags</label>
+                <div className='article__field'>
+                    <label htmlFor='tags' className='article__label'>Tags</label>
                     <div>
                         {selectedTags.map((tag, index) => (
                             <span key={index}>
                                 #{tag.name || tag}
-                                <button type="button" onClick={() => {
+                                <button type='button' onClick={() => {
                                     setSelectedTags(selectedTags.filter((_, i) => i !== index));
                                 }}>x</button>
                             </span>
                         ))}
 
                         <input
-                            type="text"
+                            type='text'
                             value={currentTag}
                                 onChange={e => {
                                     const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, '');
                                     setCurrentTag(value);
                                 }}
                             onKeyDown={e => {
-                                if (e.key === "Enter") {
+                                if (e.key === 'Enter') {
                                     e.preventDefault();
                                     const trimmed = currentTag.trim();
                                     if (!trimmed) return;
@@ -221,41 +221,41 @@ function AddArticle() {
                                     setCurrentTag('');
                                 }
                             }}
-                            placeholder="Tapez un tag et appuyez sur Entrée"
-                            className="article__input"
+                            placeholder='Tapez un tag et appuyez sur Entrée'
+                            className='article__input'
                         />
                     </div>
                 </div>
 
                 {/* Champ pour le fichier image */}
-                <div className="article__field">
-                    <label htmlFor="image" className="article__label">Image de la recette</label>
+                <div className='article__field'>
+                    <label htmlFor='image' className='article__label'>Image de la recette</label>
                     <input
-                        id="image"
-                        className="article__file"
-                        type="file"
-                        accept="image/*"
+                        id='image'
+                        className='article__file'
+                        type='file'
+                        accept='image/*'
                         onChange={(e) => setImage(e.target.files[0])} // Récupère le fichier
                     />
-                      <label htmlFor="image" className="article__image">Choisir une image</label>
+                      <label htmlFor='image' className='article__image'>Choisir une image</label>
                 </div>
                 <div className='article__buttons'>
                     <button
-                        className="article__submit"
-                        type="button"
+                        className='article__submit'
+                        type='button'
                          onClick={() => setShowCancelModal(true)}
                     >
                         Annuler
                     </button>
-                    <button className="article__submit" type="submit">Valider</button>
+                    <button className='article__submit' type='submit'>Valider</button>
                 </div>
             </form>
                {/* Modale d’annulation */}
             {showCancelModal && (
                 <ConfirmModal
-                    title="Confirmation"
-                    message="Êtes-vous sûr de vouloir annuler ? Vos modifications seront perdues."
-                    onConfirm={() => navigate("/")} // redirection
+                    title='Confirmation'
+                    message='Êtes-vous sûr de vouloir annuler ? Vos modifications seront perdues.'
+                    onConfirm={() => navigate('/')} // redirection
                     onCancel={() => setShowCancelModal(false)} // ferme la modale
                 />
             )}

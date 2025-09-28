@@ -168,7 +168,7 @@ function EditArticle() {
                         className='articleModify__textarea'
                         value={article.ingredient}
                         onChange={(e) =>
-                            setArticle({...article, ingredient: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
+                            setArticle({...article, ingredient: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n-]/g, '')
                         })
                     }
                         placeholder='Ingrédients'
@@ -181,7 +181,7 @@ function EditArticle() {
                         className='articleModify__textarea'
                         value={article.content}
                         onChange={(e) =>
-                            setArticle({...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
+                            setArticle({...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n-]/g, '')
                         })
                     }
                         placeholder='Contenu'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
 import '../styles/layout/_account.scss';
 

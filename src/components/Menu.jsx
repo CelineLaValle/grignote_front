@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useFilters } from './FilterContext';
 import '../styles/layout/_menu.scss';
 import { Link, useNavigate } from 'react-router-dom';

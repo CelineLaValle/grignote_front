@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Pagination = ({ currentPage, totalPages, nextPage, prevPage }) => {
   return (
     <div className='pagination'>

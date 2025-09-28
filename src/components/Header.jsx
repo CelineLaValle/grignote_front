@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cupcake from '../assets/cupcake.png';
 import '../styles/layout/_header.scss';
 import Menu from '../components/Menu'

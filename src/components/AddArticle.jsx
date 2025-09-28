@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/layout/_add.scss';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal';
@@ -97,7 +97,7 @@ function AddArticle() {
                 throw new Error('Erreur lors de l\'envoi de l\'article');
             }
 
-            const result = await response.json(); // Si le backend renvoie des données
+            // const result = await response.json(); // Si le backend renvoie des données
             // Rediriger vers la page principale
             navigate('/');
         } catch (error) {
@@ -113,10 +113,6 @@ function AddArticle() {
         setImage(null);
     };
 
-    // Affichage de chargement si l'utilisateur n'est pas encore chargé
-    if (!user) {
-        return <div>Chargement...</div>;
-    }
 
     return (
         <div className='article'>

@@ -1,4 +1,3 @@
-import React from 'react';
 import '../styles/layout/_confirmModal.scss';
 
 function ConfirmModal({ title, message, onConfirm, onCancel }) {

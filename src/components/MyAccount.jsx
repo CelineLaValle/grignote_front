@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import '../styles/layout/_myAccount.scss';
 import '../styles/layout/_pagination.scss'
 import { Link, useNavigate } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/layout/_editUser.scss';
 
@@ -7,7 +7,6 @@ function EditUser() {
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState(null);
-    const [notFound, setNotFound] = useState(false);
     // Récupérer la page d'origine depuis l'état de navigation
     const fromPage = location.state?.from || 'AdminPage';
 
@@ -16,16 +15,16 @@ function EditUser() {
             .then((res) => res.json())
             .then((data) => {
                 if (data.message === 'Utilisateur non trouvé') {
-                    setNotFound(true);
+                    navigate('/not-found'); // Redirection vers une page 404 au lieu de définir notFound
                 } else {
                     setUser(data);
                 }
             })
             .catch((err) => {
                 console.error('Erreur :', err);
-                setNotFound(true);
+                navigate('/not-found'); // Redirection vers une page 404 au lieu de définir notFound
             });
-    }, [id]);
+    }, [id, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,7 +67,7 @@ function EditUser() {
     };
 
     if (!user) {
-        return null; // on affiche rien si pas encore reçu les données
+        return null; // On affiche rien si pas encore reçu les données
     }
 
     return (

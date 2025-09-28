@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import ConfirmModal from '../components/ConfirmModal';
@@ -76,29 +76,6 @@ function AdminPage() {
             .catch((err) => console.error('Erreur chargement utilisateurs:', err));
     }, []);
 
-    const toggleSuspend = async (idUser) => {
-        try {
-            const response = await fetch(
-                `http://localhost:4000/user/suspend/${idUser}`,
-                {
-                    method: 'PATCH',
-                    credentials: 'include',
-                }
-            );
-
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message);
-
-            // Mise à jour dans le state
-            setUsers((prev) =>
-                prev.map((u) =>
-                    u.idUser === idUser ? { ...u, suspended: data.suspended } : u
-                )
-            );
-        } catch (err) {
-            console.error('Erreur action confirmée :', err);
-        }
-    };
 
     // Récupération des articles
     useEffect(() => {

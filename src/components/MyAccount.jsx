@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
 import { useLocation } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal';
+import { API_URL } from '../config';
+
 
 function MyAccount() {
     const navigate = useNavigate();
@@ -23,11 +25,11 @@ function MyAccount() {
         //     setUser(null);
         //     return;
         // }
-        fetch('http://localhost:4000/auth/me', { credentials: 'include' })
+        fetch(`${API_URL}/auth/me`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 setUser(data.user); // stocke l'utilisateur
-                return fetch(`http://localhost:4000/article/user/${data.user.idUser}`);
+                return fetch(`${API_URL}/article/user/${data.user.idUser}`);
             })
             .then(res => res.json())
             .then(data => {
@@ -76,7 +78,7 @@ function MyAccount() {
     const handleDelete = async () => {
         if (!articleToDelete) return;
         try {
-            const response = await fetch(`http://localhost:4000/article/${articleToDelete.idArticle}`, {
+            const response = await fetch(`${API_URL}/article/${articleToDelete.idArticle}`, {
                 method: 'DELETE',
                 credentials: 'include',
             });

@@ -4,6 +4,7 @@ import '../styles/layout/_pagination.scss'
 import { Link } from 'react-router-dom'
 import { useFilters } from './FilterContext';
 import Pagination from './Pagination';
+import { API_URL } from '../config'; 
 
 function AccueilPage() {
   const [articles, setArticles] = useState([]);
@@ -21,7 +22,7 @@ function AccueilPage() {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('http://localhost:4000/article');
+      const response = await fetch(`${API_URL}/article`);
       if (!response.ok) {
         throw new Error(`Erreur lors de la récupération des données: ${response.status}`);
       }

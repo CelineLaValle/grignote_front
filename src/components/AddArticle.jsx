@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import '../styles/layout/_add.scss';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal';
+import { API_URL } from '../config'; 
 
 function AddArticle() {
     // Déclaration des états pour le titre et le contenu
@@ -22,7 +23,7 @@ function AddArticle() {
 
     // useEffect permet de récupérer l'utilisateur via l'endpoint /auth/me
     useEffect(() => {
-        fetch('http://localhost:4000/auth/me', {
+        fetch(`${API_URL}/auth/me`, {
             credentials: 'include' // Important pour envoyer les cookies
         })
             .then(res => {
@@ -41,7 +42,7 @@ function AddArticle() {
 
 
     useEffect(() => {
-        fetch('http://localhost:4000/tag')
+        fetch(`${API_URL}/tag`)
             .then(res => res.json())
             .then(data => setAllTags(data))
             .catch(err => console.error('Erreur chargement tags:', err));
@@ -62,7 +63,7 @@ function AddArticle() {
         for (let tag of selectedTags) {
             let existingTag = allTags.find(t => t.name.toLowerCase() === tag.name.toLowerCase());
             if (!existingTag) {
-                const res = await fetch('http://localhost:4000/tag', {
+                const res = await fetch(`${API_URL}/tag`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: tag.name })
@@ -87,7 +88,7 @@ function AddArticle() {
 
         // Envoi de la requête POST au backend
         try {
-            const response = await fetch('http://localhost:4000/article', {
+            const response = await fetch(`${API_URL}/article`, {
                 method: 'POST',
                 body: formData, // PAS besoin de Content-Type ici, le navigateur le définit
             });

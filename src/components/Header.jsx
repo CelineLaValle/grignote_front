@@ -3,6 +3,8 @@ import cupcake from '../assets/cupcake.png';
 import '../styles/layout/_header.scss';
 import Menu from '../components/Menu'
 import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
+
 
 function Header() {
   const [user, setUser] = useState(null);
@@ -17,7 +19,7 @@ function Header() {
     //   return;
     // }
 
-    fetch('http://localhost:4000/auth/me', {
+    fetch(`${API_URL}/auth/me`, {
       credentials: 'include' // Important pour envoyer les cookies
     })
       .then(res => {
@@ -41,7 +43,7 @@ function Header() {
   const handleLogout = async () => {
     try {
       // Appelle le backend pour effacer le cookie token
-      await fetch('http://localhost:4000/auth/logout', {
+      await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include' // très important pour envoyer le cookie au backend
       });

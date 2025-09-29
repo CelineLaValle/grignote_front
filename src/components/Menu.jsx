@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useFilters } from './FilterContext';
 import '../styles/layout/_menu.scss';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 
 function Menu() {
   const [ouvert, setOuvert] = useState(false);
@@ -25,7 +26,7 @@ function Menu() {
 
   useEffect(() => {
     // Récupération des catégories
-    fetch('http://localhost:4000/category')
+    fetch(`${API_URL}/category`)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -35,7 +36,7 @@ function Menu() {
       .catch(err => console.error('Erreur chargement catégories:', err));
 
     // Récupération des tags
-    fetch('http://localhost:4000/tag')
+    fetch(`${API_URL}/tag`)
       .then(response => response.json())
       .then(data => {
         setTags(Array.isArray(data) ? data : []);
@@ -45,7 +46,7 @@ function Menu() {
 
   useEffect(() => {
 
-    fetch('http://localhost:4000/auth/me', {
+    fetch(`${API_URL}/auth/me`, {
       credentials: 'include' // Important pour envoyer les cookies
     })
       .then(res => {
@@ -80,7 +81,7 @@ function Menu() {
   const handleLogout = async () => {
     try {
       // Appelle le backend pour effacer le cookie token
-      await fetch('http://localhost:4000/auth/logout', {
+      await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include' // très important pour envoyer le cookie au backend
       });

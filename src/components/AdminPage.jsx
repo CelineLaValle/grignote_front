@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Pagination from '../components/Pagination';
-import ConfirmModal from '../components/ConfirmModal';
+import Pagination from './Pagination';
+import ConfirmModal from './ConfirmModal';
 import '../styles/layout/_adminPage.scss';
+import { API_URL } from '../config'; 
+
 
 function AdminPage() {
     const navigate = useNavigate();
@@ -22,7 +24,7 @@ function AdminPage() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await fetch('http://localhost:4000/auth/me', {
+                const res = await fetch(`${API_URL}/auth/me`, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -70,7 +72,7 @@ function AdminPage() {
 
     // Récupération des utilisateurs
     useEffect(() => {
-        fetch('http://localhost:4000/user')
+        fetch(`${API_URL}/user`)
             .then((res) => res.json())
             .then((data) => setUsers(data))
             .catch((err) => console.error('Erreur chargement utilisateurs:', err));
@@ -79,7 +81,7 @@ function AdminPage() {
 
     // Récupération des articles
     useEffect(() => {
-        fetch('http://localhost:4000/article')
+        fetch(`${API_URL}/article`)
             .then((res) => res.json())
             .then((data) => setArticles(data))
             .catch((err) => console.error('Erreur chargement articles:', err));
@@ -91,7 +93,7 @@ function AdminPage() {
 
         try {
             if (actionToConfirm.type === 'deleteUser') {
-                const res = await fetch(`http://localhost:4000/user/${actionToConfirm.item.idUser}`, {
+                const res = await fetch(`${API_URL}/user/${actionToConfirm.item.idUser}`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });
@@ -102,7 +104,7 @@ function AdminPage() {
             }
 
             if (actionToConfirm.type === 'suspendUser') {
-                const res = await fetch(`http://localhost:4000/user/suspend/${actionToConfirm.item.idUser}`, {
+                const res = await fetch(`${API_URL}/user/suspend/${actionToConfirm.item.idUser}`, {
                     method: 'PATCH',
                     credentials: 'include',
                 });
@@ -125,7 +127,7 @@ function AdminPage() {
             }
 
             if (actionToConfirm.type === 'deleteArticle') {
-                const res = await fetch(`http://localhost:4000/article/${actionToConfirm.item.idArticle}`, {
+                const res = await fetch(`${API_URL}/article/${actionToConfirm.item.idArticle}`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });

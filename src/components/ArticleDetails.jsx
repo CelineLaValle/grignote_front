@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../styles/layout/_articleDetails.scss';
 import NotFound from '../components/NotFound';
+import { API_URL } from '../config';
 
 
 function ArticleDetails() {
@@ -23,7 +24,7 @@ function ArticleDetails() {
         //     return;
         // }
 
-        fetch('http://localhost:4000/auth/me', {
+        fetch(`${API_URL}/auth/me`, {
             credentials: 'include'
         })
             .then(res => {
@@ -39,7 +40,7 @@ function ArticleDetails() {
     useEffect(() => {
         async function fetchArticle() {
             try {
-                const response = await fetch(`http://localhost:4000/article/${idArticle}`);
+                const response = await fetch(`${API_URL}/article/${idArticle}`);
                 if (!response.ok) {
                     throw new Error('Erreur lors de la récupération de l\'article');
                 }
@@ -56,7 +57,7 @@ function ArticleDetails() {
     // Vérifier si déjà en favori
     useEffect(() => {
         if (user) {
-            fetch('http://localhost:4000/favori', { credentials: 'include' })
+            fetch(`${API_URL}/favori`, { credentials: 'include' })
                 .then(res => res.json())
                 .then(data => {
                     const exists = data.some(fav => fav.idArticle === parseInt(idArticle));
@@ -76,14 +77,14 @@ function ArticleDetails() {
         try {
             if (isFavori) {
                 // Retirer
-                await fetch(`http://localhost:4000/favori/${idArticle}`, {
+                await fetch(`${API_URL}/favori/${idArticle}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
                 setIsFavori(false);
             } else {
                 // Ajouter
-                await fetch('http://localhost:4000/favori', {
+                await fetch(`${API_URL}/favori`, {
                     method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
@@ -100,7 +101,7 @@ function ArticleDetails() {
     useEffect(() => {
         async function fetchComments() {
             try {
-                const res = await fetch(`http://localhost:4000/comment/${idArticle}`);
+                const res = await fetch(`${API_URL}/comment/${idArticle}`);
                 if (!res.ok) throw new Error('Erreur récupération commentaires');
                 const data = await res.json();
                 setComments(data);
@@ -118,7 +119,7 @@ function ArticleDetails() {
 
         try {
 
-            const res = await fetch('http://localhost:4000/comment', {
+            const res = await fetch(`${API_URL}/comment`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },

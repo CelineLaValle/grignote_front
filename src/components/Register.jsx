@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/layout/_account.scss';
+import { API_URL } from '../config';
+
 function Register() {
     const [pseudo, setPseudo] = useState('');
     const [email, setEmail] = useState('');
@@ -29,7 +31,7 @@ function Register() {
         }
 
         try {
-            const response = await fetch('http://localhost:4000/auth/register', {
+            const response = await fetch(`${API_URL}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

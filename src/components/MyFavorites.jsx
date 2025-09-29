@@ -4,6 +4,8 @@ import Pagination from '../components/Pagination';
 import ConfirmModal from '../components/ConfirmModal';
 import '../styles/layout/_myFavorites.scss';
 import '../styles/layout/_pagination.scss'
+import { API_URL } from '../config';
+
 
 function MyFavorites() {
     const navigate = useNavigate();
@@ -33,7 +35,7 @@ function MyFavorites() {
         //     return;
         // }
 
-        fetch('http://localhost:4000/auth/me', { credentials: 'include' })
+        fetch(`${API_URL}/auth/me`, { credentials: 'include' })
             .then(res => {
                 if (!res.ok) throw new Error('Vous n\'êtes pas connecté');
                 return res.json();
@@ -48,7 +50,7 @@ function MyFavorites() {
 
         async function fetchFavorites() {
             try {
-                const res = await fetch(`http://localhost:4000/favori`, {
+                const res = await fetch(`${API_URL}/favori`, {
                     credentials: 'include',
                 });
                 if (!res.ok) throw new Error('Erreur lors de la récupération des favoris');
@@ -67,7 +69,7 @@ function MyFavorites() {
     const handleRemoveFavori = async () => {
         if (!favoriToRemove) return;
         try {
-            const res = await fetch(`http://localhost:4000/favori/${favoriToRemove.idArticle}`, {
+            const res = await fetch(`${API_URL}/favori/${favoriToRemove.idArticle}`, {
                 method: 'DELETE',
                 credentials: 'include',
             });

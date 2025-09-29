@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/layout/_editArticle.scss';
+import { API_URL } from '../config';
+
 
 function EditArticle() {
     const { id } = useParams();
@@ -16,7 +18,7 @@ function EditArticle() {
     const fromPage = location.state?.from || 'MyAccount';
 
     useEffect(() => {
-        fetch(`http://localhost:4000/article/${id}`)
+        fetch(`${API_URL}/article/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.message === 'Article non trouvé') {
@@ -38,14 +40,14 @@ function EditArticle() {
 
 
     useEffect(() => {
-        fetch('http://localhost:4000/category')
+        fetch(`${API_URL}/category`)
             .then((res) => res.json())
             .then((data) => setCategories(data))
             .catch((err) => console.error('Erreur categories :', err));
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:4000/tag')
+        fetch(`${API_URL}/tag`)
             .then((res) => res.json())
             .then((data) => setTags(Array.isArray(data) ? data : []))
             .catch((err) => console.error('Erreur tags :', err));
@@ -64,7 +66,7 @@ function EditArticle() {
         if (!newTag.trim()) return;
 
         try {
-            const response = await fetch('http://localhost:4000/tag', {
+            const response = await fetch(`${API_URL}/tag`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -108,7 +110,7 @@ function EditArticle() {
 
             const token = localStorage.getItem('token'); // ou récupérer d'où tu stockes ton JWT
 
-            const response = await fetch(`http://localhost:4000/article/${id}`, {
+            const response = await fetch(`${API_URL}/article/${id}`, {
                 method: 'PUT',
                 headers: {
                     Authorization: token ? `Bearer ${token}` : '', // JWT

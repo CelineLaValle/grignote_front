@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
 import '../styles/layout/_account.scss';
+import { API_URL } from '../config';
+
 
 function Login() {
     // On initialise des états pour stocker les champs du formulaire
@@ -21,7 +23,7 @@ function Login() {
 
         try {
             // On envoie la requête POST au backend avec email et mot de passe
-            const response = await fetch('http://localhost:4000/auth/login', {
+            const response = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // On envoie du JSON

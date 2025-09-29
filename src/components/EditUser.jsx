@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/layout/_editUser.scss';
+import { API_URL } from '../config';
 
 function EditUser() {
     const { id } = useParams();
@@ -11,7 +12,7 @@ function EditUser() {
     const fromPage = location.state?.from || 'AdminPage';
 
     useEffect(() => {
-        fetch(`http://localhost:4000/user/${id}`)
+        fetch(`${API_URL}/user/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.message === 'Utilisateur non trouvé') {
@@ -31,7 +32,7 @@ function EditUser() {
         if (!user) return;
 
         try {
-            const response = await fetch(`http://localhost:4000/user/${id}`, {
+            const response = await fetch(`${API_URL}/user/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

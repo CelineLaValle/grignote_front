@@ -28,6 +28,8 @@ function AccueilPage() {
       }
 
       const data = await response.text();
+      console.log(data);
+      
       
       setArticles(data);
     } catch (err) {

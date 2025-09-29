@@ -83,7 +83,7 @@ function MyAccount() {
 
             if (!response.ok) {
                 const errData = await response.json();
-                throw new Error(errData.message || 'Erreur lors de la suppression');
+                throw new Error(errData.message || 'Erreur lors de la suppression de l\'article');
             }
 
             setArticles(prev => prev.filter(a => a.idArticle !== articleToDelete.idArticle));

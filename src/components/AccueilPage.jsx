@@ -23,7 +23,7 @@ function AccueilPage() {
       
       const response = await fetch('http://localhost:4000/article');
       if (!response.ok) {
-        throw new Error(`Erreur serveur: ${response.status}`);
+        throw new Error(`Erreur lors de la récupération des données: ${response.status}`);
       }
 
       const data = await response.json();

@@ -73,7 +73,8 @@ function EditArticle() {
                 body: JSON.stringify({ name: newTag }),
             });
 
-            if (!response.ok) throw new Error('Erreur lors de l’ajout du tag');
+            // Ligne 76
+            if (!response.ok) throw new Error('Erreur lors de l\'ajout du tag');
 
             const createdTag = await response.json();
 
@@ -118,7 +119,8 @@ function EditArticle() {
 
             if (!response.ok) {
                 const errData = await response.json();
-                throw new Error(errData.message || 'Erreur lors de la mise à jour');
+                // Ligne 121
+                throw new Error(errData.message || 'Erreur lors de la mise à jour de l\'article');
             }
 
             // Redirection avec message et conservation de l'onglet actif

@@ -27,7 +27,7 @@ function ArticleDetails() {
             credentials: 'include'
         })
             .then(res => {
-                if (!res.ok) throw new Error('Non connecté');
+                if (!res.ok) throw new Error('Vous n\'êtes pas connecté');
                 return res.json();
             })
             .then(data => setUser(data.user))
@@ -41,7 +41,7 @@ function ArticleDetails() {
             try {
                 const response = await fetch(`http://localhost:4000/article/${idArticle}`);
                 if (!response.ok) {
-                    throw new Error('Erreur lors de la récupération de l’article');
+                    throw new Error('Erreur lors de la récupération de l\'article');
                 }
                 const data = await response.json();
                 setArticle(data);

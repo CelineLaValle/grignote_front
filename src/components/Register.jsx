@@ -41,7 +41,7 @@ function Register() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Erreur d’inscription');
+                throw new Error(data.message || 'Erreur lors de l\'inscription');
             }
 
             setTimeout(() => {

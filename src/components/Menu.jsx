@@ -51,7 +51,7 @@ function Menu() {
       .then(res => {
         if (res.ok) return res.json();
         if (res.status === 401) return null; // utilisateur non connecté
-        throw new Error('Erreur serveur');   // toutes les autres erreurs remontent
+        throw new Error('Erreur lors de la communication avec le serveur');   // toutes les autres erreurs remontent
       })
       .then(data => {
         if (data?.user) {

@@ -129,7 +129,7 @@ function AdminPage() {
                     method: 'DELETE',
                     credentials: 'include',
                 });
-                if (!res.ok) throw new Error('Erreur suppression article');
+                if (!res.ok) throw new Error('Erreur lors de la suppression de l\'article');
                 setArticles(prev => prev.filter(a => a.idArticle !== actionToConfirm.item.idArticle));
                 setMessage({ text: 'Article supprimé avec succès !', type: 'success' });
                 setTimeout(() => setMessage(null), 5000);

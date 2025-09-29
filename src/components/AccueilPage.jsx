@@ -104,19 +104,19 @@ function AccueilPage() {
             {currentArticles.map(item => (
               <div className='articlesContainer__article__div' key={item.idArticle}>
                 <div className='articlesContainer__article__div__card'>
-                  <span className='articlesContainer__article__div__card__title'>{item.title}</span>
+                  <h3 className='articlesContainer__article__div__card__title'>{item.title}</h3>
                   
                   {/* Affichage de l'image si elle existe */}
                   {item.image && (
                     <img 
-                      src={`http://localhost:4000/uploads/${item.image}`} 
+                      src={`${API_URL}/uploads/${item.image}`} 
                       alt={item.title} 
                       className='articlesContainer__article__div__card__image' 
                     />
                   )}
 
                   <Link to={`/article/${item.idArticle}`} className='fullLink'></Link>
-                  <span className='articlesContainer__article__div__card__content'>{item.content}</span>
+                  <p className='articlesContainer__article__div__card__content'>{item.content}</p>
 
                   {/* Affichage de la catégorie */}
                   <div className='articlesContainer__article__div__card__category'>{item.category}</div>

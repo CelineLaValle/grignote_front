@@ -69,6 +69,12 @@
     cursor: pointer;
   }
 
+  &__preview {
+    max-width: 200px;
+    margin-top: 10px;
+    border-radius: $radius-sm;
+  }
+
   &__buttons {
     display: flex;
     gap: 10px;

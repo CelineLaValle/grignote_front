@@ -223,9 +223,23 @@ function AddArticle() {
                     </div>
                 </div>
 
+
                 {/* Champ pour le fichier image */}
                 <div className='article__field'>
-                    <label htmlFor='image' className='article__label'>Image de la recette</label>
+                    
+                    {/* Aperçu de l'image */}
+                    {image && (
+                        <div className='article__field'>
+                            <span className='article__label'>Aperçu de l'image</span>
+                            <img
+                                className='article__preview'
+                                src={URL.createObjectURL(image)}
+                                alt='Aperçu'
+                            />
+                        </div>
+                    )}
+
+                        <label htmlFor='image' className='article__label'>Image de la recette</label>
                     <input
                         id='image'
                         className='article__file'
@@ -233,8 +247,9 @@ function AddArticle() {
                         accept='image/*'
                         onChange={(e) => setImage(e.target.files[0])} // Récupère le fichier
                     />
-                      <label htmlFor='image' className='article__image'>Choisir une image</label>
+                    <label htmlFor='image' className='article__image'>Choisir une image</label>
                 </div>
+                
                 <div className='article__buttons'>
                     <button
                         className='article__submit'
@@ -246,6 +261,7 @@ function AddArticle() {
                     <button className='article__submit' type='submit'>Valider</button>
                 </div>
             </form>
+
                {/* Modale d’annulation */}
             {showCancelModal && (
                 <ConfirmModal

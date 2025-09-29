@@ -87,14 +87,14 @@ function MyAccount() {
             }
 
             setArticles(prev => prev.filter(a => a.idArticle !== articleToDelete.idArticle));
-            setMessage({ text: 'Article supprimé avec succès !', type: 'error' });
+            setMessage({ text: 'Article supprimé avec succès !', type: 'success' }); // Changé 'error' en 'success'
             setTimeout(() => setMessage(null), 5000);
         } catch (error) {
             console.error('Erreur suppression:', error);
-            setMessage("Échec de la suppression : " + error.message);
+            setMessage({ text: "Échec de la suppression : " + error.message, type: 'error' }); // Format cohérent
             setTimeout(() => setMessage(null), 5000);
         } finally {
-            setArticleToDelete(null); // ✅ ferme la modale
+            setArticleToDelete(null); // Ferme la modale
         }
     };
 

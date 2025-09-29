@@ -250,7 +250,7 @@ function EditArticle() {
                             className='articleModify__preview'
                             src={
                                 typeof article.image === 'string'
-                                    ? `http://localhost:4000/uploads/${article.image}`
+                                    ? `${API_URL}/uploads/${article.image}`
                                     : URL.createObjectURL(article.image)
                             }
                             alt='Aperçu'

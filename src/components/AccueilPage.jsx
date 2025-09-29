@@ -27,7 +27,7 @@ function AccueilPage() {
         throw new Error(`Erreur lors de la récupération des données: ${response.status}`);
       }
 
-      const data = await response.text();
+      const data = await response.json();
       console.log(data);
       
       

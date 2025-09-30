@@ -2,9 +2,9 @@ import AccueilPage from '../components/AccueilPage'
 
 function Accueil() {
   return (
-    <div>
+    <main>
     <AccueilPage />
-    </div>
+    </main>
   )
 }
 

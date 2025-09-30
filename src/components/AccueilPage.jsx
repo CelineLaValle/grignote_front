@@ -101,7 +101,7 @@ function AccueilPage() {
 
       {/* Affichage des articles */}
       {filteredArticles.length > 0 && (
-        <div className='articlesContainer'>
+        <section className='articlesContainer'>
           <article className='articlesContainer__article'>
             {currentArticles.map(item => (
               <div className='articlesContainer__article__div' key={item.idArticle}>
@@ -137,7 +137,7 @@ function AccueilPage() {
               </div>
             ))}
           </article>
-        </div>
+        </section>
       )}
 
       <div className='containerButton'>

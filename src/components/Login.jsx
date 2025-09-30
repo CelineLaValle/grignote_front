@@ -39,6 +39,7 @@ function Login() {
                 throw new Error(data.message || 'Erreur de connexion');
             }
 
+
             // Si la connexion est réussie, on redirige vers la page d'accueil
             // Le token est maintenant stocké dans un cookie HTTP-only
             // Si la connexion est réussie, redirige vers l'article ou page demandée
@@ -50,6 +51,7 @@ function Login() {
             setMessageType('error');
         }
     };
+
     return (
         <div className='containerAccount'>
             {message && (

@@ -87,23 +87,27 @@ function AddArticle() {
         }
 
         // Envoi de la requête POST au backend
-        try {
+            try {
             const response = await fetch(`${API_URL}/article`, {
                 method: 'POST',
-                body: formData, // PAS besoin de Content-Type ici, le navigateur le définit
+                body: formData,
+                credentials: 'include', // nécessaire si backend renvoie un cookie
             });
 
-            // Vérification de la réponse
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Erreur lors de l\'envoi de l\'article');
+                console.error('Erreur serveur:', data);
+                throw new Error(data.message || 'Erreur serveur');
             }
 
-            // const result = await response.json(); // Si le backend renvoie des données
+            console.log('Article créé:', data);
             // Rediriger vers la page principale
             navigate('/');
         } catch (error) {
             console.error('Erreur lors de la soumission:', error);
         }
+
 
         // Réinitialisation des champs du formulaire
         setTitle('');

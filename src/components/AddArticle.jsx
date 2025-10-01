@@ -53,6 +53,12 @@ function AddArticle() {
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
+
+        // Vérifier la taille de l'image AVANT de soumettre
+        if (image && image.size > 1 * 1024 * 1024) {
+            setImageError('Le fichier est trop volumineux (max 1 Mo)');
+            return;
+        }
         
         // Vérifier si l'image est valide avant de soumettre
         if (imageError) {

@@ -18,7 +18,6 @@ function AddArticle() {
     const [selectedTags, setSelectedTags] = useState([]); // tags choisis par l'utilisateur
     const [currentTag, setCurrentTag] = useState(''); // input en cours
     const [showCancelModal, setShowCancelModal] = useState(false);
-    const [imageError, setImageError] = useState('');
 
 
 
@@ -54,22 +53,11 @@ function AddArticle() {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
 
-        // Vérifier la taille de l'image AVANT de soumettre
-        if (image && image.size > 1 * 1024 * 1024) {
-            setImageError('Le fichier est trop volumineux (max 1 Mo)');
-            return;
-        }
-        
-        // Vérifier si l'image est valide avant de soumettre
-        if (imageError) {
-            return; // Ne pas soumettre si l'image a une erreur
-        }
-    
         // Vérifie que l'utilisateur est bien chargé avant de soumettre
         if (!user || !user.idUser) {
             return;
         }
-    
+
         // Créer les tags qui n'existent pas encore
         const tagIds = [];
         for (let tag of selectedTags) {
@@ -85,7 +73,7 @@ function AddArticle() {
             }
             tagIds.push(existingTag.id || existingTag.idTag);
         }
-    
+
         // Utilisation de FormData pour gérer texte + fichier
         const formData = new FormData();
         formData.append('title', title);
@@ -97,35 +85,33 @@ function AddArticle() {
         if (image) {
             formData.append('image', image); // Ajoute le fichier s'il existe
         }
-    
+
         // Envoi de la requête POST au backend
         try {
             const response = await fetch(`${API_URL}/article`, {
                 method: 'POST',
                 body: formData, // PAS besoin de Content-Type ici, le navigateur le définit
             });
-    
+
             // Vérification de la réponse
             if (!response.ok) {
-                const errorData = await response.json();
-                if (errorData.error && errorData.error.includes('volumineux')) {
-                    setImageError(errorData.error);
-                    // Ne pas vider le formulaire, juste l'image
-                    setImage(null);
-                    // Réinitialiser l'input file
-                    const fileInput = document.getElementById('image');
-                    if (fileInput) fileInput.value = '';
-                    return;
-                }
-                throw new Error(errorData.error || 'Erreur lors de l\'envoi de l\'article');
+                throw new Error('Erreur lors de l\'envoi de l\'article');
             }
-    
+
+            // const result = await response.json(); // Si le backend renvoie des données
             // Rediriger vers la page principale
             navigate('/');
         } catch (error) {
             console.error('Erreur lors de la soumission:', error);
-            setImageError(error.message);
         }
+
+        // Réinitialisation des champs du formulaire
+        setTitle('');
+        setIngredient('');
+        setContent('');
+        setCategory(categories[0]);
+        setSelectedTags([]);
+        setImage(null);
     };
 
 
@@ -260,27 +246,9 @@ function AddArticle() {
                         className='article__file'
                         type='file'
                         accept='image/*'
-                        onChange={(e) => {
-                            const file = e.target.files[0];
-                            const maxSize = 1 * 1024 * 1024; // 1 Mo en octets
-    
-                            if (file && file.size > maxSize) {
-                                setImageError('Le fichier est trop volumineux (max 1 Mo)');
-                                setImage(null);
-                                e.target.value = ''; // reset input
-                            } else if (file) {
-                                setImageError('');
-                                setImage(file);
-                            } else {
-                                setImageError('');
-                                setImage(null);
-                            }
-                        }}
+                        onChange={(e) => setImage(e.target.files[0])} // Récupère le fichier
                     />
                     <label htmlFor='image' className='article__image'>Choisir une image</label>
-                    
-                    {/* Message d'erreur */}
-                    {imageError && <p className='article__error'>{imageError}</p>}
                 </div>
                 
                 <div className='article__buttons'>

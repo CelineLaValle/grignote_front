@@ -164,8 +164,8 @@ function ArticleDetails() {
 
     return (
         <>
-            <div className='articleDetails'>
-                <div className='articleDetails__container'>
+            <article className='articleDetails'>
+                <section className='articleDetails__container'>
                     <h2 className='articleDetails__title'>{article.title}</h2>
 
                     {article.image && (
@@ -214,8 +214,8 @@ function ArticleDetails() {
                             ))}
                         </div>
                     )}
-                </div>
-                <div className='articleDetails__comments'>
+                </section>
+                <section className='articleDetails__comments'>
                     <h3>Commentaires</h3>
 
                     {user ? (
@@ -255,8 +255,8 @@ function ArticleDetails() {
                             ))}
                         </div>
                     )}
-                </div>
-            </div>
+                </section>
+            </article>
 
         </>
     );

@@ -250,8 +250,8 @@ function EditArticle() {
                             className='articleModify__preview'
                             src={
                                 typeof article.image === 'string'
-                                    ? `${API_URL}/uploads/${article.image}`
-                                    : URL.createObjectURL(article.image)
+                                ? article.image // L'URL Cloudinary est déjà complète
+                                : URL.createObjectURL(article.image)
                             }
                             alt='Aperçu'
                         />

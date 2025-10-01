@@ -54,8 +54,10 @@ function AddArticle() {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
         
-        // Réinitialiser les messages d'erreur
-        setImageError('');
+        // Vérifier si l'image est valide avant de soumettre
+        if (imageError) {
+            return; // Ne pas soumettre si l'image a une erreur
+        }
     
         // Vérifie que l'utilisateur est bien chargé avant de soumettre
         if (!user || !user.idUser) {
@@ -252,17 +254,20 @@ function AddArticle() {
                         className='article__file'
                         type='file'
                         accept='image/*'
-                          onChange={(e) => {
+                        onChange={(e) => {
                             const file = e.target.files[0];
                             const maxSize = 1 * 1024 * 1024; // 1 Mo en octets
-
+    
                             if (file && file.size > maxSize) {
                                 setImageError('Le fichier est trop volumineux (max 1 Mo)');
                                 setImage(null);
                                 e.target.value = ''; // reset input
-                            } else {
+                            } else if (file) {
                                 setImageError('');
                                 setImage(file);
+                            } else {
+                                setImageError('');
+                                setImage(null);
                             }
                         }}
                     />

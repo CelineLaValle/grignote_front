@@ -53,12 +53,15 @@ function AddArticle() {
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault(); // Empêche le rechargement de la page
-
+        
+        // Réinitialiser les messages d'erreur
+        setImageError('');
+    
         // Vérifie que l'utilisateur est bien chargé avant de soumettre
         if (!user || !user.idUser) {
             return;
         }
-
+    
         // Créer les tags qui n'existent pas encore
         const tagIds = [];
         for (let tag of selectedTags) {
@@ -74,7 +77,7 @@ function AddArticle() {
             }
             tagIds.push(existingTag.id || existingTag.idTag);
         }
-
+    
         // Utilisation de FormData pour gérer texte + fichier
         const formData = new FormData();
         formData.append('title', title);
@@ -86,33 +89,35 @@ function AddArticle() {
         if (image) {
             formData.append('image', image); // Ajoute le fichier s'il existe
         }
-
+    
         // Envoi de la requête POST au backend
         try {
             const response = await fetch(`${API_URL}/article`, {
                 method: 'POST',
                 body: formData, // PAS besoin de Content-Type ici, le navigateur le définit
             });
-
+    
             // Vérification de la réponse
             if (!response.ok) {
-                throw new Error('Erreur lors de l\'envoi de l\'article');
+                const errorData = await response.json();
+                if (errorData.error && errorData.error.includes('volumineux')) {
+                    setImageError(errorData.error);
+                    // Ne pas vider le formulaire, juste l'image
+                    setImage(null);
+                    // Réinitialiser l'input file
+                    const fileInput = document.getElementById('image');
+                    if (fileInput) fileInput.value = '';
+                    return;
+                }
+                throw new Error(errorData.error || 'Erreur lors de l\'envoi de l\'article');
             }
-
-            // const result = await response.json(); // Si le backend renvoie des données
+    
             // Rediriger vers la page principale
             navigate('/');
         } catch (error) {
             console.error('Erreur lors de la soumission:', error);
+            setImageError(error.message);
         }
-
-        // Réinitialisation des champs du formulaire
-        setTitle('');
-        setIngredient('');
-        setContent('');
-        setCategory(categories[0]);
-        setSelectedTags([]);
-        setImage(null);
     };
 
 

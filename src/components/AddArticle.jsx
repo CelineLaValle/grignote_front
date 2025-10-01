@@ -18,6 +18,7 @@ function AddArticle() {
     const [selectedTags, setSelectedTags] = useState([]); // tags choisis par l'utilisateur
     const [currentTag, setCurrentTag] = useState(''); // input en cours
     const [showCancelModal, setShowCancelModal] = useState(false);
+    const [imageError, setImageError] = useState('');
 
 
 
@@ -246,9 +247,24 @@ function AddArticle() {
                         className='article__file'
                         type='file'
                         accept='image/*'
-                        onChange={(e) => setImage(e.target.files[0])} // Récupère le fichier
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            const maxSize = 1 * 1024 * 1024; // 1 Mo en octets
+
+                            if (file && file.size > maxSize) {
+                                setImageError('Le fichier est trop volumineux (max 1 Mo)');
+                                setImage(null);
+                                e.target.value = ''; // reset input
+                            } else {
+                                setImageError('');
+                                setImage(file);
+                            }
+                        }}
                     />
                     <label htmlFor='image' className='article__image'>Choisir une image</label>
+                    
+                    {/* Message d'erreur */}
+                    {imageError && <p className='article__error'>{imageError}</p>}
                 </div>
                 
                 <div className='article__buttons'>

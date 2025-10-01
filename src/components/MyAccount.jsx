@@ -129,7 +129,7 @@ function MyAccount() {
                                     <h4 className='containerMyAccount__content__article__list__item__title'>{article.title}</h4>
                                     <img
                                         className='containerMyAccount__content__article__list__item__image'
-                                        src={`${API_URL}/uploads/${article.image}`}
+                                        src={article.image}
                                         alt={article.title}
                                     />
                                     <p className='containerMyAccount__content__article__list__item__content'>

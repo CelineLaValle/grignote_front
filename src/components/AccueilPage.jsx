@@ -111,7 +111,7 @@ function AccueilPage() {
                   {/* Affichage de l'image si elle existe */}
                   {item.image && (
                     <img 
-                      src={`${API_URL}/uploads/${item.image}`} 
+                      src={item.image} 
                       alt={item.title} 
                       className='articlesContainer__article__div__card__image' 
                     />

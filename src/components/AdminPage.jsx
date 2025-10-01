@@ -217,7 +217,7 @@ function AdminPage() {
                             <li className='admin__list__item' key={article.idArticle}>
                                 <h4 className='admin__list__item__title'>{article.title}</h4>
                                 <img
-                                    src={`${API_URL}/uploads/${article.image}`}
+                                    src={article.image}
                                     alt={article.title}
                                     className='admin__list__item__image'
                                 />

@@ -171,7 +171,7 @@ function ArticleDetails() {
                     {article.image && (
                         <img
                             className='articleDetails__image'
-                            src={`${API_URL}/uploads/${article.image}`}
+                            src={article.image}
                             alt={article.title}
                         />
                     )}

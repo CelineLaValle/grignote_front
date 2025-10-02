@@ -115,11 +115,11 @@ function MyAccount() {
 
                 <h2 className='containerMyAccount__content__title'>Mon Compte</h2>
 
-                <div className='containerMyAccount__content__userInfo'>
+                <section className='containerMyAccount__content__userInfo'>
                     <p><strong>Pseudo:</strong> {user.pseudo}</p>
                     <p><strong>Email:</strong> {user.email}</p>
-                </div>
-                 <div className='containerMyAccount__content__article__list__item__separator'></div>
+                </section>
+                 <section className='containerMyAccount__content__article__list__item__separator'></section>
                 <h3 className='containerMyAccount__content__article'>Mes Articles</h3>
                 {articles.length > 0 ? (
                     <>

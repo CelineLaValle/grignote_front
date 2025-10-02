@@ -20,10 +20,10 @@ function Verify() {
             .catch(() => setMessage("Erreur lors de la vérification."));
     }, [searchParams]);
     return (
-        <div>
+        <section>
             <h2>Vérification du compte</h2>
             <p>{message}</p>
-        </div>
+        </section>
     );
 }
 export default Verify;

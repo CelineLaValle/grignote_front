@@ -181,7 +181,7 @@ function Menu() {
 
           <h3 className='menu__content__title'>Filtres :</h3>
 
-          <div className='containerFiltres'>
+          <section className='containerFiltres'>
             <label className='containerFiltres__title'>Par Catégorie</label>
             <select value={selectedCategory} onChange={handleCategoryChange}>
               <option value=''>Toutes les catégories</option>
@@ -257,7 +257,7 @@ function Menu() {
                 {selectedTags.length > 0 && <span className='containerFiltres__dropdown__reset__active__tags'>{selectedTags.length} tag(s)</span>}
               </div>
             )}
-          </div>
+          </section>
         </div>
       </div>
     </div>

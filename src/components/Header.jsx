@@ -61,7 +61,7 @@ function Header() {
   return (
     <div>
       <Menu />
-      <div className='header'>
+      <section className='header'>
         <Link to='/'> <img className='header__logo' src={cupcake} alt='logo' /></Link>
         <div className='header__containerNav'>
         <h1 className='header__title'>Grignote</h1>
@@ -81,7 +81,7 @@ function Header() {
           )}
         </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

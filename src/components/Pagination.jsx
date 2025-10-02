@@ -1,6 +1,6 @@
 const Pagination = ({ currentPage, totalPages, nextPage, prevPage }) => {
   return (
-    <div className='pagination'>
+    <section className='pagination'>
       <button onClick={prevPage} disabled={currentPage === 1}>
         &#60; 
       </button>
@@ -8,7 +8,7 @@ const Pagination = ({ currentPage, totalPages, nextPage, prevPage }) => {
       <button onClick={nextPage} disabled={currentPage === totalPages}>
         &#62;
       </button>
-    </div>
+    </section>
   );
 };
 

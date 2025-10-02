@@ -104,7 +104,7 @@ function MyFavorites() {
 
     return (
         <div className='containerFavorites'>
-            <div className='containerFavorites__content'>
+            <section className='containerFavorites__content'>
                 <h2 className='containerFavorites__content__article'>Mes Favoris</h2>
 
                 {favorites.length > 0 ? (
@@ -177,7 +177,7 @@ function MyFavorites() {
                     />
                 )}
 
-            </div>
+            </section>
         </div>
     );
 }

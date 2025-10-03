@@ -68,10 +68,7 @@ function EditArticle() {
         try {
             const response = await fetch(`${API_URL}/tag`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`, // si tu utilises JWT
-                },
+                credentials: 'include',
                 body: JSON.stringify({ name: newTag }),
             });
 
@@ -108,13 +105,8 @@ function EditArticle() {
                 formData.append('image', article.image);
             }
 
-            const token = localStorage.getItem('token'); // ou récupérer d'où tu stockes ton JWT
-
             const response = await fetch(`${API_URL}/article/${id}`, {
                 method: 'PUT',
-                headers: {
-                    Authorization: token ? `Bearer ${token}` : '', // JWT
-                },
                 credentials: 'include',
                 body: formData,
             });

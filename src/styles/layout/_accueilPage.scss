@@ -165,23 +165,17 @@
         &__card {
           height: 320px;
 
-          &__title {
-            font-size: 20px;
-          }
-
           &__image {
-            width: 70%;
-            max-height: 220px;
+            width: 60%;
+            max-height: 180px;
           }
 
 
           &__content {
-            font-size: 14px;
             padding: 0 10px;
           }
 
           &__category {
-            font-size: 14px;
             padding: 4px 8px;
           }
         }
@@ -251,9 +245,7 @@
 
           &__title {
             font-size: $font-size-lg;
-            top: 10px;
-            left: 10px;
-            right: 10px;
+            top: -10px;
             padding: 8px 10px;
             max-height: none;
             line-height: 1.2;
@@ -265,7 +257,7 @@
             width: 85%;
             height: 180px;
             margin: 65px auto 15px;
-            border-radius: 8px;
+            border-radius: $radius-sm;
           }
 
           &__content {

@@ -239,8 +239,7 @@ function EditArticle() {
                             </span>
                         ))}
                     </div>
-                    
-                    <span className='articleModify__label'>Tapez un tag et appuyez sur Entrée</span>
+                
 
                     {/* Ajout d’un nouveau tag */}
                     <div className='articleModify__newTag'>

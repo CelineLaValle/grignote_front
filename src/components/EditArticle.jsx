@@ -11,7 +11,7 @@ function EditArticle() {
     const [article, setArticle] = useState(null); // null = pas encore de données
     const [notFound, setNotFound] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [newTag, setNewTag] = useState('');
+    const [currentTag, setCurrentTag] = useState('');
     const [tags, setTags] = useState([]); // tous les tags existants
     const [selectedTags, setSelectedTags] = useState([]); // tags de l'article
     // Récupérer la page d'origine depuis l'état de navigation
@@ -62,35 +62,40 @@ function EditArticle() {
     };
 
     // Nouvelle fonction : ajouter un tag
-    const handleAddTag = async () => {
-        if (!newTag.trim()) return;
+        const handleAddTag = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const trimmed = currentTag.trim();
+                if (!trimmed) return;
+                if (!selectedTags.some(t => t.name?.toLowerCase() === trimmed.toLowerCase())) {
+                    setSelectedTags([...selectedTags, { name: trimmed }]);
+                }
+                setCurrentTag('');
+            }
+        };
+        
 
-        try {
-            const response = await fetch(`${API_URL}/tag`, {
-                method: 'POST',
-                credentials: 'include',
-                body: JSON.stringify({ name: newTag }),
-            });
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            if (!article) return;
 
-            // Ligne 76
-            if (!response.ok) throw new Error('Erreur lors de l\'ajout du tag');
-
-            const createdTag = await response.json();
-
-            // Ajout immédiat dans la liste et sélection
-            setTags((prev) => [...prev, createdTag]);
-            setSelectedTags((prev) => [...prev, createdTag.idTag]);
-            setNewTag('');
-        } catch (err) {
-            console.error(err);
+    try {
+        // Créer les tags qui n'existent pas encore
+        const tagIds = [];
+        for (let tag of selectedTags) {
+            let existingTag = tags.find(t => t.name.toLowerCase() === tag.name.toLowerCase());
+            if (!existingTag) {
+                const res = await fetch(`${API_URL}/tag`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: tag.name })
+                });
+                existingTag = await res.json();
+                setTags(prev => [...prev, existingTag]);
+            }
+            tagIds.push(existingTag.idTag);
         }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!article) return;
-
-        try {
+            // Création du FormData avec tous les champs
             const formData = new FormData();
             formData.append('title', article.title);
             formData.append('ingredient', article.ingredient);
@@ -98,7 +103,7 @@ function EditArticle() {
             formData.append('category', article.category);
 
             // On ajoute les tags sélectionnés
-            formData.append('tags', JSON.stringify(selectedTags));
+            formData.append('tags', JSON.stringify(tagIds));
 
             // Si l'image est un fichier (nouvelle image)
             if (article.image instanceof File) {
@@ -205,15 +210,13 @@ function EditArticle() {
 
                     {/* Tags existants */}
                     <div className='articleModify__tags'>
-                        {tags.map((tag) => (
-                            <label key={tag.idTag}>
-                                <input
-                                    type='checkbox'
-                                    checked={selectedTags.includes(tag.idTag)}
-                                    onChange={() => handleTagToggle(tag.idTag)}
-                                />
-                                {tag.name}
-                            </label>
+                        {selectedTags.map((tag, index) => (
+                            <span key={index}>
+                                #{tag.name || tag}
+                                <button type='button' onClick={() => {
+                                    setSelectedTags(selectedTags.filter((_, i) => i !== index));
+                                }}>x</button>
+                            </span>
                         ))}
                     </div>
 
@@ -221,16 +224,15 @@ function EditArticle() {
                     <div className='articleModify__newTag'>
                         <input
                             type='text'
-                            placeholder='Ajouter un tag...'
-                            value={newTag}
-                            onChange={(e) => 
-                                setNewTag(e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, ''))
-                            }
-                            onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
+                            value={currentTag}
+                            onChange={e => {
+                                const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, '');
+                                setCurrentTag(value);
+                            }}
+                            onKeyDown={handleAddTag}
+                            placeholder='Tapez un tag et appuyez sur Entrée'
+                            className='articleModify__input'
                         />
-                        <button type='button' onClick={handleAddTag}>
-                            Ajouter
-                        </button>
                     </div>
                 </div>
 

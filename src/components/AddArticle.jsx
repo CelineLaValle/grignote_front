@@ -166,11 +166,11 @@ function AddArticle() {
                         cols='33'
                         id='content'
                         value={content}
-                         onChange={(e) => {
-                            const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n\r-]/g, '');
                             setContent(value);
                         }}
-                        placeholder='Entrez le contenu de la recette'
+                        placeholder='Entrez les étapes de la recette (appuyez sur Entrée pour aller à la ligne)'
                     />
                 </div>
 
@@ -193,7 +193,7 @@ function AddArticle() {
                 {/* Champ pour les tags */}
 
                 <div className='article__field'>
-                    <label htmlFor='tags' className='article__label'>Tags</label>
+                    <label htmlFor='tags' className='article__label'>Tags (Tapez un tag et appuyez sur Entrée)</label>
                     <div>
                         {selectedTags.map((tag, index) => (
                             <span key={index}>

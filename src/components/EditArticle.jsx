@@ -201,10 +201,11 @@ function EditArticle() {
                         className='articleModify__textarea'
                         value={article.content}
                         onChange={(e) =>
-                            setArticle({...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n-]/g, '')
+                            setArticle({...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n\r-]/g, '')
                         })
                     }
                         placeholder='Contenu'
+                        rows="20"
                     />
                 </div>
 
@@ -238,6 +239,8 @@ function EditArticle() {
                             </span>
                         ))}
                     </div>
+                    
+                    <span className='articleModify__label'>Tapez un tag et appuyez sur Entrée</span>
 
                     {/* Ajout d’un nouveau tag */}
                     <div className='articleModify__newTag'>

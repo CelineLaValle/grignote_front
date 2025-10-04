@@ -53,9 +53,11 @@ function EditArticle() {
                 } else {
                     setArticle(data);
 
-                    // on coche les tags de l’article si le backend les envoie
                     if (Array.isArray(data.tags)) {
-                        setSelectedTags(data.tags.map((tag) => tag.idTag));
+                        setSelectedTags(data.tags.map(tag => ({
+                            idTag: tag.idTag,
+                            name: tag.name
+                        })));
                     }
                 }
             })

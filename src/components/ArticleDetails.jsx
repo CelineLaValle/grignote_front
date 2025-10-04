@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/layout/_articleDetails.scss';
 import NotFound from '../components/NotFound';
 import { API_URL } from '../config';
+import React from 'react';
 
 
 function ArticleDetails() {
@@ -186,7 +187,14 @@ function ArticleDetails() {
                     {/* Ligne de séparation */}
                     <div className='articleDetails__separator'></div>
 
-                    <p className='articleDetails__content'>{article.content}</p>
+                    <p className='articleDetails__content'>
+                        {article.content.split('\n').map((line, index) => (
+                            <React.Fragment key={index}>
+                                {line}
+                                <br />
+                            </React.Fragment>
+                        ))}
+                    </p>
                     <div className='articleDetails__meta'>
 
                         {article.category && (

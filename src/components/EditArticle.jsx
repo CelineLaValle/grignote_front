@@ -86,7 +86,7 @@ function EditArticle() {
         const handleAddTag = (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                const trimmed = currentTag.trim();
+                const trimmed = currentTag.trim(); // Supprime les espaces au début et à la fin
                 if (!trimmed) return;
                 if (!selectedTags.some(t => t.name?.toLowerCase() === trimmed.toLowerCase())) {
                     setSelectedTags([...selectedTags, { name: trimmed }]);

@@ -8,9 +8,36 @@ function EditUser() {
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     // Récupérer la page d'origine depuis l'état de navigation
     const fromPage = location.state?.from || 'AdminPage';
 
+
+     useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await fetch(`${API_URL}/auth/me`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                if (!res.ok) throw new Error('Non authentifié');
+                const data = await res.json();
+
+                if (data.user.role !== 'admin') {
+                    navigate('/login'); // Redirection si pas admin
+                } else {
+                    setLoading(false);
+                }
+            } catch (err) {
+                console.error('Erreur auth:', err);
+                navigate("/login");
+            }
+        };
+
+        checkAuth();
+    }, [navigate]);
+
+    
     useEffect(() => {
         fetch(`${API_URL}/user/${id}`)
             .then((res) => res.json())

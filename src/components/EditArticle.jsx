@@ -14,8 +14,35 @@ function EditArticle() {
     const [currentTag, setCurrentTag] = useState('');
     const [tags, setTags] = useState([]); // tous les tags existants
     const [selectedTags, setSelectedTags] = useState([]); // tags de l'article
+    const [loading, setLoading] = useState(true);
     // Récupérer la page d'origine depuis l'état de navigation
     const fromPage = location.state?.from || 'MyAccount';
+
+
+       useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await fetch(`${API_URL}/auth/me`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                if (!res.ok) throw new Error('Non authentifié');
+                const data = await res.json();
+
+                if (data.user.role !== 'admin') {
+                    navigate('/login'); // Redirection si pas admin
+                } else {
+                    setLoading(false);
+                }
+            } catch (err) {
+                console.error('Erreur auth:', err);
+                navigate("/login");
+            }
+        };
+
+        checkAuth();
+    }, [navigate]);
+
 
     useEffect(() => {
         fetch(`${API_URL}/article/${id}`)
@@ -53,15 +80,7 @@ function EditArticle() {
             .catch((err) => console.error('Erreur tags :', err));
     }, []);
 
-    const handleTagToggle = (tagId) => {
-        setSelectedTags((prev) =>
-            prev.includes(tagId)
-                ? prev.filter((t) => t !== tagId)
-                : [...prev, tagId]
-        );
-    };
-
-    // Nouvelle fonction : ajouter un tag
+    // Ajouter un tag
         const handleAddTag = (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();

@@ -18,26 +18,22 @@ function MyAccount() {
     const [message, setMessage] = useState(null);
     const [articleToDelete, setArticleToDelete] = useState(null);
 
+    // Récupérer l'utilisateur connecté et ses articles
     useEffect(() => {
-        // // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
-        // if (!document.cookie.includes('token=')) {
-        //     // Pas de cookie = pas connecté => on ne fait pas la requête
-        //     setUser(null);
-        //     return;
-        // }
         fetch(`${API_URL}/auth/me`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
-                setUser(data.user); // stocke l'utilisateur
+                setUser(data.user); // Stocke l'utilisateur
                 return fetch(`${API_URL}/article/user/${data.user.idUser}`);
             })
             .then(res => res.json())
             .then(data => {
-                setArticles(data);
+                setArticles(data); // Stocke les articles de l'utilisateur
             })
             .catch(err => console.error('Erreur chargement données:', err));
     }, []);
 
+    // Affiche un message de confirmation ou d’information envoyé depuis une autre page (modification)
     useEffect(() => {
         if (location.state?.message) {
             setMessage(location.state.message);
@@ -46,6 +42,7 @@ function MyAccount() {
     }, [location.state]);
 
 
+    // Si pas connecté, message et bouton pour se connecter
     if (!user) {
         return (
             <div className='myAccount'>
@@ -75,6 +72,7 @@ function MyAccount() {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
 
+    // Supprime un article après confirmation
     const handleDelete = async () => {
         if (!articleToDelete) return;
         try {
@@ -88,12 +86,13 @@ function MyAccount() {
                 throw new Error(errData.message || 'Erreur lors de la suppression de l\'article');
             }
 
+            // Mise à jour du state pour retirer l'article
             setArticles(prev => prev.filter(a => a.idArticle !== articleToDelete.idArticle));
-            setMessage({ text: 'Article supprimé avec succès !', type: 'success' }); // Changé 'error' en 'success'
+            setMessage({ text: 'Article supprimé avec succès !', type: 'success' }); 
             setTimeout(() => setMessage(null), 5000);
         } catch (error) {
             console.error('Erreur suppression:', error);
-            setMessage({ text: "Échec de la suppression : " + error.message, type: 'error' }); // Format cohérent
+            setMessage({ text: "Échec de la suppression : " + error.message, type: 'error' }); 
             setTimeout(() => setMessage(null), 5000);
         } finally {
             setArticleToDelete(null); // Ferme la modale

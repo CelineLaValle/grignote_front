@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config';
 
 function Menu() {
+  // État pour savoir si le menu est ouvert ou fermé
   const [ouvert, setOuvert] = useState(false);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
@@ -13,7 +14,7 @@ function Menu() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Utilisation du contexte de filtres
+  // Utilisation du contexte pour gérer les filtres
   const {
     selectedCategory,
     setSelectedCategory,
@@ -22,8 +23,11 @@ function Menu() {
     resetFilters
   } = useFilters();
 
+  // useRef garde une référence vers un élément du DOM, ici pour fermer le menu des tags si on clique en dehors
   const dropdownRef = useRef(null);
 
+  
+  // useEffect pour récupérer les catégories et tags au chargement
   useEffect(() => {
     // Récupération des catégories
     fetch(`${API_URL}/category`)
@@ -44,10 +48,10 @@ function Menu() {
       .catch(err => console.error('Erreur chargement tags:', err));
   }, []);
 
+  // useEffect pour récupérer l'utilisateur connecté
   useEffect(() => {
-
     fetch(`${API_URL}/auth/me`, {
-      credentials: 'include' // Important pour envoyer les cookies
+      credentials: 'include'
     })
       .then(res => {
         if (res.ok) return res.json();
@@ -65,6 +69,7 @@ function Menu() {
   }, []);
 
 
+  // useEffect pour fermer le dropdown si clic en dehors
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -72,43 +77,47 @@ function Menu() {
         setTagSearch('');
       }
     }
+    // On ajoute un écouteur global sur le document pour détecter les clics en dehors du menu.
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
+  
+  // Fonction de déconnexion
   const handleLogout = async () => {
     try {
-      // Appelle le backend pour effacer le cookie token
       await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
-        credentials: 'include' // très important pour envoyer le cookie au backend
+        credentials: 'include'
       });
 
-      // Réinitialise l'état
+      // réinitialise l'état utilisateur
       setUser(null);
 
-      // Redirige vers l'accueil
       navigate('/');
     } catch (err) {
       console.error('Erreur déconnexion:', err);
     }
   };
 
+  // Fonction pour cocher/décocher (toogle) un tag dans les filtres
   const toggleTag = (idTag) => {
     setSelectedTags(prev =>
-      prev.includes(idTag) ? prev.filter(t => t !== idTag) : [...prev, idTag]
+      // Si le tag est déjà sélectionné, en cliquant de nouveau on le retire (décoché), sinon on l'ajoute en cliquant (coché)
+      prev.includes(idTag) ? prev.filter(tag => tag !== idTag) : [...prev, idTag]
     );
   };
-
+  
+  // Filtre des tags en fonction de la recherche
   const filteredTags = tagSearch
     ? tags.filter(tag =>
       tag.name.toLowerCase().startsWith(tagSearch.toLowerCase())
     )
     : [];
 
-
+  // Changement de catégorie
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
@@ -177,7 +186,7 @@ function Menu() {
               )}
             </div>
           </div>
-          {/* fin bloc auth */}
+          {/* Fin bloc auth */}
 
           <h3 className='menu__content__title'>Filtres :</h3>
 

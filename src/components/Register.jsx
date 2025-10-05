@@ -12,9 +12,11 @@ function Register() {
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
 
+    // Fonction pour gérer l'inscription
     const handleRegister = async (e) => {
         e.preventDefault();
 
+        // Vérifie que les mots de passe correspondent
         if (password !== confirmPassword) {
             setMessage('Les mots de passe ne correspondent pas');
             setMessageType('error');
@@ -22,7 +24,7 @@ function Register() {
         }
 
 
-        // Vérif pseudo (côté front)
+        // Vérifie que le pseudo est valide
         const pseudoRegex = /^[a-zA-Z0-9_-]{3,20}$/;
         if (!pseudoRegex.test(pseudo)) {
             setMessage('Le pseudo doit faire entre 3 et 20 caractères et contenir uniquement lettres, chiffres, _ ou -.');

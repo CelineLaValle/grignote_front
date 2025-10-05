@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
+import { useNavigate } from 'react-router-dom'; // Permet de rediriger après connexion
 import '../styles/layout/_account.scss';
 import { API_URL } from '../config';
 
@@ -24,7 +24,7 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json', // On envoie du JSON
                 },
-                credentials: 'include',
+                credentials: 'include', // On envoie le cookie avec la requête
                 body: JSON.stringify({ email, password }) // Corps de la requête = données du formulaire
             });
 

@@ -28,13 +28,6 @@ function MyFavorites() {
 
     // Récupérer l'utilisateur connecté
     useEffect(() => {
-        //     // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
-        // if (!document.cookie.includes('token=')) {
-        //     // Pas de cookie = pas connecté => on ne fait pas la requête
-        //     setUser(null);
-        //     return;
-        // }
-
         fetch(`${API_URL}/auth/me`, { credentials: 'include' })
             .then(res => {
                 if (!res.ok) throw new Error('Vous n\'êtes pas connecté');
@@ -56,7 +49,7 @@ function MyFavorites() {
                 if (!res.ok) throw new Error('Erreur lors de la récupération des favoris');
                 const data = await res.json();
                 
-                // data doit contenir au moins idArticle
+                // Stocke les favoris dans le state
                 setFavorites(data);
             } catch (err) {
                 console.error(err);
@@ -66,6 +59,7 @@ function MyFavorites() {
         fetchFavorites();
     }, [user]);
 
+    // Supprimer un favori après confirmation
     const handleRemoveFavori = async () => {
         if (!favoriToRemove) return;
         try {
@@ -75,7 +69,7 @@ function MyFavorites() {
             });
             if (!res.ok) throw new Error('Erreur lors de la suppression du favori');
 
-            // Mise à jour du state
+            // Mise à jour du state pour retirer le favori
             setFavorites(prev => prev.filter(f => f.idArticle !== favoriToRemove.idArticle));
 
             setMessage({ text: 'Article retiré des favoris.', type: 'success' });
@@ -85,10 +79,11 @@ function MyFavorites() {
             setMessage({ text: err.message, type: 'error' });
             setTimeout(() => setMessage(null), 3000);
         } finally {
-            setFavoriToRemove(null); // ferme la modale
+            setFavoriToRemove(null); // Ferme la modale
         }
     };
-
+    
+    // Si pas connecté, message et bouton pour se connecter
     if (!user) {
         return (
             <div className='myFavorite'>

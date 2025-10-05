@@ -10,14 +10,8 @@ function Header() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Charger l'utilisateur via l'endpoint /auth/me au lieu du localStorage
+  // Vérifie si l'utilisateur est connecté et stocke les informations dans le state user
   useEffect(() => {
-    // // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
-    // if (!document.cookie.includes('token=')) {
-    //   // Pas de cookie = pas connecté => on ne fait pas la requête
-    //   setUser(null);
-    //   return;
-    // }
 
     fetch(`${API_URL}/auth/me`, {
       credentials: 'include' // Important pour envoyer les cookies
@@ -35,7 +29,7 @@ function Header() {
         }
       })
       .catch(err => {
-        console.error(err); // ici on logue seulement les vraies erreurs
+        console.error(err); 
       });
   }, []);
 

@@ -9,13 +9,9 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); // Permet de rediriger vers une autre page
-    const location = useLocation();
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
 
-    // Récupérer le redirect ou fallback sur '/'
-    const params = new URLSearchParams(location.search);
-    const redirectPath = params.get('redirect') || '/';
 
     // Fonction appelée lors de la soumission du formulaire
     const handleLogin = async (e) => {
@@ -28,7 +24,7 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json', // On envoie du JSON
                 },
-                credentials: 'include', // Pour inclure les cookies (comme le token JWT)
+                credentials: 'include',
                 body: JSON.stringify({ email, password }) // Corps de la requête = données du formulaire
             });
 
@@ -39,11 +35,7 @@ function Login() {
                 throw new Error(data.message || 'Erreur de connexion');
             }
 
-
-            // Si la connexion est réussie, on redirige vers la page d'accueil
-            // Le token est maintenant stocké dans un cookie HTTP-only
-            // Si la connexion est réussie, redirige vers l'article ou page demandée
-            navigate(redirectPath);
+            navigate('/');
             window.location.reload(); // Pour recharger la page et mettre à jour l'état de l'application
         } catch (error) {
             console.error('Erreur de connexion:', error);

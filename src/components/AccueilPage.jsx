@@ -107,7 +107,7 @@ function AccueilPage() {
                 <div className='articlesContainer__article__div__card'>
                   <h3 className='articlesContainer__article__div__card__title'>{item.title}</h3>
                   
-                  {/* Affichage de l'image si elle existe */}
+                  {/* Affichage de l'image */}
                   {item.image && (
                     <img 
                       src={item.image} 

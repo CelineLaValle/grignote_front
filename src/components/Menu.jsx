@@ -147,7 +147,7 @@ function Menu() {
             <li> <Link to='/MyFavorites' className='menu__content__title__button' onClick={() => setOuvert(false)}>Mes favoris</Link> </li>
           </ul>
 
-          {/* Bloc d'auth juste sous 'Mes informations' (visible mobile seulement via CSS) */}
+          {/* Bloc d'auth juste sous 'Mes informations' (visible tablette et mobile seulement via CSS) */}
           <div className='menu__mobileDiff'>
             {/* Ligne de séparation */}
             <div className='menu__separator'></div>

@@ -86,13 +86,13 @@
             font-size: $font-size-md;
             margin: 20px;
             font-weight: bold;
-            overflow: hidden; // coupe si trop long
+            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
         &__image {
-            flex-shrink: 0; // garde sa taille fixe
+            flex-shrink: 0;
             width: 80px;
             height: 80px;
             border-radius: $radius-sm;

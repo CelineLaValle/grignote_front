@@ -56,7 +56,7 @@ function Header() {
     <div>
       <Menu />
       <section className='header'>
-        <Link to='/'> <img className='header__logo' src={cupcake} alt='logo' /></Link>
+        <Link to='/'> <img className='header__logo' src={cupcake} alt='logo représentant un cupcake' /></Link>
         <div className='header__containerNav'>
         <h1 className='header__title'>Grignote</h1>
 

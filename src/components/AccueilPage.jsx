@@ -13,10 +13,10 @@ function AccueilPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 4;
 
-  // Utilisation du contexte de filtres
+  // Utilisation du contexte FilterContext pour appliquer les filtres
   const { applyFilters, selectedCategory, selectedTags } = useFilters();
 
-  // Fonction qui retourne les articles
+  // Fonction pour récupérer tous les articles
   const getWorks = async () => {
     try {
       setLoading(true);
@@ -28,8 +28,6 @@ function AccueilPage() {
       }
 
       const data = await response.json();
-      console.log(data);
-      
       
       setArticles(data);
     } catch (err) {
@@ -41,6 +39,7 @@ function AccueilPage() {
     }
   };
 
+// Quand la page se charge pour la première fois, on récupère la liste des articles et on les affiches
   useEffect(() => {
     getWorks();
   }, []);
@@ -53,20 +52,20 @@ function AccueilPage() {
     setCurrentPage(1);
   }, [selectedCategory, selectedTags]);
 
-  // Calcul des articles actuels (après filtrage)
+// Calcul du nombre et de la sélection d'articles à afficher selon la pagination
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = filteredArticles.slice(indexOfFirstArticle, indexOfLastArticle);
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
 
-  // Gestion de la page suivante
+  // Aller à la page suivante
   const nextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  // Gestion de la page précédente
+  // Revenir à la page précédente
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);

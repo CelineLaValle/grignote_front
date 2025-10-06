@@ -5,8 +5,7 @@ import ConfirmModal from '../components/ConfirmModal';
 import { API_URL } from '../config'; 
 
 function AddArticle() {
-    // Déclaration des états pour le titre et le contenu
-    const navigate = useNavigate(); // Initialiser useNavigate
+    const navigate = useNavigate();
     const [user, setUser] = useState(null); // On crée un état pour stocker l'utilisateur connecté
     const categories = ['Entrée', 'Plat', 'Dessert'];
     const [title, setTitle] = useState('');
@@ -14,33 +13,26 @@ function AddArticle() {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState(categories[0]);
     const [image, setImage] = useState(null); // Fichier image
-    const [allTags, setAllTags] = useState([]);       // tous les tags existants récupérés depuis le backend
-    const [selectedTags, setSelectedTags] = useState([]); // tags choisis par l'utilisateur
-    const [currentTag, setCurrentTag] = useState(''); // input en cours
+    const [allTags, setAllTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [currentTag, setCurrentTag] = useState(''); // Valeur en cours dans l'input
     const [showCancelModal, setShowCancelModal] = useState(false);
 
 
 
-    // useEffect permet de récupérer l'utilisateur via l'endpoint /auth/me
-    useEffect(() => {
-        fetch(`${API_URL}/auth/me`, {
-            credentials: 'include' // Important pour envoyer les cookies
+    // Récupération de l'utilisateur connecté au chargement du composant
+ useEffect(() => {
+    fetch(`${API_URL}/auth/me`, 
+        { credentials: 'include' })
+        .then(res => {
+            if (res.ok) return res.json();
+            throw new Error('Non authentifié');
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error('Non authentifié');
-            })
-            .then(data => {
-                setUser(data.user);
-            })
-            .catch(err => {
-                navigate('/login');
-            });
-    }, []); // Ce code ne s'exécute qu'une seule fois au chargement du composant
+        .then(data => setUser(data.user))
+        .catch(() => navigate('/login'));
+}, [navigate]);
 
-
+    // Récupération de tous les tags disponibles au chargement du composant
     useEffect(() => {
         fetch(`${API_URL}/tag`)
             .then(res => res.json())
@@ -69,12 +61,12 @@ function AddArticle() {
                     body: JSON.stringify({ name: tag.name })
                 });
                 existingTag = await res.json();
-                setAllTags(prev => [...prev, existingTag]);
+                setAllTags(prev => [...prev, existingTag]); // Met à jour la liste des tags
             }
             tagIds.push(existingTag.id || existingTag.idTag);
         }
 
-        // Utilisation de FormData pour gérer texte + fichier
+        // Préparation du FormData pour envoyer tous les champs et l'image
         const formData = new FormData();
         formData.append('title', title);
         formData.append('ingredient', ingredient);
@@ -91,7 +83,7 @@ function AddArticle() {
             const response = await fetch(`${API_URL}/article`, {
                 method: 'POST',
                 body: formData,
-                credentials: 'include', // nécessaire si backend renvoie un cookie
+                credentials: 'include',
             });
 
             const data = await response.json();
@@ -101,8 +93,6 @@ function AddArticle() {
                 throw new Error(data.message || 'Erreur serveur');
             }
 
-            console.log('Article créé:', data);
-            // Rediriger vers la page principale
             navigate('/');
         } catch (error) {
             console.error('Erreur lors de la soumission:', error);
@@ -123,6 +113,7 @@ function AddArticle() {
         <div className='article'>
             <h2 className='article__title'>Ajouter une recette</h2>
             <form className='article__form' onSubmit={handleSubmit} encType='multipart/form-data'>
+
                 {/* Champ pour le titre */}
                 <div className='article__field'>
                     <label htmlFor='title' className='article__label'>Titre de la recette</label>
@@ -191,7 +182,6 @@ function AddArticle() {
                 </div>
 
                 {/* Champ pour les tags */}
-
                 <div className='article__field'>
                     <label htmlFor='tags' className='article__label'>Tags (Tapez un tag et appuyez sur Entrée)</label>
                     <div>
@@ -272,8 +262,8 @@ function AddArticle() {
                 <ConfirmModal
                     title='Confirmation'
                     message='Êtes-vous sûr de vouloir annuler ? Vos modifications seront perdues.'
-                    onConfirm={() => navigate('/')} // redirection
-                    onCancel={() => setShowCancelModal(false)} // ferme la modale
+                    onConfirm={() => navigate('/')}
+                    onCancel={() => setShowCancelModal(false)} // Ferme la modale
                 />
             )}
         </div>

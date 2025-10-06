@@ -21,6 +21,7 @@ function AdminPage() {
     // Récupérer l'onglet actif depuis l'état de navigation
     const location = useLocation();
 
+    // Vérifie que l'utilisateur connecté est bien admin
     useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -45,7 +46,7 @@ function AdminPage() {
         checkAuth();
     }, [navigate]);
 
-    
+    // Gestion de l'onglet actif et affichage des messages passés via navigate
     useEffect(() => {
         // Si un onglet actif est spécifié dans l'état, l'utiliser
         if (location.state?.activeTab) {
@@ -55,9 +56,10 @@ function AdminPage() {
         // Récupérer le message s'il existe
         if (location.state?.message) {
             setMessage(location.state.message);
-            setTimeout(() => setMessage(null), 5000); // disparaît après 5s
+            setTimeout(() => setMessage(null), 5000);
         }
     }, [location.state]);
+
     // Pagination
     const totalPages =
         activeTab === 'user'
@@ -87,7 +89,7 @@ function AdminPage() {
             .catch((err) => console.error('Erreur chargement articles:', err));
     }, []);
 
-    // Fonction qui s’exécute après confirmation
+    // Fonction qui s’exécute après confirmation d'une action (suppression, suspension)
     const handleConfirmAction = async () => {
         if (!actionToConfirm) return;
 

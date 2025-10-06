@@ -8,17 +8,17 @@ function EditArticle() {
     const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
-    const [article, setArticle] = useState(null); // null = pas encore de données
+    const [article, setArticle] = useState(null);
     const [notFound, setNotFound] = useState(false);
     const [categories, setCategories] = useState([]);
     const [currentTag, setCurrentTag] = useState('');
-    const [tags, setTags] = useState([]); // tous les tags existants
-    const [selectedTags, setSelectedTags] = useState([]); // tags de l'article
+    const [tags, setTags] = useState([]); // Tous les tags existants
+    const [selectedTags, setSelectedTags] = useState([]); // Tags de l'article
     const [loading, setLoading] = useState(true);
     // Récupérer la page d'origine depuis l'état de navigation
     const fromPage = location.state?.from || 'MyAccount';
 
-
+       // Vérifie que l'utilisateur connecté est bien admin
        useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -43,7 +43,7 @@ function EditArticle() {
         checkAuth();
     }, [navigate]);
 
-
+    // Récupération des données de l'article à modifier
     useEffect(() => {
         fetch(`${API_URL}/article/${id}`)
             .then((res) => res.json())
@@ -67,14 +67,14 @@ function EditArticle() {
             });
     }, [id]);
 
-
+    // Récupération des catégories pour le select
     useEffect(() => {
         fetch(`${API_URL}/category`)
             .then((res) => res.json())
             .then((data) => setCategories(data))
             .catch((err) => console.error('Erreur categories :', err));
     }, []);
-
+    // Récupération des tags existants pour le select
     useEffect(() => {
         fetch(`${API_URL}/tag`)
             .then((res) => res.json())
@@ -82,12 +82,13 @@ function EditArticle() {
             .catch((err) => console.error('Erreur tags :', err));
     }, []);
 
-    // Ajouter un tag
+        // Ajouter un nouveau tag à l'article
         const handleAddTag = (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const trimmed = currentTag.trim(); // Supprime les espaces au début et à la fin
                 if (!trimmed) return;
+                // Ajoute le tag si pas déjà présent
                 if (!selectedTags.some(t => t.name?.toLowerCase() === trimmed.toLowerCase())) {
                     setSelectedTags([...selectedTags, { name: trimmed }]);
                 }
@@ -95,7 +96,7 @@ function EditArticle() {
             }
         };
         
-
+        // Soumission du formulaire pour modifier l'article
         const handleSubmit = async (e) => {
             e.preventDefault();
             if (!article) return;
@@ -116,14 +117,12 @@ function EditArticle() {
             }
             tagIds.push(existingTag.idTag);
         }
-            // Création du FormData avec tous les champs
+            // Préparation du FormData pour envoyer tous les champs et l'image
             const formData = new FormData();
             formData.append('title', article.title);
             formData.append('ingredient', article.ingredient);
             formData.append('content', article.content);
             formData.append('category', article.category);
-
-            // On ajoute les tags sélectionnés
             formData.append('tags', JSON.stringify(tagIds));
 
             // Si l'image est un fichier (nouvelle image)
@@ -139,7 +138,6 @@ function EditArticle() {
 
             if (!response.ok) {
                 const errData = await response.json();
-                // Ligne 121
                 throw new Error(errData.message || 'Erreur lors de la mise à jour de l\'article');
             }
 
@@ -161,7 +159,7 @@ function EditArticle() {
     };
 
     if (!article) {
-        return null; // on affiche rien si pas encore reçu les données
+        return null; // On affiche rien si pas encore reçu les données
     }
 
 

@@ -18,13 +18,6 @@ function ArticleDetails() {
 
     // Récupérer l'utilisateur connecté
     useEffect(() => {
-        // // Vérifier si un cookie JWT est présent AVANT d'appeler /auth/me
-        // if (!document.cookie.includes('token=')) {
-        //     // Pas de cookie = pas connecté => on ne fait pas la requête
-        //     setUser(null);
-        //     return;
-        // }
-
         fetch(`${API_URL}/auth/me`, {
             credentials: 'include'
         })
@@ -68,7 +61,7 @@ function ArticleDetails() {
         }
     }, [idArticle, user]);
 
-    // Fonction toggle favori
+    // Ajouter ou retirer des favoris
     const handleToggleFavori = async () => {
         if (!user) {
             navigate(`/login?redirect=/article/${idArticle}`);
@@ -77,14 +70,14 @@ function ArticleDetails() {
 
         try {
             if (isFavori) {
-                // Retirer
+                // Retirer des favoris
                 await fetch(`${API_URL}/favori/${idArticle}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
                 setIsFavori(false);
             } else {
-                // Ajouter
+                // Ajouter aux favoris
                 await fetch(`${API_URL}/favori`, {
                     method: 'POST',
                     credentials: 'include',
@@ -114,7 +107,7 @@ function ArticleDetails() {
         fetchComments();
     }, [idArticle]);
 
-
+    // Ajouter un commentaire
     const handleAddComment = async () => {
         if (!newComment.trim()) return;
 
@@ -131,7 +124,7 @@ function ArticleDetails() {
             });
             const data = await res.json();
 
-            // Ajouter le nouveau commentaire en haut
+            // Ajouter le nouveau commentaire en haut de la liste
             setComments([{ idComment: data.idComment, content: newComment, pseudo: user.pseudo, date: new Date() }, ...comments]);
             setNewComment('');
         } catch (err) {
@@ -139,24 +132,19 @@ function ArticleDetails() {
         }
     };
 
-    // if (!article) {
-    //     return <div>Chargement...</div>; // Message de chargement
-    // }
-
     if (!article) {
         return <NotFound />;
     }
 
-
+    // Gestion des ingrédients : on parse la chaîne JSON pour obtenir un tableau exploitable. Au départ, la valeur est une chaîne de caractères.
     const ingredientItems = Array.isArray(article.ingredient)
         ? article.ingredient
         : (() => {
-            // essaie de parser du JSON ['Farine','Oeufs']
             try {
                 const parsed = JSON.parse(article.ingredient);
                 if (Array.isArray(parsed)) return parsed;
             } catch { }
-            // sinon split sur retour à la ligne, virgule ou point-virgule
+            // Si le JSON est invalide, on découpe manuellement la chaîne en utilisant les retours à la ligne, virgules ou points-virgules pour recréer un tableau propre.
             return String(article.ingredient)
                 .split(/\r?\n|,|;/)
                 .map(s => s.trim())

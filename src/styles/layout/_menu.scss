@@ -93,7 +93,7 @@
           top: 100%;
           left: 0;
           width: 100%;
-          max-height: 50vh; // hauteur max avant scroll
+          max-height: 50vh;
           overflow-y: auto;
           border: 1px solid $color-quaternary;
           background: $color-tertiary;
@@ -187,7 +187,7 @@
     .menu,
     &__content {
       position: fixed;
-      overflow-y: auto; // Permet le scroll
+      overflow-y: auto;
       padding-bottom: 120px;
       display: flex;
       flex-direction: column;

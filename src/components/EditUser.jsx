@@ -9,10 +9,12 @@ function EditUser() {
     const location = useLocation();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    // Récupérer la page d'origine depuis l'état de navigation
+
+    // Récupérer la page d'origine depuis l'état de navigation (permet de rester dans l'onglet Articles si l'on modifie un article)
     const fromPage = location.state?.from || 'AdminPage';
 
 
+    // Vérifie que l'utilisateur connecté est bien admin
      useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -37,23 +39,25 @@ function EditUser() {
         checkAuth();
     }, [navigate]);
 
-    
+    // Récupère les informations de l'utilisateur à modifier
     useEffect(() => {
         fetch(`${API_URL}/user/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.message === 'Utilisateur non trouvé') {
-                    navigate('/not-found'); // Redirection vers une page 404 au lieu de définir notFound
+                    navigate('/not-found'); // Redirection vers une page 404
                 } else {
                     setUser(data);
                 }
             })
             .catch((err) => {
                 console.error('Erreur :', err);
-                navigate('/not-found'); // Redirection vers une page 404 au lieu de définir notFound
+                navigate('/NotFound'); // Redirige vers la page 404 si l'utilisateur n'existe pas
             });
     }, [id, navigate]);
 
+    
+    // Fonction pour envoyer les modifications au backend
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!user) return;

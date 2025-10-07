@@ -127,7 +127,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin: 20px 0 20px 0;
+    margin-bottom: 50px;
     box-shadow: $color-quaternary 0px 1px 0px 0px;
     border-radius: $radius-md;
     border: 1px solid $color-quaternary;
@@ -187,7 +187,8 @@
     &__link {
       width: 160px;
       height: 30px;
-      font-size: 14px;
+      font-size: $font-size-sm;
+      margin-bottom: 40px;
     }
   }
 }
@@ -282,12 +283,9 @@
   }
 
   .containerButton {
-    margin: 30px 0;
-
     &__link {
       width: 160px;
       height: 35px;
-      font-size: $font-size-sm;
     }
   }
 }

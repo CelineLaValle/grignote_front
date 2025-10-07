@@ -17,7 +17,7 @@ function AccueilPage() {
   const { applyFilters, selectedCategory, selectedTags } = useFilters();
 
   // Fonction pour récupérer tous les articles
-  const getWorks = async () => {
+  const getRecipes = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -41,7 +41,7 @@ function AccueilPage() {
 
   // Quand la page se charge pour la première fois, on récupère la liste des articles et on les affiches
   useEffect(() => {
-    getWorks();
+    getRecipes();
   }, []);
 
   // Appliquer les filtres aux articles
@@ -87,7 +87,7 @@ function AccueilPage() {
       {error && (
         <div className='error'>
           <p>Erreur lors du chargement des articles : {error}</p>
-          <button onClick={getWorks}>Réessayer</button>
+          <button onClick={getRecipes}>Réessayer</button>
         </div>
       )}
 

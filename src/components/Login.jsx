@@ -25,7 +25,7 @@ function Login() {
                     'Content-Type': 'application/json', // On envoie du JSON
                 },
                 credentials: 'include', // On envoie le cookie avec la requête
-                body: JSON.stringify({ email, password }) // Corps de la requête = données du formulaire
+                body: JSON.stringify({ email, password }) // Envoi les données dans le body sous format json
             });
 
             const data = await response.json(); // On récupère la réponse du serveur

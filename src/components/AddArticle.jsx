@@ -144,7 +144,7 @@ function AddArticle() {
                             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
                             setIngredient(value);
                         }}
-                        placeholder='Noter les ingrédients'
+                        placeholder='Noter les ingrédients et appuyez sur entrée pour aller à la ligne'
                     />
                 </div>
 
@@ -161,7 +161,7 @@ function AddArticle() {
                             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n\r-]/g, '');
                             setContent(value);
                         }}
-                        placeholder='Entrez les étapes de la recette (appuyez sur Entrée pour aller à la ligne)'
+                        placeholder='Entrez les étapes de la recette (appuyez sur entrée pour aller à la ligne)'
                     />
                 </div>
 

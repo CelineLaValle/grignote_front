@@ -179,7 +179,7 @@ function EditArticle() {
                                 ...article, title: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
                             })
                         }
-                        placeholder='Titre'
+                        placeholder='Entrez le nom de la recette'
                     />
                 </div>
 
@@ -193,7 +193,7 @@ function EditArticle() {
                                 ...article, ingredient: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n-]/g, '')
                             })
                         }
-                        placeholder='Ingrédients'
+                        placeholder='Noter les ingrédients (appuyez sur entrée pour aller à la ligne)'
                     />
                 </div>
 
@@ -207,7 +207,7 @@ function EditArticle() {
                                 ...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n\r-]/g, '')
                             })
                         }
-                        placeholder='Contenu'
+                        placeholder='Entrez les étapes de la recette (appuyez sur entrée pour aller à la ligne)'
                         rows="20"
                     />
                 </div>

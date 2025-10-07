@@ -144,7 +144,7 @@ function AddArticle() {
                             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
                             setIngredient(value);
                         }}
-                        placeholder='Noter les ingrédients et appuyez sur entrée pour aller à la ligne'
+                        placeholder='Noter les ingrédients (appuyez sur entrée pour aller à la ligne)'
                     />
                 </div>
 

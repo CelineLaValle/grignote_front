@@ -39,7 +39,7 @@ function Header() {
       // Appelle le backend pour effacer le cookie token
       await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
-        credentials: 'include' // très important pour envoyer le cookie au backend
+        credentials: 'include' 
       });
 
       // Réinitialise l'état

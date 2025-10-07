@@ -26,7 +26,7 @@ function Menu() {
   // useRef garde une référence vers un élément du DOM, ici pour fermer le menu des tags si on clique en dehors
   const dropdownRef = useRef(null);
 
-  
+
   // useEffect pour récupérer les catégories et tags au chargement
   useEffect(() => {
     // Récupération des catégories
@@ -84,7 +84,7 @@ function Menu() {
     };
   }, []);
 
-  
+
   // Fonction de déconnexion
   const handleLogout = async () => {
     try {
@@ -109,7 +109,7 @@ function Menu() {
       prev.includes(idTag) ? prev.filter(tag => tag !== idTag) : [...prev, idTag]
     );
   };
-  
+
   // Filtre des tags en fonction de la recherche
   const filteredTags = tagSearch
     ? tags.filter(tag =>

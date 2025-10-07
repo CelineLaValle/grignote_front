@@ -6,7 +6,7 @@ function Verify() {
     const [searchParams] = useSearchParams();
     const [message, setMessage] = useState('');
 
-    
+
     // Vérifie le token de vérification depuis l'URL et récupère le message du serveur
     useEffect(() => {
         const token = searchParams.get('token'); // Récupère le token depuis l'URL

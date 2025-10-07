@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Pagination from './Pagination';
 import ConfirmModal from './ConfirmModal';
 import '../styles/layout/_adminPage.scss';
-import { API_URL } from '../config'; 
+import { API_URL } from '../config';
 
 
 function AdminPage() {
@@ -17,7 +17,7 @@ function AdminPage() {
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    
+
     // Récupérer l'onglet actif depuis l'état de navigation
     const location = useLocation();
 
@@ -52,7 +52,7 @@ function AdminPage() {
         if (location.state?.activeTab) {
             setActiveTab(location.state.activeTab);
         }
-        
+
         // Récupérer le message s'il existe
         if (location.state?.message) {
             setMessage(location.state.message);
@@ -119,11 +119,11 @@ function AdminPage() {
                             : u
                     )
                 );
-                setMessage({ 
-                    text: data.suspended ? 
-                        `L'utilisateur ${actionToConfirm.item.pseudo} a été suspendu` : 
-                        `L'utilisateur ${actionToConfirm.item.pseudo} a été réactivé`, 
-                    type: 'success' 
+                setMessage({
+                    text: data.suspended ?
+                        `L'utilisateur ${actionToConfirm.item.pseudo} a été suspendu` :
+                        `L'utilisateur ${actionToConfirm.item.pseudo} a été réactivé`,
+                    type: 'success'
                 });
                 setTimeout(() => setMessage(null), 5000);
             }
@@ -183,7 +183,7 @@ function AdminPage() {
                                     <strong>Email:</strong> {user.email}
                                 </p>
                                 <div className='admin__list__item__buttons'>
-                                    <button 
+                                    <button
                                         className='admin__list__item__edit'
                                         onClick={() => navigate(`/EditUser/${user.idUser}`, { state: { from: 'AdminPage', tab: 'user' } })}>
                                         Modifier
@@ -226,9 +226,9 @@ function AdminPage() {
                                 <p className='admin__list__item__content'>{article.content?.slice(0, 100)}...</p>
                                 <div className='admin__list__item__buttons'>
                                     <button className='admin__list__item__edit'
-                                            onClick={() => navigate(`/EditArticle/${article.idArticle}`, { state: { from: 'AdminPage', tab: 'article' } })}>
-                                            Modifier
-                                            </button>
+                                        onClick={() => navigate(`/EditArticle/${article.idArticle}`, { state: { from: 'AdminPage', tab: 'article' } })}>
+                                        Modifier
+                                    </button>
                                     <button
                                         className='admin__list__item__delete'
                                         onClick={() =>

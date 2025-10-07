@@ -18,8 +18,8 @@ function EditArticle() {
     // Récupérer la page d'origine depuis l'état de navigation
     const fromPage = location.state?.from || 'MyAccount';
 
-       // Vérifie que l'utilisateur connecté est bien admin
-       useEffect(() => {
+    // Vérifie que l'utilisateur connecté est bien admin
+    useEffect(() => {
         const checkAuth = async () => {
             try {
                 const res = await fetch(`${API_URL}/auth/me`, {
@@ -82,41 +82,41 @@ function EditArticle() {
             .catch((err) => console.error('Erreur tags :', err));
     }, []);
 
-        // Ajouter un nouveau tag à l'article
-        const handleAddTag = (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const trimmed = currentTag.trim(); // Supprime les espaces au début et à la fin
-                if (!trimmed) return;
-                // Ajoute le tag si pas déjà présent
-                if (!selectedTags.some(t => t.name?.toLowerCase() === trimmed.toLowerCase())) {
-                    setSelectedTags([...selectedTags, { name: trimmed }]);
-                }
-                setCurrentTag('');
-            }
-        };
-        
-        // Soumission du formulaire pour modifier l'article
-        const handleSubmit = async (e) => {
+    // Ajouter un nouveau tag à l'article
+    const handleAddTag = (e) => {
+        if (e.key === 'Enter') {
             e.preventDefault();
-            if (!article) return;
-
-    try {
-        // Créer les tags qui n'existent pas encore
-        const tagIds = [];
-        for (let tag of selectedTags) {
-            let existingTag = tags.find(t => t.name.toLowerCase() === tag.name.toLowerCase());
-            if (!existingTag) {
-                const res = await fetch(`${API_URL}/tag`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: tag.name })
-                });
-                existingTag = await res.json();
-                setTags(prev => [...prev, existingTag]);
+            const trimmed = currentTag.trim(); // Supprime les espaces au début et à la fin
+            if (!trimmed) return;
+            // Ajoute le tag si pas déjà présent
+            if (!selectedTags.some(t => t.name?.toLowerCase() === trimmed.toLowerCase())) {
+                setSelectedTags([...selectedTags, { name: trimmed }]);
             }
-            tagIds.push(existingTag.idTag);
+            setCurrentTag('');
         }
+    };
+
+    // Soumission du formulaire pour modifier l'article
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!article) return;
+
+        try {
+            // Créer les tags qui n'existent pas encore
+            const tagIds = [];
+            for (let tag of selectedTags) {
+                let existingTag = tags.find(t => t.name.toLowerCase() === tag.name.toLowerCase());
+                if (!existingTag) {
+                    const res = await fetch(`${API_URL}/tag`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: tag.name })
+                    });
+                    existingTag = await res.json();
+                    setTags(prev => [...prev, existingTag]);
+                }
+                tagIds.push(existingTag.idTag);
+            }
             // Préparation du FormData pour envoyer tous les champs et l'image
             const formData = new FormData();
             formData.append('title', article.title);
@@ -175,9 +175,10 @@ function EditArticle() {
                         type='text'
                         value={article.title}
                         onChange={(e) =>
-                            setArticle({...article, title: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
-                        })
-                    }
+                            setArticle({
+                                ...article, title: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?()-]/g, '')
+                            })
+                        }
                         placeholder='Titre'
                     />
                 </div>
@@ -188,9 +189,10 @@ function EditArticle() {
                         className='articleModify__textarea'
                         value={article.ingredient}
                         onChange={(e) =>
-                            setArticle({...article, ingredient: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n-]/g, '')
-                        })
-                    }
+                            setArticle({
+                                ...article, ingredient: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n-]/g, '')
+                            })
+                        }
                         placeholder='Ingrédients'
                     />
                 </div>
@@ -201,9 +203,10 @@ function EditArticle() {
                         className='articleModify__textarea'
                         value={article.content}
                         onChange={(e) =>
-                            setArticle({...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n\r-]/g, '')
-                        })
-                    }
+                            setArticle({
+                                ...article, content: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():\n\r-]/g, '')
+                            })
+                        }
                         placeholder='Contenu'
                         rows="20"
                     />
@@ -214,7 +217,7 @@ function EditArticle() {
                     <select
                         className='articleModify__select'
                         value={article.category}
-                        onChange={(e) => 
+                        onChange={(e) =>
                             setArticle({ ...article, category: e.target.value })}
                     >
                         <option value=''>-- Sélectionner une catégorie --</option>
@@ -239,7 +242,7 @@ function EditArticle() {
                             </span>
                         ))}
                     </div>
-                
+
 
                     {/* Ajout d’un nouveau tag */}
                     <div className='articleModify__newTag'>
@@ -265,8 +268,8 @@ function EditArticle() {
                             className='articleModify__preview'
                             src={
                                 typeof article.image === 'string'
-                                ? article.image // L'URL Cloudinary est déjà complète
-                                : URL.createObjectURL(article.image)
+                                    ? article.image // L'URL Cloudinary est déjà complète
+                                    : URL.createObjectURL(article.image)
                             }
                             alt='Aperçu'
                         />

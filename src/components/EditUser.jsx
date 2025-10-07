@@ -15,7 +15,7 @@ function EditUser() {
 
 
     // Vérifie que l'utilisateur connecté est bien admin
-     useEffect(() => {
+    useEffect(() => {
         const checkAuth = async () => {
             try {
                 const res = await fetch(`${API_URL}/auth/me`, {
@@ -56,7 +56,7 @@ function EditUser() {
             });
     }, [id, navigate]);
 
-    
+
     // Fonction pour envoyer les modifications au backend
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -114,8 +114,9 @@ function EditUser() {
                         className='userModify__input'
                         type='text'
                         value={user.pseudo}
-                         onChange={(e) =>
-                            setUser({ ...user, pseudo: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 _-]/g, '')
+                        onChange={(e) =>
+                            setUser({
+                                ...user, pseudo: e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 _-]/g, '')
                             })
                         }
                         placeholder='Pseudo'
@@ -148,15 +149,15 @@ function EditUser() {
                 </div>
 
                 <div className='userModify__buttons'>
-                    <button 
-                        className='userModify__cancel' 
+                    <button
+                        className='userModify__cancel'
                         type='button'
-                        onClick={() => navigate(`/${fromPage}`, { 
-                            state: { activeTab: location.state?.tab || 'user' } 
+                        onClick={() => navigate(`/${fromPage}`, {
+                            state: { activeTab: location.state?.tab || 'user' }
                         })}
                     >
                         Annuler
-                    </button>     
+                    </button>
                     <button className='userModify__submit' type='submit'>Enregistrer</button>
                 </div>
             </form>

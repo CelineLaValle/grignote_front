@@ -31,10 +31,10 @@ export const FilterProvider = ({ children }) => {
     return articles.filter(article => {
       // Vérifie si l'article correspond à la catégorie sélectionnée
       const categoryMatch = !selectedCategory || article.category === selectedCategory;
-      
+
       // Vérifie si l'article correspond à au moins un tag sélectionné
       let tagMatch = true; // Par défaut, si aucun tag sélectionné
-      
+
       if (selectedTags.length > 0) {
         if (!article.tags || !Array.isArray(article.tags)) {
           tagMatch = false; // L'article n'a pas de tags
@@ -51,7 +51,7 @@ export const FilterProvider = ({ children }) => {
     });
   };
 
-  
+
   // Valeurs fournies à tous les composants enfants via le contexte
   const value = {
     selectedCategory,

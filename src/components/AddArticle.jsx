@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import '../styles/layout/_add.scss';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal';
-import { API_URL } from '../config'; 
+import { API_URL } from '../config';
 
 function AddArticle() {
     const navigate = useNavigate();
@@ -21,16 +21,16 @@ function AddArticle() {
 
 
     // Récupération de l'utilisateur connecté au chargement du composant
- useEffect(() => {
-    fetch(`${API_URL}/auth/me`, 
-        { credentials: 'include' })
-        .then(res => {
-            if (res.ok) return res.json();
-            throw new Error('Non authentifié');
-        })
-        .then(data => setUser(data.user))
-        .catch(() => navigate('/login'));
-}, [navigate]);
+    useEffect(() => {
+        fetch(`${API_URL}/auth/me`,
+            { credentials: 'include' })
+            .then(res => {
+                if (res.ok) return res.json();
+                throw new Error('Non authentifié');
+            })
+            .then(data => setUser(data.user))
+            .catch(() => navigate('/login'));
+    }, [navigate]);
 
     // Récupération de tous les tags disponibles au chargement du composant
     useEffect(() => {
@@ -79,7 +79,7 @@ function AddArticle() {
         }
 
         // Envoi de la requête POST au backend
-            try {
+        try {
             const response = await fetch(`${API_URL}/article`, {
                 method: 'POST',
                 body: formData,
@@ -143,7 +143,7 @@ function AddArticle() {
                         onChange={(e) => {
                             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9 '",.!?():;\n-]/g, '');
                             setIngredient(value);
-                        }}      
+                        }}
                         placeholder='Noter les ingrédients'
                     />
                 </div>
@@ -197,10 +197,10 @@ function AddArticle() {
                         <input
                             type='text'
                             value={currentTag}
-                                onChange={e => {
-                                    const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, '');
-                                    setCurrentTag(value);
-                                }}
+                            onChange={e => {
+                                const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, '');
+                                setCurrentTag(value);
+                            }}
                             onKeyDown={e => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
@@ -221,7 +221,7 @@ function AddArticle() {
 
                 {/* Champ pour le fichier image */}
                 <div className='article__field'>
-                    
+
                     {/* Aperçu de l'image */}
                     {image && (
                         <div className='article__field'>
@@ -234,7 +234,7 @@ function AddArticle() {
                         </div>
                     )}
 
-                        <label htmlFor='image' className='article__label'>Image de la recette</label>
+                    <label htmlFor='image' className='article__label'>Image de la recette</label>
                     <input
                         id='image'
                         className='article__file'
@@ -244,12 +244,12 @@ function AddArticle() {
                     />
                     <label htmlFor='image' className='article__image'>Choisir une image</label>
                 </div>
-                
+
                 <div className='article__buttons'>
                     <button
                         className='article__submit'
                         type='button'
-                         onClick={() => setShowCancelModal(true)}
+                        onClick={() => setShowCancelModal(true)}
                     >
                         Annuler
                     </button>
@@ -257,7 +257,7 @@ function AddArticle() {
                 </div>
             </form>
 
-               {/* Modale d’annulation */}
+            {/* Modale d’annulation */}
             {showCancelModal && (
                 <ConfirmModal
                     title='Confirmation'

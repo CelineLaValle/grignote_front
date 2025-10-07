@@ -134,7 +134,7 @@
               color: darken($color-primary, 10%);
             }
           }
-          
+
           // Filtres actifs
           &__active {
             font-size: $font-size-md;
@@ -218,14 +218,13 @@
       &__dropdown {
         &__menuFiltres {
           top: auto;
-          bottom: 20px; 
+          bottom: 20px;
           left: 20px;
           right: 20px;
-          width: auto; 
-          max-height: 40vh; 
+          width: auto;
+          max-height: 40vh;
         }
       }
     }
   }
 }
-

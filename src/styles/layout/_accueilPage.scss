@@ -136,7 +136,7 @@
     width: 196px;
     height: 35px;
     font-family: $font-secondary;
-    font-size: $font-size-sm;  
+    font-size: $font-size-sm;
     color: #000000;
 
     &:visited {
@@ -196,7 +196,7 @@
 @media (max-width: 390px) {
   .containerFilter {
     padding-top: 10px;
-    
+
     &__title {
       font-size: $font-size-lg;
       padding: 0 15px;
@@ -283,7 +283,7 @@
 
   .containerButton {
     margin: 30px 0;
-    
+
     &__link {
       width: 160px;
       height: 35px;

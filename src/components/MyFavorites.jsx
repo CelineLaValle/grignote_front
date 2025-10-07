@@ -15,7 +15,7 @@ function MyFavorites() {
     const [message, setMessage] = useState(null);
     const [favoriToRemove, setFavoriToRemove] = useState(null);
 
-    const articlesPerPage = 5; 
+    const articlesPerPage = 5;
     const totalPages = Math.ceil(favorites.length / articlesPerPage);
     const currentArticles = favorites.slice(
         (currentPage - 1) * articlesPerPage,
@@ -48,7 +48,7 @@ function MyFavorites() {
                 });
                 if (!res.ok) throw new Error('Erreur lors de la récupération des favoris');
                 const data = await res.json();
-                
+
                 // Stocke les favoris dans le state
                 setFavorites(data);
             } catch (err) {
@@ -82,7 +82,7 @@ function MyFavorites() {
             setFavoriToRemove(null); // Ferme la modale
         }
     };
-    
+
     // Si pas connecté, message et bouton pour se connecter
     if (!user) {
         return (
@@ -132,7 +132,7 @@ function MyFavorites() {
                                         Voir l'article
                                     </button>
 
-                                      {/* Bouton pour retirer des favoris */}
+                                    {/* Bouton pour retirer des favoris */}
                                     <button
                                         className='containerFavorites__content__article__list__item__delete'
                                         onClick={() => setFavoriToRemove(article)} // ouvre la modale
@@ -162,7 +162,7 @@ function MyFavorites() {
                     </div>
                 )}
 
-                   {/* Modale de confirmation */}
+                {/* Modale de confirmation */}
                 {favoriToRemove && (
                     <ConfirmModal
                         title='Retirer des favoris'

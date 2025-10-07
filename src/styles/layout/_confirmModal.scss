@@ -53,7 +53,7 @@
     background: $color-primary-green;
     color: black;
 
-        &:hover {
+    &:hover {
       background: darken($color-primary-green, 10%);
     }
   }
@@ -62,7 +62,7 @@
     background: $color-primary;
     color: white;
 
-      &:hover {
+    &:hover {
       background: darken($color-primary, 10%);
     }
   }
@@ -72,13 +72,13 @@
 
 // Tablette (390px)
 @media (max-width: 390px) {
-    .modal {
-        &__content {
-          width: 60%;
-        }
-
-        &__actions {
-            flex-direction: column;
-        }
+  .modal {
+    &__content {
+      width: 60%;
     }
+
+    &__actions {
+      flex-direction: column;
+    }
+  }
 }

@@ -1,39 +1,39 @@
 @use '../var' as *;
 
 .notfound {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 
-    h1 {
-        font-size: $font-size-xxxxl;
-        margin-bottom: 20px;
-        color: $color-primary-green;
-    }
-
-    p {
-        font-size: $font-size-lg;
-        margin-bottom: 30px;
-    }
-
-    &__button {
-        background-color: $color-primary-green;
-        font-size: $font-size-lg;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: $radius-sm;
-        text-decoration: none;
-        transition: background 0.2s;
-
-        &:hover {
-            background: darken($color-primary-green, 10%);
-        }
-    }
+  h1 {
+    font-size: $font-size-xxxxl;
+    margin-bottom: 20px;
+    color: $color-primary-green;
   }
 
- @media (max-width: 768px) {
+  p {
+    font-size: $font-size-lg;
+    margin-bottom: 30px;
+  }
+
+  &__button {
+    background-color: $color-primary-green;
+    font-size: $font-size-lg;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: $radius-sm;
+    text-decoration: none;
+    transition: background 0.2s;
+
+    &:hover {
+      background: darken($color-primary-green, 10%);
+    }
+  }
+}
+
+@media (max-width: 768px) {
   .notfound {
     height: 500px;
 

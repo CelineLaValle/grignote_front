@@ -3,7 +3,7 @@ import AccueilPage from '../components/AccueilPage'
 function Accueil() {
   return (
     <main>
-    <AccueilPage />
+      <AccueilPage />
     </main>
   )
 }

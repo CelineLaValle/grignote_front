@@ -36,7 +36,7 @@
     border: 1px solid $color-quaternary;
     border-radius: $radius-sm;
     font-size: $font-size-md;
-  
+
   }
 
   &__select {
@@ -97,25 +97,25 @@
   }
 }
 
- .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #c3e6cb;
-        }
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #c3e6cb;
+}
 
 // Responsive
 
 // Tablette (768px)
 @media (max-width: 768px) {
-    .articleModify {
-        width: 80%;
+  .articleModify {
+    width: 80%;
 
     &__buttons {
       justify-content: center;
       margin-bottom: 20px;
     }
-  }    
+  }
 }

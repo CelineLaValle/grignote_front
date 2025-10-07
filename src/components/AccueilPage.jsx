@@ -122,7 +122,7 @@ function AccueilPage() {
                   {/* Affichage de la catégorie */}
                   <div className='articlesContainer__article__div__card__category'>{item.category}</div>
 
-                  {/* Affichage des tags si disponibles */}
+                  {/* Affichage des tags */}
                   {item.tags && item.tags.length > 0 && (
                     <div className='articlesContainer__article__div__card__tags'>
                       {item.tags.map((tag, index) => (
@@ -143,7 +143,7 @@ function AccueilPage() {
         <Link to='/AddArticle' className='containerButton__link'>Ajouter une recette</Link>
       </div>
 
-      {/* Affichage de la pagination seulement s'il y a des résultats */}
+      {/* Affichage de la pagination */}
       {filteredArticles.length > 0 && totalPages > 1 && (
         <Pagination
           currentPage={currentPage}

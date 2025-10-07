@@ -75,7 +75,7 @@ function AccueilPage() {
   return (
     <div className='containerFilter'>
       <h2 className='containerFilter__title'>
-        Articles
+        Recettes
         {(selectedCategory || selectedTags.length > 0) && (
           <span className='containerFilter__indicator'>
             ({filteredArticles.length} résultat{filteredArticles.length > 1 ? 's' : ''})
@@ -97,6 +97,10 @@ function AccueilPage() {
           <p>Aucun article ne correspond aux filtres sélectionnés.</p>
         </div>
       )}
+      
+      <div className='containerButton'>
+        <Link to='/AddArticle' className='containerButton__link'>Ajouter une recette</Link>
+      </div>
 
       {/* Affichage des articles */}
       {filteredArticles.length > 0 && (
@@ -138,10 +142,6 @@ function AccueilPage() {
           </article>
         </section>
       )}
-
-      <div className='containerButton'>
-        <Link to='/AddArticle' className='containerButton__link'>Ajouter une recette</Link>
-      </div>
 
       {/* Affichage de la pagination */}
       {filteredArticles.length > 0 && totalPages > 1 && (
